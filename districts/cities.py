@@ -1,18 +1,44 @@
 # --- Imports --- #
 
-from enum import StrEnum, auto
-from .divisions import Division, DivisionTypes, add_population, add_subdivisions
-        
+from enum import IntEnum, auto
+from .divisions import Division, DivisionTypes
+
+
+# --- CityTypes Enum --- #
+
+class CityTypes(IntEnum):
+    LOST = auto() #This is incredibly rare
+    SITE = auto()
+    COMMUNITY = auto()
+    CITY = auto()
+
+    def __str__(self):
+        return self.name.title()
+
+
+# --- AdministrativeTypes Enum --- #
+
+class AdministrativeTypes(IntEnum):
+    NONE = auto()
+    SEAT = auto()
+    CAPITAL = auto()
+
+    def __str__(self):
+        if (self == AdministrativeTypes.SEAT):
+            return f"County {self.name.title()}"
+        return self.name.title()
+
 
 # --- City Class --- #
 
 class City(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, citytype: CityTypes, admintype: AdministrativeTypes, /, population: int = None, subdivisions: list[Division] | Division = None):
 
-        super().__init__(name, DivisionTypes.CITY)
+        super().__init__(name, DivisionTypes.CITY, population, subdivisions)
+        self.city_type = citytype
+        self.admin_type = admintype
 
-        if (population != None):
-            add_population(self, population)
-
-        if (subdivisions != None):
-            add_subdivisions(self, subdivisions)
+    def __str__(self):
+        if (self.admin_type != AdministrativeTypes.NONE):
+            return f"The {self.admin_type} of {self.name}"
+        return f"The {self.city_type} of {self.name}"

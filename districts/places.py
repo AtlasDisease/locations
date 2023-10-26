@@ -1,7 +1,7 @@
 # --- Imports --- #
 
 from enum import StrEnum, auto
-from .divisions import Division, DivisionTypes, add_population, add_subdivisions
+from .divisions import Division, DivisionTypes
 
 
 # --- PlaceTypes Enum --- #
@@ -22,4 +22,4 @@ class PlaceTypes(StrEnum):
 class Place(Division):
     def __init__(self, name: str, type_: PlaceTypes):
 
-        super().__init__(name, DivisionTypes.BUILDING, type_)
+        super().__init__(name, type_, population, subdivisions)

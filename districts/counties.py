@@ -1,7 +1,7 @@
 # --- Imports --- #
 
 from enum import StrEnum, auto
-from .divisions import Division, DivisionTypes, add_population, add_subdivisions
+from .divisions import Division, DivisionTypes
         
 
 # --- County Class --- #
@@ -9,10 +9,19 @@ from .divisions import Division, DivisionTypes, add_population, add_subdivisions
 class County(Division):
     def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
 
-        super().__init__(name, DivisionTypes.COUNTY)
+        super().__init__(name, DivisionTypes.COUNTY, population, subdivisions)
 
-        if (population != None):
-            add_population(self, population)
+    def __str__(self):
+        return f"{self.name} {self.__class__.__name__}"
 
-        if (subdivisions != None):
-            add_subdivisions(self, subdivisions)
+
+class Parish(County): #French version of a County
+    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+
+        super().__init__(name, population, subdivisions)
+
+
+class Shire(County): #English version of a County
+    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+
+        super().__init__(name, population, subdivisions)

@@ -1,12 +1,12 @@
 # --- Imports --- #
 
-from enum import StrEnum, auto
-from .divisions import Division, DivisionTypes, add_population, add_subdivisions
+from enum import IntEnum, auto
+from .divisions import Division
 
 
 # --- AreaTypes Enum --- #
 
-class AreaTypes(StrEnum):
+class AreaTypes(IntEnum):
     NEIGHBORHOOD = auto()
     COLLEGE = auto()
     UNIVERSITY = auto()
@@ -19,9 +19,9 @@ class AreaTypes(StrEnum):
 # --- Area Class --- #
 
 class Area(Division):
-    def __init__(self, name: str, type_: AreaTypes):
+    def __init__(self, name: str, type_: AreaTypes, /, population: int = None, subdivisions: list[Division] | Division = None):
 
-        super().__init__(name, DivisionTypes.BUILDING, type_)
+        super().__init__(name, type_, population, subdivisions)
 
 
 # --- Neighborhood Class --- #
@@ -29,4 +29,4 @@ class Area(Division):
 class Neighborhood(Area):
     def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
 
-        super().__init__(name, DivisionTypes.NEIGHBORHOOD)
+        super().__init__(name, AreaTypes.NEIGHBORHOOD, population, subdivisions)

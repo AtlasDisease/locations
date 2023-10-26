@@ -1,13 +1,12 @@
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from enum import IntEnum, auto
+from typing import Self
     
 
 # --- DivisionTypes Enum --- #
 
-class DivisionTypes(StrEnum):
-    BUILDING = auto()
-    NEIGHBORHOOD = auto()
+class DivisionTypes(IntEnum):
     CITY = auto()
     COUNTY = auto()
     STATE = auto()
@@ -24,10 +23,19 @@ class DivisionTypes(StrEnum):
 # --- Division Class --- #
 
 class Division:
-    def __init__(self, name: str, type_: DivisionTypes):
+    def __init__(self, name: str, type_: IntEnum,
+                 /,
+                 population: int = None,
+                 subdivisions: list[Self] | Self = None):
 
         self.name = name
         self.type_ = type_
+
+        if (population != None):
+            add_population(self, population)
+
+        if (subdivisions != None):
+            add_subdivisions(self, subdivisions)
 
     def __str__(self):
         return f"The {self.type_} of {self.name}"
