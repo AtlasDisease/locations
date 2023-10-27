@@ -1,3 +1,8 @@
+# By: Brendan Beard
+# Copyright: 2023
+# Description: A module to handle a division. These are very similar to Areas
+# but are for larger regions and have a clearly defined area.
+
 # --- Imports --- #
 
 from enum import IntEnum, auto
@@ -14,6 +19,7 @@ class DivisionTypes(IntEnum):
     CONTINENT = auto()
     PLANET = auto()
     SOLAR_SYSTEM = auto()
+    GALAXY = auto()
     UNIVERSE = auto()
 
     def __str__(self):
@@ -55,3 +61,6 @@ def add_subdivisions(cls, subdivisions: list[Division] | Division):
         return
 
     cls.subdivisions.append(subdivisions)
+
+#def add_government(cls, govt: Government):
+#    cls.government = govt

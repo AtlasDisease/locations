@@ -1,3 +1,7 @@
+# By: Brendan Beard
+# Copyright: 2023
+# Description: A module to handle a universe.
+
 # --- Imports --- #
 
 from enum import StrEnum, auto

@@ -1,3 +1,8 @@
+# By: Brendan Beard
+# Copyright: 2023
+# Description: A module to handle an area where humans have a population.
+# To create your own you can subclass the City or Division class.
+
 # --- Imports --- #
 
 from enum import IntEnum, auto

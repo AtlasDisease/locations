@@ -16,12 +16,8 @@ class County(Division):
 
 
 class Parish(County): #French version of a County
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
-
-        super().__init__(name, population, subdivisions)
+    pass
 
 
 class Shire(County): #English version of a County
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
-
-        super().__init__(name, population, subdivisions)
+    pass
