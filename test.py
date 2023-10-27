@@ -55,6 +55,19 @@ if __name__ == "__main__":
     universe = Universe("My Universe",
                         subdivisions = [galaxy])
 
+
+    leader = Leader("Daniel Miller", LeaderPolicy.DEMOCRACY)
+    economy = Economy(EconomicPolicy.CAPITALIST)
+
+    bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
+                """
+1. Freedom of Religion, Press, Protest, etc
+2. Right to Own Guns
+""")
+    law = Law(LawPolicy.EYE_FOR_AN_EYE, bills = [bill])
+
+    government = Government(leader, economy, law)
+
     print(str(fort))
     print(str(neighborhood))
     print(str(city), city.population,
@@ -75,20 +88,4 @@ if __name__ == "__main__":
 
     print()
 
-    leader = Leader("Daniel Miller", LeaderPolicy.DEMOCRACY)
-    economy = Economy(EconomicPolicy.CAPITALIST)
-
-    bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
-                """
-1. Freedom of Religion, Press, Protest, etc
-2. Right to Own Guns
-""")
-    law = Law(LawPolicy.EYE_FOR_AN_EYE, bills = [bill])
-
-    government = Government(leader, economy, law)
-
-    print(leader)
-    print(economy)
-    print(bill)
-    print(law)
     print(government)
