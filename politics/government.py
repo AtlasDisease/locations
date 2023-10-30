@@ -6,7 +6,7 @@
 
 # --- Imports --- #
 
-from .leaders import Leader
+from .leaders import Leader, Administrator
 from .economics import Economy
 from .law import Law
 
@@ -22,3 +22,12 @@ class Government:
 
     def __str__(self):
         return f"{self.leader}\r\n{self.economy}\r\n{self.law}"
+
+
+# --- Extending Functionality Definitions --- #
+
+def add_government(cls, govt: Government):
+    cls.government = govt
+
+def add_administrator(cls, admin: Administrator):
+    cls.administrator = admin

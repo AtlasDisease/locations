@@ -18,8 +18,13 @@ from districts.galaxies import Galaxy
 from districts.universes import Universe
 from districts.details import Population
 
+# Politics is a complex thing as it is tied into districts very
+# closely but a separate idea so doing something like districts.politics
+# makes it seem like they rely on each other which does not make sense
+# to me especially since the politics package could be used on its own
+# without the districts being used. Could make a protocol maybe?
 from politics.government import Government
-from politics.leaders import Leader, LeaderPolicy
+from politics.leaders import Leader, LeaderPolicy, Administrator
 from politics.economics import Economy, EconomicPolicy
 from politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
 
@@ -28,6 +33,19 @@ from politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
 
 if __name__ == "__main__":
 
+    administrator = Administrator("Greg Abbott")
+    leader = Leader("Daniel Miller", LeaderPolicy.DEMOCRACY)
+    economy = Economy(EconomicPolicy.CAPITALIST)
+
+    bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
+                """
+1. Freedom of Religion, Press, Protest, etc
+2. Right to Own Guns
+""")
+    law = Law(LawPolicy.EYE_FOR_AN_EYE, bills = [bill])
+
+    government = Government(leader, economy, law)
+    
     fort = Place("Concho", PlaceTypes.FORT)
     neighborhood = Neighborhood("Rock Prairie")
     city = City("College Station",
@@ -41,8 +59,12 @@ if __name__ == "__main__":
     parish = Parish("Acadia")
     state = State("Louisiana", subdivisions = [parish])
     country = Country("Texas",
-                    population = Population(27_000_000),
-                    subdivisions = [county])
+                      population = Population(27_000_000),
+                      subdivisions = [county],
+                      government = government)
+
+    country2 = Country("United States of America", subdivisions = [state])
+
     continent = Continent("North America",
                     subdivisions = [country])
     planet = Planet("Earth",
@@ -54,20 +76,7 @@ if __name__ == "__main__":
                     subdivisions = [solarsystem])
     universe = Universe("My Universe",
                         subdivisions = [galaxy])
-
-
-    leader = Leader("Daniel Miller", LeaderPolicy.DEMOCRACY)
-    economy = Economy(EconomicPolicy.CAPITALIST)
-
-    bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
-                """
-1. Freedom of Religion, Press, Protest, etc
-2. Right to Own Guns
-""")
-    law = Law(LawPolicy.EYE_FOR_AN_EYE, bills = [bill])
-
-    government = Government(leader, economy, law)
-
+    
     print(str(fort))
     print(str(neighborhood))
     print(str(city), city.population,
@@ -85,6 +94,7 @@ if __name__ == "__main__":
     print()
     print(parish)
     print(state, [str(subdivision) for subdivision in state.subdivisions])
+    print(country2, [str(subdivision) for subdivision in country2.subdivisions])
 
     print()
 

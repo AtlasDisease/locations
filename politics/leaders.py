@@ -18,14 +18,27 @@ class LeaderPolicy(StrEnum):
     AUTHORITARIAN = auto()
 
 
-# --- Leader Class --- #
+# --- Administrator Class --- #
 
-class Leader:
-    def __init__(self, name: str, policy: LeaderPolicy, title: str = "President"):
+class Administrator:
+    """A person in charge of a division without the need for a LeaderPolicy.
+This is a simplified version of the Leader class.
+A good use of this class would be a Chief of Police who has very little policy control
+but has an administrative function."""
+    
+    def __init__(self, name: str, title: str = ""):
 
         self.name = name
         self.title = title
-        self.policy = policy
 
     def __str__(self):
-        return f"{self.title} {self.name}"
+        return f"{self.title} {self.name}".strip()
+
+
+# --- Leader Class --- #
+
+class Leader(Administrator):
+    def __init__(self, name: str, policy: LeaderPolicy, title: str = "President"):
+
+        super().__init__(name, title)
+        self.policy = policy

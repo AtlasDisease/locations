@@ -17,7 +17,7 @@ class PlaceTypes(StrEnum):
     BUILDING = auto() #General use
     CITY_HALL = auto()
     COURTHOUSE = auto()
-    FORT = auto()
+    FORT = auto() #This should probably be in the AreaTypes
     AIRPORT = auto()
 
     def __str__(self):

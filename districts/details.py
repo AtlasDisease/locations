@@ -1,7 +1,7 @@
 # By: Brendan Beard
 # Copyright: 2023
-# Description: This module contains classes for extending functionality
-# of a class.
+# Description: This module contains classes that help extend functionality
+# of a class in the districts package.
 
 # --- Population Class --- #
 

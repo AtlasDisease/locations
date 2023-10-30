@@ -32,7 +32,8 @@ class Division:
     def __init__(self, name: str, type_: IntEnum,
                  /,
                  population: int = None,
-                 subdivisions: list[Self] | Self = None):
+                 subdivisions: list[Self] | Self = None,
+                 **kwargs):
 
         self.name = name
         self.type_ = type_
@@ -42,6 +43,13 @@ class Division:
 
         if (subdivisions != None):
             add_subdivisions(self, subdivisions)
+
+        #I do not like this as it ties districts and politics together
+        if "administrator" in kwargs and "government" in kwargs:
+            if kwargs["administrator"] != None and kwargs["government"] != None:
+                raise Exception("You cannot have both government and administrator populated")
+
+        self.__dict__ |= kwargs
 
     def __str__(self):
         return f"The {self.type_} of {self.name}"
@@ -61,6 +69,3 @@ def add_subdivisions(cls, subdivisions: list[Division] | Division):
         return
 
     cls.subdivisions.append(subdivisions)
-
-#def add_government(cls, govt: Government):
-#    cls.government = govt

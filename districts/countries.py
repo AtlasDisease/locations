@@ -11,6 +11,6 @@ from .divisions import Division, DivisionTypes
 # --- Country Class --- #
 
 class Country(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None, **kwargs):
 
-        super().__init__(name, DivisionTypes.COUNTRY, population, subdivisions)
+        super().__init__(name, DivisionTypes.COUNTRY, population, subdivisions, **kwargs)
