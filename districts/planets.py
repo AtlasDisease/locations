@@ -11,6 +11,9 @@ from .divisions import Division, DivisionTypes
 # --- Planet Class --- #
 
 class Planet(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, /,
+                 population: int = None,
+                 subdivisions: list[Division] | Division = None,
+                 **kwargs):
 
-        super().__init__(name, DivisionTypes.PLANET, population, subdivisions)
+        super().__init__(name, DivisionTypes.PLANET, population, subdivisions, **kwargs)

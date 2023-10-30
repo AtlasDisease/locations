@@ -27,9 +27,12 @@ class PlaceTypes(StrEnum):
 # --- Place Class --- #
 
 class Place(Division):
-    def __init__(self, name: str, type_: PlaceTypes, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, type_: PlaceTypes, /,
+                 population: int = None,
+                 subdivisions: list[Division] | Division = None,
+                 **kwargs):
 
-        super().__init__(name, type_, population, subdivisions)
+        super().__init__(name, type_, population, subdivisions, **kwargs)
 
     def __str__(self):
         if self.type_ == PlaceTypes.FORT:

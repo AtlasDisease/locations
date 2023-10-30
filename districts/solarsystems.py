@@ -11,6 +11,9 @@ from .divisions import Division, DivisionTypes
 # --- SolarSystem Class --- #
 
 class SolarSystem(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, /,
+                 population: int = None,
+                 subdivisions: list[Division] | Division = None,
+                 **kwargs):
 
-        super().__init__(name, DivisionTypes.SOLAR_SYSTEM, population, subdivisions)
+        super().__init__(name, DivisionTypes.SOLAR_SYSTEM, population, subdivisions, **kwargs)

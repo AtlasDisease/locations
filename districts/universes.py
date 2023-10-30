@@ -11,6 +11,9 @@ from .divisions import Division, DivisionTypes
 # --- Universe Class --- #
 
 class Universe(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, /,
+                 population: int = None,
+                 subdivisions: list[Division] | Division = None,
+                 **kwargs):
 
-        super().__init__(name, DivisionTypes.UNIVERSE, population, subdivisions)
+        super().__init__(name, DivisionTypes.UNIVERSE, population, subdivisions, **kwargs)

@@ -16,6 +16,9 @@ from .divisions import Division, DivisionTypes
 # --- State Class --- #
 
 class State(Division):
-    def __init__(self, name: str, /, population: int = None, subdivisions: list[Division] | Division = None):
+    def __init__(self, name: str, /,
+                 population: int = None,
+                 subdivisions: list[Division] | Division = None,
+                 **kwargs):
 
-        super().__init__(name, DivisionTypes.STATE, population, subdivisions)
+        super().__init__(name, DivisionTypes.STATE, population, subdivisions, **kwargs)
