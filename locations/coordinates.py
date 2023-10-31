@@ -1,5 +1,12 @@
+
+# --- Imports --- #
+
 from dataclasses import dataclass
 
+
+__all__ = ("Coordinates",)
+
+# --- Coordinates Class --- #
 
 @dataclass
 class Coordinates:
@@ -7,4 +14,4 @@ class Coordinates:
 	latitude: float
 
 	def __str__(self):
-		return f"{self.longitude}, {self.latitude}"
+                return f"{self.longitude}, {self.latitude}"

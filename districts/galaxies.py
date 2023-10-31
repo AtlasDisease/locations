@@ -7,13 +7,15 @@
 from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
 
+__all__ = ("Galaxy",)
+
 
 # --- Galaxy Class --- #
 
 class Galaxy(Division):
     def __init__(self, name: str, /,
-                 population: int = None,
                  subdivisions: list[Division] | Division = None,
+                 population: int = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.GALAXY, population, subdivisions, **kwargs)
+        super().__init__(name, DivisionTypes.GALAXY, subdivisions, population, **kwargs)

@@ -6,6 +6,9 @@
 # --- Imports --- #
 
 from enum import StrEnum, auto
+from dataclasses import dataclass, field
+
+__all__ = ("EconomicPolicy", "Economy")
 
 
 # --- EconomicPolicy Enum --- #
@@ -19,10 +22,10 @@ class EconomicPolicy(StrEnum):
 
 # --- Economy Class --- #
 
+@dataclass(slots = True)
 class Economy:
-    def __init__(self, policy: EconomicPolicy):
-
-        self.policy = policy
+    
+    policy: EconomicPolicy
 
     def __str__(self):
         return self.policy.value.title()

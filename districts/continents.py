@@ -7,13 +7,15 @@
 from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
 
+__all__ = ("Continent",)
+
 
 # --- Continent Class --- #
 
 class Continent(Division):
     def __init__(self, name: str, /,
+                subdivisions: list[Division] | Division = None,
                  population: int = None,
-                 subdivisions: list[Division] | Division = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.CONTINENT, population, subdivisions, **kwargs)
+        super().__init__(name, DivisionTypes.CONTINENT, subdivisions, population, **kwargs)

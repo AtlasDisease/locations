@@ -12,13 +12,15 @@
 from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
 
+__all__ = ("State",)
+
 
 # --- State Class --- #
 
 class State(Division):
     def __init__(self, name: str, /,
-                 population: int = None,
                  subdivisions: list[Division] | Division = None,
+                 population: int = None,    
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.STATE, population, subdivisions, **kwargs)
+        super().__init__(name, DivisionTypes.STATE, subdivisions, population, **kwargs)

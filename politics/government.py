@@ -10,6 +10,8 @@ from .leaders import Leader, Administrator
 from .economics import Economy
 from .law import Law
 
+__all__ = ("Government", "add_government", "add_administrator",)
+
 
 # --- Government Class --- #
 

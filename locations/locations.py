@@ -6,8 +6,14 @@
 ## Location().divisions[0] = smallest area (most detailed)
 ## Location().divisions[-1] = largest known area (least detailed)
 
+# --- Imports --- #
+
 from dataclasses import dataclass, field
 
+__all__ = ("Location",)
+
+
+# --- Location Class --- #
 
 @dataclass
 class Location:

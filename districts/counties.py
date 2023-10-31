@@ -2,19 +2,21 @@
 
 from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
+
+__all__ = ("County", "Parish", "Shire")
         
 
 # --- County Class --- #
 
 class County(Division):
     def __init__(self, name: str, /,
-                 population: int = None,
                  subdivisions: list[Division] | Division = None,
+                 population: int = None,   
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.COUNTY, population, subdivisions, **kwargs)
+        super().__init__(name, DivisionTypes.COUNTY, subdivisions, population, **kwargs)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} {self.__class__.__name__}"
 
 

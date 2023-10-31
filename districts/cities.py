@@ -8,6 +8,8 @@
 from enum import IntEnum, auto
 from .divisions import Division, DivisionTypes
 
+__all__ = ("CityTypes", "AdministrativeTypes", "City")
+
 
 # --- CityTypes Enum --- #
 
@@ -17,7 +19,7 @@ class CityTypes(IntEnum):
     COMMUNITY = auto()
     CITY = auto()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name.title()
 
 
@@ -28,8 +30,8 @@ class AdministrativeTypes(IntEnum):
     SEAT = auto()
     CAPITAL = auto()
 
-    def __str__(self):
-        if (self == AdministrativeTypes.SEAT):
+    def __str__(self) -> str:
+        if self == AdministrativeTypes.SEAT:
             return f"County {self.name.title()}"
         return self.name.title()
 
@@ -38,15 +40,15 @@ class AdministrativeTypes(IntEnum):
 
 class City(Division):
     def __init__(self, name: str, citytype: CityTypes, admintype: AdministrativeTypes, /,
-                 population: int = None,
                  subdivisions: list[Division] | Division = None,
+                 population: int = None,   
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.CITY, population, subdivisions, **kwargs)
+        super().__init__(name, DivisionTypes.CITY, subdivisions, population, **kwargs)
         self.city_type = citytype
         self.admin_type = admintype
 
-    def __str__(self):
-        if (self.admin_type != AdministrativeTypes.NONE):
+    def __str__(self) -> str:
+        if self.admin_type != AdministrativeTypes.NONE:
             return f"The {self.admin_type} of {self.name}"
         return f"The {self.city_type} of {self.name}"

@@ -6,14 +6,14 @@
 
 from districts.divisions import Division, DivisionTypes
 from districts.places import Place, PlaceTypes
-from districts.areas import Neighborhood
+from districts.areas import AreaTypes, Neighborhood
 from districts.cities import City, CityTypes, AdministrativeTypes
 from districts.counties import County, Parish
 from districts.states import State
 from districts.countries import Country
 from districts.continents import Continent
 from districts.planets import Planet
-from districts.solarsystems import SolarSystem
+from districts.planetarysystems import PlanetarySystem
 from districts.galaxies import Galaxy
 from districts.universes import Universe
 from districts.details import Population
@@ -27,6 +27,12 @@ from politics.government import Government
 from politics.leaders import Leader, LeaderPolicy, Administrator
 from politics.economics import Economy, EconomicPolicy
 from politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
+
+
+# --- Functions --- #
+
+def stringify(division: Division):
+    return f"{[str(subdivision) for subdivision in division.subdivisions]}"
 
 
 # --- Main Logic --- #
@@ -48,11 +54,12 @@ if __name__ == "__main__":
     
     fort = Place("Concho", PlaceTypes.FORT)
     neighborhood = Neighborhood("Rock Prairie")
+    university = Division("Texas A&M", AreaTypes.UNIVERSITY)
     city = City("College Station",
                 CityTypes.CITY,
                 AdministrativeTypes.NONE,
                 population = Population(115_000),
-                subdivisions = [neighborhood])
+                subdivisions = [neighborhood, university])
     county = County("Brazos",
                     population = Population(233_849),
                     subdivisions = [city])
@@ -70,7 +77,7 @@ if __name__ == "__main__":
     planet = Planet("Earth",
                     population = Population(8_000_000_000),
                     subdivisions = [continent])
-    solarsystem = SolarSystem("My Solar System",
+    solarsystem = PlanetarySystem("Solar",
                               subdivisions = [planet])
     galaxy = Galaxy("Milky Way",
                     subdivisions = [solarsystem])
@@ -79,23 +86,19 @@ if __name__ == "__main__":
     
     print(str(fort))
     print(str(neighborhood))
-    print(str(city), city.population,
-          [str(subdivision) for subdivision in city.subdivisions])
-    print(str(county), county.population,
-          [str(subdivision) for subdivision in county.subdivisions])
-    print(str(country), country.population,
-          [str(subdivision) for subdivision in country.subdivisions])
-    print(str(continent), [str(subdivision) for subdivision in continent.subdivisions])
-    print(str(planet), planet.population,
-          [str(subdivision) for subdivision in planet.subdivisions])
-    print(str(solarsystem), [str(subdivision) for subdivision in solarsystem.subdivisions])
-    print(str(galaxy), [str(subdivision) for subdivision in galaxy.subdivisions])
-    print(str(universe), [str(subdivision) for subdivision in universe.subdivisions])
+    print(str(university))
+    print(str(city), city.population, stringify(city))
+    print(str(county), county.population, stringify(county))
+    print(str(country), country.population, stringify(country))
+    print(str(continent), stringify(continent))
+    print(str(planet), planet.population, stringify(planet))
+    print(str(solarsystem), stringify(solarsystem))
+    print(str(galaxy), stringify(galaxy))
+    print(str(universe), stringify(universe))
     print()
     print(parish)
-    print(state, [str(subdivision) for subdivision in state.subdivisions])
-    print(country2, [str(subdivision) for subdivision in country2.subdivisions])
-
+    print(state, stringify(state))
+    print(country2, stringify(country2))
     print()
-
     print(government)
+    
