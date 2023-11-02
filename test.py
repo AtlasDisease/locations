@@ -16,7 +16,7 @@ from districts.planets import Planet
 from districts.planetarysystems import PlanetarySystem
 from districts.galaxies import Galaxy
 from districts.universes import Universe
-from districts.details import Population
+from districts.extensions import Population
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -31,8 +31,22 @@ from politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
 
 # --- Functions --- #
 
-def stringify(division: Division):
+def stringify(division: Division) -> str:
     return f"{[str(subdivision) for subdivision in division.subdivisions]}"
+
+def print_all(start: Division) -> None:
+
+    print(start)
+    _print_all(start)
+
+def _print_all(start: Division) -> None:
+
+    for subdivision in start.subdivisions:
+        print(subdivision)
+        if not hasattr(subdivision, "subdivisions"):
+            continue
+
+        _print_all(subdivision)
 
 
 # --- Main Logic --- #
@@ -53,16 +67,25 @@ if __name__ == "__main__":
     government = Government(leader, economy, law)
     
     fort = Place("Concho", PlaceTypes.FORT)
-    neighborhood = Neighborhood("Rock Prairie")
     university = Division("Texas A&M", AreaTypes.UNIVERSITY)
+    neighborhood = Neighborhood("Rock Prairie",
+                                subdivisions = [fort])
     city = City("College Station",
                 CityTypes.CITY,
                 AdministrativeTypes.NONE,
                 population = Population(115_000),
                 subdivisions = [neighborhood, university])
+    city2 = City("Bryan",
+                CityTypes.CITY,
+                AdministrativeTypes.SEAT,
+                population = Population(200_000))
+    city3 = City("Boonville",
+                 CityTypes.SITE,
+                 AdministrativeTypes.NONE,
+                 population = Population(0))
     county = County("Brazos",
                     population = Population(233_849),
-                    subdivisions = [city])
+                    subdivisions = [city, city2, city3])
     parish = Parish("Acadia")
     state = State("Louisiana", subdivisions = [parish])
     country = Country("Texas",
@@ -73,32 +96,36 @@ if __name__ == "__main__":
     country2 = Country("United States of America", subdivisions = [state])
 
     continent = Continent("North America",
-                    subdivisions = [country])
+                    subdivisions = [country, country2])
     planet = Planet("Earth",
                     population = Population(8_000_000_000),
                     subdivisions = [continent])
-    solarsystem = PlanetarySystem("Solar",
+    solarsystem = PlanetarySystem("Solis",
                               subdivisions = [planet])
     galaxy = Galaxy("Milky Way",
                     subdivisions = [solarsystem])
     universe = Universe("My Universe",
+                        population = float('inf'),
                         subdivisions = [galaxy])
-    
-    print(str(fort))
-    print(str(neighborhood))
-    print(str(university))
-    print(str(city), city.population, stringify(city))
-    print(str(county), county.population, stringify(county))
-    print(str(country), country.population, stringify(country))
-    print(str(continent), stringify(continent))
-    print(str(planet), planet.population, stringify(planet))
-    print(str(solarsystem), stringify(solarsystem))
-    print(str(galaxy), stringify(galaxy))
-    print(str(universe), stringify(universe))
-    print()
-    print(parish)
-    print(state, stringify(state))
-    print(country2, stringify(country2))
+
+    print_all(universe)
     print()
     print(government)
+    print()
+
+    print(county.seat()) #Implying there is a cost to this
+    print(list(county)) # Test for __iter__
+
+    city3 = county.get(func = Population.largest)
+    if not city3:
+        print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
+
+    city3 = county.get(func = Population.smallest)
+    if not city3:
+        print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
+
+##    #This will cause an error as expected
+##    universe1 = universe.get(func = Population.smallest)
+##    if not universe1:
+##        print(universe1, universe1.population)
     

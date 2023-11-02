@@ -1,6 +1,9 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a planetary system.
+# Description: A module to handle a planetary system. This was originally
+# called solarsystems but I learned that the correct term is planetary
+# system as solar refers to Our Sun (Sol, Solis) and is the incorrect term
+# for groups of other planets that revolve around other stars.
 
 # --- Imports --- #
 

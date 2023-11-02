@@ -1,13 +1,13 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
 # Description: A module to handle a division.
 
 # --- Imports --- #
 
 from enum import IntEnum, auto
-from typing import Self
+from typing import Self, Callable
 
-__all__ = ("DivisionTypes", "Division", "add_population", "add_subdivisions")
+__all__ = ("DivisionTypes", "Division")
 
 
 # --- DivisionTypes Enum --- #
@@ -30,7 +30,7 @@ class DivisionTypes(IntEnum):
 
 # --- Division Class --- #
 
-class Division:
+class Division:     
     def __init__(self, name: str, type_: IntEnum,
                  /,
                  subdivisions: list[Self] | Self = None,
@@ -39,12 +39,14 @@ class Division:
 
         self.name = name
         self.type_ = type_
+        self.subdivisions = []
 
         if (population != None):
-            add_population(self, population)
+            self.population = population
 
-        if (subdivisions != None):
-            add_subdivisions(self, subdivisions)
+        if subdivisions != None:
+            if not self.subdivisions:
+                add_subdivisions(self, subdivisions)
 
         #I do not like this as it ties districts and politics together
         if "administrator" in kwargs and "government" in kwargs:
@@ -68,20 +70,24 @@ class Division:
             return f"{self.name} {self.type_}"
         return f"{self.name} {self.__class__.__name__}"
 
+    def __bool__(self) -> bool:
+        return self.name == "New" and self.type_ == DivisionTypes.AREA \
+               and len(self.subdivisions) <= 0
+
+    def __iter__(self):
+        return iter(self.subdivisions)
+        
+    def get(self, func: Callable) -> Self:
+        """Gets a subdivision based of a certain function.
+Ex. get largest or smallest subdivision by Population"""
+        return func(self)
 
 
 # --- Extending Functionality Definitions --- #
 
-def add_population(cls, population: int) -> None:
-    cls.population = population
-
 def add_subdivisions(cls, subdivisions: list[Division] | Division) -> None:
-    if not hasattr(cls, "subdivisions"):
-        cls.subdivisions = []
-        
     if isinstance(subdivisions, list):
         cls.subdivisions.extend(subdivisions)
         return
-
+    
     cls.subdivisions.append(subdivisions)
-

@@ -1,4 +1,4 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
 # Description: A module to handle a state.
 

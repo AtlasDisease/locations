@@ -1,7 +1,12 @@
+# Created By: Brendan (@atlasdisease)
+# Copyright: 2023
+# Description: A module to handle a County, Parish, and Shire.
+
 # --- Imports --- #
 
 from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
+from .cities import AdministrativeTypes
 
 __all__ = ("County", "Parish", "Shire")
         
@@ -14,10 +19,17 @@ class County(Division):
                  population: int = None,   
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.COUNTY, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.COUNTY, subdivisions, population, **kwargs)   
 
     def __str__(self) -> str:
         return f"{self.name} {self.__class__.__name__}"
+
+    def seat(self) -> Division:
+        """Gets the county seat; this is a function (instead of a property)
+to imply there is a cost to this function"""
+
+        return next(filter(lambda x: x.admin_type == AdministrativeTypes.SEAT,
+                           self.subdivisions), None)
 
 
 class Parish(County): #French version of a County

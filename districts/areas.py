@@ -1,4 +1,4 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
 # Description: A module to handle a group of buildings that are
 # collectively named and used for a similar purpose. To create
@@ -52,7 +52,7 @@ class Neighborhood(Division):
                  population: int = None, 
                  **kwargs):
 
-        super().__init__(name, AreaTypes.NEIGHBORHOOD, population, subdivisions, **kwargs)
+        super().__init__(name, AreaTypes.NEIGHBORHOOD, subdivisions, population, **kwargs)
 
 
 # --- College Class --- #
@@ -63,7 +63,7 @@ class College(Division):
                  population: int = None,   
                  **kwargs):
 
-        super().__init__(name, AreaTypes.COLLEGE, population, subdivisions, **kwargs)
+        super().__init__(name, AreaTypes.COLLEGE, subdivisions, population, **kwargs)
 
 
 # --- University Class --- #
@@ -74,7 +74,7 @@ class University(Division):
                  population: int = None,  
                  **kwargs):
 
-        super().__init__(name, AreaTypes.UNIVERSITY, population, subdivisions, **kwargs)
+        super().__init__(name, AreaTypes.UNIVERSITY, subdivisions, population, **kwargs)
 
 
 # --- Fort Class --- #
@@ -85,4 +85,4 @@ class Port(Division):
                  population: int = None,     
                  **kwargs):
 
-        super().__init__(name, AreaTypes.PORT, population, subdivisions, **kwargs)
+        super().__init__(name, AreaTypes.PORT, subdivisions, population, **kwargs)

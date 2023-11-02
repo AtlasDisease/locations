@@ -1,4 +1,4 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
 # Description: A module to handle a building. In my code this is
 # called a place. To create your own class, you can subclass Place.

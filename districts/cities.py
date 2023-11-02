@@ -1,4 +1,4 @@
-# By: Brendan Beard
+# Created By: Brendan (@atlasdisease)
 # Copyright: 2023
 # Description: A module to handle an area where humans have a population.
 # To create your own you can subclass the City or Division class.
@@ -14,9 +14,11 @@ __all__ = ("CityTypes", "AdministrativeTypes", "City")
 # --- CityTypes Enum --- #
 
 class CityTypes(IntEnum):
+    UNKNOWN = auto() #General use
     LOST = auto() #This is incredibly rare
     SITE = auto()
     COMMUNITY = auto()
+    TOWN = auto() #No real definition, user decision, incorporated
     CITY = auto()
 
     def __str__(self) -> str:
@@ -52,3 +54,15 @@ class City(Division):
         if self.admin_type != AdministrativeTypes.NONE:
             return f"The {self.admin_type} of {self.name}"
         return f"The {self.city_type} of {self.name}"
+
+    @property
+    def incorporated(self) -> bool:
+        return self.city_type >= CityTypes.TOWN
+
+    @property
+    def abandoned(self)-> bool:
+        return self.city_type < CityTypes.COMMUNITY and self.city_type != CityTypes.UNKNOWN
+
+    @property
+    def historical(self) -> bool:
+        return self.city_type == CityTypes.SITE
