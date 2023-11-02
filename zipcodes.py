@@ -5,14 +5,20 @@
 ## This is being improved upon as other countries have different
 ## styles of doing this.
 
+# --- Imports --- #
+
+import re
 from dataclasses import dataclass
 from enum import Enum
-import re
 
+
+# --- ZipCodeTypes Enum --- #
 
 class ZipCodeTypes(Enum):
 	AMERICA = "^(\d{5})(-?)((\d{5})?)"
 
+
+# --- ZipCode Class --- #
 
 @dataclass
 class ZipCode:

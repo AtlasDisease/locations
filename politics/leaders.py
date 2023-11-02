@@ -16,23 +16,34 @@ class LeaderPolicy(StrEnum):
     NONE = auto()
     ANARCHY = auto()
     DEMOCRACY = auto()
+    REPUBLIC = auto()
     OLIGARCHY = auto()
     MONARCHY = auto()
     AUTHORITARIAN = auto()
 
+    def __str__(self) -> str:
+        return self.name.title()
+
 
 # --- Administrator Class --- #
 
-@dataclass(slots = True)
 class Administrator:
     """A person in charge of a division without the need for a LeaderPolicy.
 This is a simplified version of the Leader class.
 A good use of this class would be a Chief of Police who has very little policy control
 but has an administrative function."""
 
-    name: str
-    title: str = ""
+    __slots__ = ("name", "title")
     
+    def __init__(self, name: str = "", title: str = "", /, leader = None):
+
+        self.name = name
+        self.title = title
+
+        if (leader != None):
+            self.name = leader.name
+            self.title = leader.title
+
     def __str__(self):
         return f"{self.title} {self.name}".strip()
 
@@ -46,3 +57,6 @@ class Leader(Administrator):
     policy: LeaderPolicy
     _: KW_ONLY
     title: str = "President"
+
+    def as_Administrator(self) -> Administrator:
+        return Administrator(self.name, self.title)

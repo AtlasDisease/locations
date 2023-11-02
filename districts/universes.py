@@ -4,7 +4,6 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
 
 __all__ = ("Universe",)

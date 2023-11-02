@@ -2,14 +2,21 @@
 ## Description: This module holds the Languages dictionary, Language enum, and getNameInLanguage() funcion.
 ## This is still being improved with different languages.
 
+# --- Imports --- #
+
 from enum import IntEnum, auto
 from districts.divisions import Division
+
+
+# --- Variables --- #
 
 _LATIN_NAMES = {"Earth": "Terra"}
 _NORSK_NAMES = {"Earth": "Jord"}
 
 LANGUAGES = {"Norwegian": _NORSK_NAMES, "Latin": _LATIN_NAMES}
 
+
+# --- Loanguage Enum --- #
 
 class Language(IntEnum):
     ENGLISH = auto()

@@ -4,7 +4,6 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
 from .divisions import Division, DivisionTypes
 
 __all__ = ("Continent",)
@@ -14,7 +13,7 @@ __all__ = ("Continent",)
 
 class Continent(Division):
     def __init__(self, name: str, /,
-                subdivisions: list[Division] | Division = None,
+                 subdivisions: list[Division] | Division = None,
                  population: int = None,
                  **kwargs):
 

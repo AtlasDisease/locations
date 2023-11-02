@@ -7,7 +7,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from enum import IntEnum, auto
 from .divisions import Division, DivisionTypes
 
 __all__ = ("PlaceTypes", "Place")
@@ -15,7 +15,7 @@ __all__ = ("PlaceTypes", "Place")
 
 # --- PlaceTypes Enum --- #
 
-class PlaceTypes(StrEnum):
+class PlaceTypes(IntEnum):
     BUILDING = auto() #General use
     CITY_HALL = auto()
     COURTHOUSE = auto()

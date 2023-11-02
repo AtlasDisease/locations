@@ -30,16 +30,20 @@ class DivisionTypes(IntEnum):
 
 # --- Division Class --- #
 
-class Division:     
+class Division:
     def __init__(self, name: str, type_: IntEnum,
                  /,
                  subdivisions: list[Self] | Self = None,
-                 population: int = None,       
+                 population: int = None,
+                 #prefix: str = "",
                  **kwargs):
 
         self.name = name
         self.type_ = type_
         self.subdivisions = []
+
+##        if prefix != "":
+##            self.prefix = prefix
 
         if (population != None):
             self.population = population
