@@ -21,4 +21,4 @@ class Location:
 	divisions: list = field(default_factory=list)
 
 	def __str__(self):
-		return ", ".join((f"{division}" for division in self.divisions))
+		return ", ".join((f"{division}".strip() for division in self.divisions))

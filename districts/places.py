@@ -17,6 +17,7 @@ __all__ = ("PlaceTypes", "Place")
 
 class PlaceTypes(IntEnum):
     BUILDING = auto() #General use
+    STADIUM = auto()
     CITY_HALL = auto()
     COURTHOUSE = auto()
     FORT = auto()

@@ -10,7 +10,8 @@
 from enum import IntEnum, auto
 from .divisions import Division
 
-__all__ = ("AreaTypes", "Neighborhood", "College", "University", "Fort")
+__all__ = ("AreaTypes", "Neighborhood", "College", "University",
+           "Fort", "Port", "Airport")
 
 
 # --- AreaTypes Enum --- #
@@ -79,6 +80,17 @@ class University(Division):
 
 # --- Fort Class --- #
 
+class Fort(Division):
+    def __init__(self, name: str, /,
+                 subdivisions: list[Division] | Division = None,
+                 population: int = None,     
+                 **kwargs):
+
+        super().__init__(name, AreaTypes.FORT, subdivisions, population, **kwargs)    
+
+
+# --- Port Class --- #
+
 class Port(Division):
     def __init__(self, name: str, /,
                  subdivisions: list[Division] | Division = None,
@@ -86,3 +98,14 @@ class Port(Division):
                  **kwargs):
 
         super().__init__(name, AreaTypes.PORT, subdivisions, population, **kwargs)
+
+
+# --- Airport Class --- #
+
+class Airport(Division):
+     def __init__(self, name: str, /,
+                 subdivisions: list[Division] | Division = None,
+                 population: int = None,     
+                 **kwargs):
+
+        super().__init__(name, AreaTypes.AIRPORT, subdivisions, population, **kwargs)

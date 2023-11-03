@@ -1,8 +1,8 @@
 # --- Imports --- #
 
 from dataclasses import dataclass
-from districts import cities, counties, countries
-import zipcodes  #re
+from ..districts import cities, counties, countries
+from ..zipcodes import ZipCode  #re
 
 __all__ = ("Address",)
 
@@ -15,7 +15,7 @@ class Address:
 	city: cities.City
 	county: counties.County
 	country: countries.Country
-	zipcode: zipcodes.ZipCode
+	zipcode: ZipCode
 
 	def __str__(self) -> str:
 		return f"{self.street} {self.city}, {self.county}, {self.country} {self.zipcode}"

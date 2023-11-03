@@ -14,6 +14,7 @@ __all__ = ("LawPolicy", "Law")
 
 class LawPolicy(StrEnum):
     NONE = auto()
+    REHABILITATION = auto()
     FAIR_AND_JUST = auto()
     EYE_FOR_AN_EYE = auto()
     LAW_AND_ORDER = auto()
