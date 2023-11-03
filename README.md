@@ -269,9 +269,54 @@ These classes can receive extended functionality by specifying the population ke
 - FORT
 - PORT
 - AIRPORT
+- HOUSE_OF_WORSHIP
+- CEMETERY
+- BANK
+- EMERGENCY_SERVICE
+- HOSPITAL
+- POST_OFFICE
 
 *class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
+
+*class* places.**Building**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a building.
+
+*class* places.**Stadium**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a stadium.
+
+*class* places.**City_Hall**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a city hall.
+
+*class* places.**Courthouse**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a courthouse.
+
+*class* places.**Fort**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a fort.
+
+*class* places.**Port**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a port.
+
+*class* places.**Airport**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents an airport.
+
+*class* places.**House_Of_Worship**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a house of worship.
+
+*class* places.**Cemetery**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a cemetery.
+	
+*class* places.**Bank**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a bank.
+
+*class* places.**Emergency_Service**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents an emergency service.
+
+*class* places.**Hospital**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a hospital.
+
+*class* places.**Post_Office**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a post office.
 
 ### planetarysystems.py
 
