@@ -5,6 +5,7 @@
 
 # --- Imports --- #
 
+from typing import Callable
 from ..divisions import Division, DivisionTypes
 
 __all__ = ("Population", "add_population")
@@ -13,14 +14,15 @@ __all__ = ("Population", "add_population")
 # --- Population Class --- #
 
 class Population(int):
-    """Basically an integer but with formatting when converted to string"""
+    """Basically an integer but with formatting when converted to string
+and some additional functions to help with comparisons"""
     
     def __init__(self, population: int = 0):
 
         super().__init__()
 
     def __str__(self) -> str:
-        return f"{self: ,}"
+        return f"{self: ,}"   
 
     @staticmethod
     def __errorcheck(func):
@@ -38,30 +40,34 @@ class Population(int):
         return inner1
 
     @staticmethod
-    @__errorcheck
-    def largest(division: Division) -> Division:
+    def __get(division: Division, func: Callable) -> Division:
         result = division.subdivisions[0]
     
         for subdivision in division.subdivisions:
-            if subdivision.population <= result.population:
+            if func(subdivision, result):
                 continue
         
             result = subdivision
 
         return result
+
+    @staticmethod
+    def __largest(subdivision: Division, result: Division) -> bool:
+        return subdivision.population <= result.population
+
+    @staticmethod
+    def __smallest(subdivision: Division, result: Division) -> bool:
+        return subdivision.population >= result.population
+
+    @staticmethod
+    @__errorcheck
+    def largest(division: Division) -> Division:
+        return Population.__get(division, Population.__largest)
     
     @staticmethod
     @__errorcheck
-    def smallest(division) -> Division:
-        result = division.subdivisions[0]
-    
-        for subdivision in division.subdivisions:
-            if subdivision.population >= result.population:
-                continue
-        
-            result = subdivision
-
-        return result
+    def smallest(division: Division) -> Division:
+        return Population.__get(division, Population.__smallest)
 
 
 # --- Extending Functionality Definitions --- #

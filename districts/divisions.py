@@ -48,9 +48,8 @@ class Division:
         if (population != None):
             self.population = population
 
-        if subdivisions != None:
-            if not self.subdivisions:
-                add_subdivisions(self, subdivisions)
+        if subdivisions != None and not self.subdivisions:
+            add_subdivisions(self, subdivisions)
 
         #I do not like this as it ties districts and politics together
         if "administrator" in kwargs and "government" in kwargs:
