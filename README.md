@@ -15,7 +15,8 @@ from locations.districts.divisions import Division, DivisionTypes
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.districts.places import Place, PlaceTypes
+from locations.districts.places import Place, PlaceTypes, HouseOfWorship, \
+    ReligionTypes, WorshipStructureTypes, DenominationTypes
 from locations.districts.areas import AreaTypes, Neighborhood
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
 from locations.districts.counties import County, Parish
@@ -38,9 +39,7 @@ from locations.politics.leaders import Leader, LeaderPolicy, Administrator
 from locations.politics.economics import Economy, EconomicPolicy
 from locations.politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
 
-from locations.locations import Address
-from locations.locations import Coordinates
-from locations.locations import Location
+from locations.position import Address, Coordinates, Location
 
 from locations.zipcodes import ZipCode, ZipCodeTypes
 
@@ -59,6 +58,10 @@ government = Government(leader, economy, law)
 
 zipcode = ZipCode(77845, ZipCodeTypes.AMERICA)
 coordinates = Coordinates(0.001545, 51.477928) #Prime Meridian
+church = HouseOfWorship("First Presbyterian",
+                        ReligionTypes.CHRISTIANITY,
+                        WorshipStructureTypes.CHURCH,
+                        denomination = DenominationTypes.PRESBYTERIAN)
 stadium = Place("Kyle Field", PlaceTypes.STADIUM)
 university = Division("Texas A&M", AreaTypes.UNIVERSITY)
 neighborhood = Neighborhood("Downtown",
@@ -67,7 +70,7 @@ city = City("College Station",
 			CityTypes.CITY,
 			AdministrativeTypes.NONE,
 			population = Population(115_000),
-			subdivisions = [neighborhood, university])
+			subdivisions = [neighborhood, church, university])
 city2 = City("Bryan",
             CityTypes.CITY,
             AdministrativeTypes.SEAT,
@@ -100,7 +103,7 @@ galaxy = Galaxy("Milky Way",
 universe = Universe("My Universe",
 					population = float('inf'),
                     subdivisions = [galaxy])
-location = Location("Universe", [university, neighborhood, city, county,
+location = Location("Universe", [church, neighborhood, city, county,
                                 country, continent, planet, solarsystem,
                                 galaxy, universe])
 
