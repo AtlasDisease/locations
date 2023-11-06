@@ -129,6 +129,132 @@ if not city3:
 ```
 
 ## Districts Package
+
+### Places Package
+#### places.py
+
+These classes can receive extended functionality by specifying the population keyword argument.
+
+*enum* places.**PlaceTypes**
+	An enum that represents the type of place. The BUILDING option should be the default unless there is another option that more accurately represents the place.
+
+##### Options
+- BUILDING - General use.
+- STADIUM
+- CITY_HALL
+- COURTHOUSE
+- FORT
+- PORT
+- AIRPORT
+- HOUSE_OF_WORSHIP
+- CEMETERY
+- BANK
+- EMERGENCY_SERVICE
+- HOSPITAL
+- POST_OFFICE
+
+*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
+
+*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a building.
+
+*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a stadium.
+
+*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a city hall.
+
+*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a courthouse.
+
+*class* places.**Fort**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a fort.
+
+*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a port.
+
+*class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents an airport.
+
+*class* places.**HouseOfWorship**(*name: str*, *religion: ReligionTypes = ReligionTypes.UNKNOWN*, *structure: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, *denomination: DenominationTypes = DenominationTypes.NONE*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a house of worship.
+
+*class* places.**Cemetery**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a cemetery.
+	
+*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a bank.
+
+*class* places.**EmergencyService**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents an emergency service.
+
+*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a hospital.
+
+*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a post office.
+
+#### religious.py
+*enum* religious.**ReligionTypes**
+	An enum that represents the type of religion. The UNKNOWN option should be the default unless there is another option that more accurately represents the religion.
+
+##### Options
+- UNKNOWN - General use.
+- ATHEIST
+- CHRISTIANITY
+- JEWISH
+- MUSLIM
+- BUDDHIST
+- HINDU
+- PAGAN
+- JAINISM
+- SHINTO
+- SIKHISM
+- TAOISM
+- ZOROASTRIANISM
+
+*enum* religious.**WorshipStructureTypes**
+	An enum that represents the type of worship structure. The TEMPLE option should be the default unless there is another option that more accurately represents the worship structure.
+
+##### Options
+- TEMPLE - General use.
+- CHURCH
+- CATHEDRAL
+- CHAPEL
+- HALL
+- SYNAGOGUE
+- MOSQUE
+- DERASAR
+- BASADI
+- MANDI
+- MASHKHANNA
+- BETH_MANDA
+- HOF
+- JINJA
+- GURDWARA
+- DAOGUAN
+- ATASH_BEHRAM
+- AGYARI
+- DADGAH
+
+
+*enum* religious.**DenominationTypes**
+	An enum that represents the type of Christian denomination. The NONE option should be the default unless there is another option that more accurately represents the Christian denomination.
+
+##### Options
+- NONE - General use.
+- METHODIST
+- PRESBYTERIAN
+- BAPTIST
+- LUTHERAN
+- ANGLICAN
+- PENTECOSTAL
+- ORTHODOX
+- CATHOLIC
+- COPTIC
+- NONDENOMINATIONAL
+
 ### areas.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
@@ -256,70 +382,6 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* galaxies.**Galaxy**(*name: str*, /, *subdivisions: list[Division] | Division*, *population: int = None*, *\*\*kwargs*)
 	A class that represents a galaxy.
 
-### places.py
-
-These classes can receive extended functionality by specifying the population keyword argument.
-
-*enum* places.**PlaceTypes**
-	An enum that represents the type of place. The BUILDING option should be the default unless there is another option that more accurately represents the place.
-
-#### Options
-- BUILDING - General use.
-- STADIUM
-- CITY_HALL
-- COURTHOUSE
-- FORT
-- PORT
-- AIRPORT
-- HOUSE_OF_WORSHIP
-- CEMETERY
-- BANK
-- EMERGENCY_SERVICE
-- HOSPITAL
-- POST_OFFICE
-
-*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
-
-*class* places.**Building**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a building.
-
-*class* places.**Stadium**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a stadium.
-
-*class* places.**City_Hall**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a city hall.
-
-*class* places.**Courthouse**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a courthouse.
-
-*class* places.**Fort**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a fort.
-
-*class* places.**Port**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a port.
-
-*class* places.**Airport**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents an airport.
-
-*class* places.**House_Of_Worship**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a house of worship.
-
-*class* places.**Cemetery**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a cemetery.
-	
-*class* places.**Bank**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a bank.
-
-*class* places.**Emergency_Service**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents an emergency service.
-
-*class* places.**Hospital**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a hospital.
-
-*class* places.**Post_Office**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a post office.
-
 ### planetarysystems.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
@@ -347,22 +409,6 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* universes.**Universe**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
 	A class that represents a universe.
-
-## Locations Package
-### addresses.py
-
-*class* addresses.**Address**(*street: str*, *city: City*, *county: County*, *country: Country*, *zipcode: ZipCode*)
-	A class that represents an address.
-
-### coordinates.py
-
-*class* coordinates.**Coordinates**(*longitude: float*, *latitude: float*)
-	A class that represents a coordinate set.
-
-### locations.py
-
-*class* locations.**Location**(*name: str*, *divisions: list[Division] = []*)
-	A class that represents a location. The division list should be smallest to largest division.
 
 ## Politics Package
 ### law
@@ -468,3 +514,19 @@ languages.**getNameInLanguage**(*division: Division*, *language: Languages*)
 
 *class* zipcodes.**ZipCode**(*zip_code: int*, *type_: ZipCodeTypes*)
 	A class that represents a zip code. This is also known as a postal code, post code, PIN, or mailing code in some places.
+
+## Position Package
+### addresses.py
+
+*class* addresses.**Address**(*street: str*, *city: City*, *county: County*, *country: Country*, *zipcode: ZipCode*)
+	A class that represents an address.
+
+### coordinates.py
+
+*class* coordinates.**Coordinates**(*longitude: float*, *latitude: float*)
+	A class that represents a coordinate set.
+
+### locations.py
+
+*class* locations.**Location**(*name: str*, *divisions: list[Division] = []*)
+	A class that represents a location. The division list should be smallest to largest division.
