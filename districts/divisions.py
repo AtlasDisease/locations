@@ -25,7 +25,7 @@ class DivisionTypes(IntEnum):
     UNIVERSE = auto()
 
     def __str__(self) -> str:
-        return self.name.title()
+        return self.name.replace("_", " ").title()
 
 
 # --- Division Class --- #
@@ -63,7 +63,6 @@ class Division:
         return self.name
 
     def __format__(self, format_spec: str = "") -> str:
-        
         if "O" in format_spec or "F" in format_spec: #Stands for "Formal" or "Official"
             if self.__class__.__name__ == "Division":
                 return f"The {self.type_} of {self.name}"
