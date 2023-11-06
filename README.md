@@ -10,6 +10,11 @@ Below shows the basic usage of the package using a real-world example.
 # --- Imports --- #
 
 from locations.districts.divisions import Division, DivisionTypes
+# Religion is a complex thing as it is tied into places very
+# closely but a separate idea so doing something like districts.religions
+# makes it seem like they rely on each other which does not make sense
+# to me especially since the religions package could be used on its own
+# without the districts being used.
 from locations.districts.places import Place, PlaceTypes
 from locations.districts.areas import AreaTypes, Neighborhood
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
@@ -38,12 +43,6 @@ from locations.locations import Coordinates
 from locations.locations import Location
 
 from locations.zipcodes import ZipCode, ZipCodeTypes
-
-
-# --- Functions --- #
-
-def stringify(division: Division) -> str:
-    return f"{[str(subdivision) for subdivision in division.subdivisions]}"
 
 
 # --- Main Logic --- #
@@ -114,7 +113,7 @@ print()
 print(leader.as_Administrator())
 print(Administrator(leader = leader))
 
-print(county.seat()) #Implying there is a cost to this
+print(f"{county.seat(): O}") #Implying there is a cost to this
 print(list(county)) # Test for __iter__
 
 city3 = county.get(func = Population.largest)
