@@ -18,3 +18,10 @@ class Continent(Division):
                  **kwargs):
 
         super().__init__(name, DivisionTypes.CONTINENT, subdivisions, population, **kwargs)
+
+    def __format__(self, format_spec = "") -> str:
+
+        if "L" in format_spec or "l" in format_spec:
+            return str(self)
+
+        return Division.__format__(self, format_spec)

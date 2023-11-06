@@ -20,9 +20,6 @@ class County(Division):
 
         super().__init__(name, DivisionTypes.COUNTY, subdivisions, population, **kwargs)   
 
-    def __str__(self) -> str:
-        return f"{self.name} {self.__class__.__name__}"
-
     def seat(self) -> Division:
         """Gets the county seat; this is a function (instead of a property)
 to imply there is a cost to this function"""

@@ -22,10 +22,12 @@ class Country(Division):
         if prefix != "":
             self.prefix = prefix
 
-    def __str__(self) -> str:
-        if hasattr(self, "government"):
-            if hasattr(self, "prefix"):
-                return f"The {self.prefix} {self.government.leader.policy} of {self.name}"
-            return f"The {self.government.leader.policy} of {self.name}"
+    def __format__(self, format_spec = ""):
 
-        return self.name
+        if "F" in format_spec or "O" in format_spec:
+            if hasattr(self, "government"):
+                if hasattr(self, "prefix"):
+                    return f"The {self.prefix} {self.government.leader.policy} of {self.name}"
+                return f"The {self.government.leader.policy} of {self.name}"
+
+        return str(self)

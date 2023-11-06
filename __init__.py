@@ -6,6 +6,11 @@
 
 if __name__ == "__main__":
     from districts.divisions import Division, DivisionTypes
+    # Religion is a complex thing as it is tied into places very
+    # closely but a separate idea so doing something like districts.religions
+    # makes it seem like they rely on each other which does not make sense
+    # to me especially since the religions package could be used on its own
+    # without the districts being used.
     from districts.places import Place, PlaceTypes
     from districts.areas import AreaTypes, Neighborhood
     from districts.cities import City, CityTypes, AdministrativeTypes
@@ -53,72 +58,79 @@ if __name__ == "__main__":
     leader = Leader("Daniel Miller", LeaderPolicy.REPUBLIC)
     economy = Economy(EconomicPolicy.CAPITALIST)
     bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
-                """
-1. Freedom of Religion, Press, Protest, etc
-2. Right to Own Guns""")
+                    """
+    1. Freedom of Religion, Press, Protest, etc
+    2. Right to Own Guns""")
     law = Law(LawPolicy.EYE_FOR_AN_EYE, bills = [bill])
     government = Government(leader, economy, law)
-    
+
+    zipcode = ZipCode(77845, ZipCodeTypes.AMERICA)
+    coordinates = Coordinates(0.001545, 51.477928) #Prime Meridian
     fort = Place("Concho", PlaceTypes.FORT)
     university = Division("Texas A&M", AreaTypes.UNIVERSITY)
     neighborhood = Neighborhood("Rock Prairie",
-                                subdivisions = [fort])
+                                    subdivisions = [fort])
     city = City("College Station",
-                CityTypes.CITY,
-                AdministrativeTypes.NONE,
-                population = Population(115_000),
-                subdivisions = [neighborhood, university])
+                    CityTypes.CITY,
+                    AdministrativeTypes.NONE,
+                    population = Population(115_000),
+                    subdivisions = [neighborhood, university])
     city2 = City("Bryan",
-                CityTypes.CITY,
-                AdministrativeTypes.SEAT,
-                population = Population(200_000))
+                    CityTypes.CITY,
+                    AdministrativeTypes.SEAT,
+                    population = Population(200_000))
     city3 = City("Boonville",
-                 CityTypes.SITE,
-                 AdministrativeTypes.NONE,
-                 population = Population(0))
+                     CityTypes.SITE,
+                     AdministrativeTypes.NONE,
+                     population = Population(0))
     county = County("Brazos",
-                    population = Population(233_849),
-                    subdivisions = [city, city2, city3])
+                        population = Population(233_849),
+                        subdivisions = [city, city2, city3])
     parish = Parish("Acadia")
     state = State("Louisiana", subdivisions = [parish])
     country = Country("Texas",
-                      population = Population(27_000_000),
-                      subdivisions = [county],
-                      government = government,
-                      prefix = "Second")
+                          population = Population(27_000_000),
+                          subdivisions = [county],
+                          government = government,
+                          prefix = "Second")
     country2 = Country("United States of America",
-                       subdivisions = [state])
+                           subdivisions = [state])
     continent = Continent("North America",
-                          subdivisions = [country, country2])
+                              subdivisions = [country, country2])
     planet = Planet("Earth",
-                    population = Population(8_000_000_000),
-                    subdivisions = [continent])
+                        population = Population(8_000_000_000),
+                        subdivisions = [continent])
     solarsystem = PlanetarySystem("Solis",
-                                  subdivisions = [planet])
+                                      subdivisions = [planet])
     galaxy = Galaxy("Milky Way",
-                    subdivisions = [solarsystem])
-    universe = Universe("My Universe",
-                        population = float('inf'),
-                        subdivisions = [galaxy])
+                        subdivisions = [solarsystem])
+    universe = Universe("",
+                            population = float('inf'),
+                            subdivisions = [galaxy])
+    location = Location("Universe", [university, neighborhood, city, county,
+                                         country, continent, planet, solarsystem,
+                                         galaxy, universe])
 
-    print_all(universe)
+    print(location)
+    #_print_all(universe)
     print()
     print(government)
     print()
+    print(leader.as_Administrator())
     print(Administrator(leader = leader))
-    print(county.seat()) #Implying there is a cost to this
+    print(f"{county.seat(): O}") #Implying there is a cost to this
     print(list(county)) # Test for __iter__
 
     city3 = county.get(func = Population.largest)
-    if not city3:
+    if city3: #If city3 is not empty
         print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
 
     city3 = county.get(func = Population.smallest)
-    if not city3:
+    if city3:
         print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
 
-##    #This will cause an error as expected
-##    universe1 = universe.get(func = Population.smallest)
-##    if not universe1:
-##        print(universe1, universe1.population)
+    ##    #This will cause an error as expected
+    ##    universe1 = universe.get(func = Population.smallest)
+    ##    if not universe1:
+    ##        print(universe1, universe1.population)
     

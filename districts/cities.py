@@ -50,10 +50,14 @@ class City(Division):
         self.city_type = citytype
         self.admin_type = admintype
 
-    def __str__(self) -> str:
-        if self.admin_type != AdministrativeTypes.NONE:
-            return f"The {self.admin_type} of {self.name}"
-        return f"The {self.city_type} of {self.name}"
+    def __format__(self, format_spec = "") -> str:
+
+        if "F" in format_spec or "O" in format_spec:
+            if self.admin_type != AdministrativeTypes.NONE:
+                return f"The {self.admin_type} of {self.name}"
+            return f"The {self.city_type} of {self.name}"
+
+        return str(self)
 
     @property
     def incorporated(self) -> bool:

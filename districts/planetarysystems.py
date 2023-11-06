@@ -22,12 +22,8 @@ class PlanetarySystem(Division):
 
         super().__init__(name, DivisionTypes.PLANETARY_SYSTEM, subdivisions, population, **kwargs)
 
-    def __str__(self) -> str:
-        return f"The Planetary System of {self.name}"
-
     def __format__(self, format_spec: str = "") -> str:
-
-        if format_spec == "%t":
-            return str(self)
+        if "F" in format_spec or "O" in format_spec:
+            return f"The Planetary System of {self.name}"
 
         return f"{self.name} Planetary System"
