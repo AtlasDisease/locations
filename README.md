@@ -15,8 +15,8 @@ from locations.districts.divisions import Division, DivisionTypes
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.districts.places import Place, PlaceTypes, HouseOfWorship, \
-    ReligionTypes, WorshipStructureTypes, DenominationTypes
+from locations.districts.places import Place, PlaceTypes, HouseOfWorship
+from locations.districts.places.religious import ReligionTypes, WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.areas import AreaTypes, Neighborhood
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
 from locations.districts.counties import County, Parish
@@ -58,10 +58,10 @@ government = Government(leader, economy, law)
 
 zipcode = ZipCode(77845, ZipCodeTypes.AMERICA)
 coordinates = Coordinates(0.001545, 51.477928) #Prime Meridian
-church = HouseOfWorship("First Presbyterian",
-                        ReligionTypes.CHRISTIANITY,
-                        WorshipStructureTypes.CHURCH,
-                        denomination = DenominationTypes.PRESBYTERIAN)
+religion = Religion(ReligionTypes.CHRISTIANITY,
+                    WorshipStructureTypes.CHURCH,
+                    denomination = DenominationTypes.PRESBYTERIAN)
+church = HouseOfWorship("First", religion)
 stadium = Place("Kyle Field", PlaceTypes.STADIUM)
 university = Division("Texas A&M", AreaTypes.UNIVERSITY)
 neighborhood = Neighborhood("Downtown",
@@ -177,7 +177,7 @@ These classes can receive extended functionality by specifying the population ke
 *class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents an airport.
 
-*class* places.**HouseOfWorship**(*name: str*, *religion: ReligionTypes = ReligionTypes.UNKNOWN*, *structure: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, *denomination: DenominationTypes = DenominationTypes.NONE*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents a house of worship.
 
 *class* places.**Cemetery**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
@@ -238,7 +238,6 @@ These classes can receive extended functionality by specifying the population ke
 - AGYARI
 - DADGAH
 
-
 *enum* religious.**DenominationTypes**
 	An enum that represents the type of Christian denomination. The NONE option should be the default unless there is another option that more accurately represents the Christian denomination.
 
@@ -254,6 +253,9 @@ These classes can receive extended functionality by specifying the population ke
 - CATHOLIC
 - COPTIC
 - NONDENOMINATIONAL
+
+*class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)
+	A class that represents a religion.
 
 ### areas.py
 
@@ -301,6 +303,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - CAPITAL - A capital of a state or country
 
 Some cities are about a county seat and a capital. An example is Austin, Texas. CAPITAL should be used in this case.
+
 
 *class* cities.**City**(*name: str*, *citytype: CityTypes, admintype: AdministrativeTypes*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
 	A class that represents a city. This class subclasses divisions.Division, therefore it receives subdivision functionality by default. This class can receive extended functionality by specifying the population keyword argument.
