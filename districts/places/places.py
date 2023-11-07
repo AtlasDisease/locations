@@ -9,13 +9,15 @@
 
 from enum import IntEnum, auto
 from ..divisions import Division, DivisionTypes
-from .religious import ReligionTypes, WorshipStructureTypes, DenominationTypes, Religion
+from .religious import ReligionTypes, WorshipStructureTypes, \
+     DenominationTypes, Religion
+from .emergency import EmergencyServiceTypes
 
 __all__ = ("PlaceTypes", "ReligionTypes", "WorshipStructureTypes",
-           "DenominationTypes", "Religion", "Place", "Building",
-           "Stadium", "CityHall", "Courthouse", "Fort", "Port",
-           "Airport", "HouseOfWorship", "Cemetery", "Bank",
-           "EmergencyService", "Hospital", "PostOffice")
+           "DenominationTypes", "Religion", "EmergencyServiceTypes",
+           "Place", "Building", "Stadium", "CityHall", "Courthouse",
+           "Fort", "Port", "Airport", "HouseOfWorship", "Cemetery",
+           "Bank", "EmergencyService", "Hospital", "PostOffice")
 
 
 # --- PlaceTypes Enum --- #
@@ -166,9 +168,11 @@ class Bank(Place):
 # --- EmergencyService Class --- #
 
 class EmergencyService(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
+    def __init__(self, name: str, service: EmergencyServiceTypes, /, population: int = None, **kwargs):
 
         super().__init__(name, PlaceTypes.EMERGENCY_SERVICE, population, **kwargs)
+
+        self.service = service
 
 
 # --- Hospital Class --- #
