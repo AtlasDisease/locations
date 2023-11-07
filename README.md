@@ -131,6 +131,16 @@ if not city3:
 ## Districts Package
 
 ### Places Package
+#### emergency.py
+
+*enum* emergency.**EmergencyServiceTypes**
+	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
+
+##### Options
+- POLICE
+- FIRE
+- HEALTH
+
 #### places.py
 
 These classes can receive extended functionality by specifying the population keyword argument.
