@@ -5,6 +5,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
+from dataclasses import dataclass, KW_ONLY
 
 
 # --- ReligionTypes Enum --- #
@@ -72,3 +73,16 @@ class DenominationTypes(IntEnum):
 
     def __str__(self) -> str:
         return self.name.replace("_", " ").title()
+
+
+# --- Religion Class --- #
+
+@dataclass
+class Religion:
+    
+    type_: ReligionTypes
+    structure: WorshipStructureTypes
+    _: KW_ONLY
+    denomination: DenominationTypes
+
+        

@@ -9,12 +9,12 @@
 
 from enum import IntEnum, auto
 from ..divisions import Division, DivisionTypes
-from .religious import ReligionTypes, WorshipStructureTypes, DenominationTypes
+from .religious import ReligionTypes, WorshipStructureTypes, DenominationTypes, Religion
 
 __all__ = ("PlaceTypes", "ReligionTypes", "WorshipStructureTypes",
-           "DenominationTypes", "Place", "Building", "Stadium",
-           "CityHall", "Courthouse", "Fort", "Port", "Airport",
-           "HouseOfWorship", "Cemetery", "Bank",
+           "DenominationTypes", "Religion", "Place", "Building",
+           "Stadium", "CityHall", "Courthouse", "Fort", "Port",
+           "Airport", "HouseOfWorship", "Cemetery", "Bank",
            "EmergencyService", "Hospital", "PostOffice")
 
 
@@ -129,24 +129,20 @@ class Airport(Place):
 # --- HouseOfWorship Class --- #
 
 class HouseOfWorship(Place):
-    def __init__(self, name: str,
-                 religion: ReligionTypes = ReligionTypes.UNKNOWN,
-                 structure: WorshipStructureTypes = WorshipStructureTypes.TEMPLE,
-                 denomination: DenominationTypes = DenominationTypes.NONE,
+    def __init__(self, name: str, religion: Religion,
                  /,
                  population: int = None,
                  **kwargs):
 
         super().__init__(name, PlaceTypes.HOUSE_OF_WORSHIP, population, **kwargs)
 
-        self.religion_type = religion
-        self.worship_type = structure
-        self.denomination = denomination
+        self.religion = religion
 
     def __format__(self, format_spec = "") -> str:
-        if "F" in format_spec or "O" in format_spec or \
-           "L" in format_spec or "l" in format_spec:
-            return f"{self.name} {self.worship_type}"
+        if any(i in format_spec for i in {"F", "O", "L", "l"}):
+            if self.religion.type_ == ReligionTypes.CHRISTIANITY:
+                return f"{self.name} {self.religion.denomination} {self.religion.structure}"
+            return f"{self.name} {self.religion.structure}"
 
         return str(self)
     
