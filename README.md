@@ -67,7 +67,7 @@ religion = Religion(ReligionTypes.CHRISTIANITY,
                     WorshipStructureTypes.CHURCH,
                     denomination = DenominationTypes.PRESBYTERIAN)
 grave = Grave("Rosie Lee Moore", dt.date(1899, 6, 22), dt.date(1967, 2, 12),
-              description = """Rosie was \" Aunt Jemima\" for
+              epitaph = """Rosie was \" Aunt Jemima\" for
 Quaker Oats Co. for 25 years.""")
 cemetery = Cemetery("Blackjack", graves = [grave])
 church = HouseOfWorship("First", religion)
