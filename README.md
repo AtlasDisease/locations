@@ -23,15 +23,9 @@ from locations.districts.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.places.cemeteries import Grave
 from locations.districts.areas import AreaTypes, Neighborhood, University
-from locations.districts.cities import City, CityTypes, AdministrativeTypes
-from locations.districts.counties import County, Parish
-from locations.districts.states import State
-from locations.districts.countries import Country
-from locations.districts.continents import Continent
-from locations.districts.planets import Planet
-from locations.districts.planetarysystems import PlanetarySystem
-from locations.districts.galaxies import Galaxy
-from locations.districts.universes import Universe
+from locations.districts import City, County, Parish, State, Country, \
+     Continent, Planet, PlanetarySystem, Galaxy, Universe
+from locations.districts.cities import CityTypes, AdministrativeTypes
 from locations.districts.extensions import Population
 
 # Politics is a complex thing as it is tied into districts very
