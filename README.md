@@ -22,8 +22,7 @@ from locations.districts.places import Place, PlaceTypes, HouseOfWorship, \
 from locations.districts.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.places.cemeteries import Grave
-from locations.districts.areas import AreaTypes, Neighborhood
-from locations.districts.areas.schools import University
+from locations.districts.areas import AreaTypes, Neighborhood, University
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
 from locations.districts.counties import County, Parish
 from locations.districts.states import State
