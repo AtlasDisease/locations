@@ -35,10 +35,10 @@ from locations.districts.extensions import Population
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the politics package could be used on its own
 # without the districts being used.
-from locations.politics.government import Government
-from locations.politics.leaders import Leader, LeaderPolicy, Administrator
-from locations.politics.economics import Economy, EconomicPolicy
-from locations.politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
+from locations.politics import Government, Leader, Administrator, \Economy, Law, Bill, Constitution
+from locations.politics.leaders import LeaderPolicy
+from locations.politics.economics import EconomicPolicy
+from locations.politics.law import LawPolicy, BillStatus
 
 from locations.positional import Address, Coordinates, Location
 
