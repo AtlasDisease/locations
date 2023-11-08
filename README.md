@@ -145,14 +145,14 @@ if not city3:
 ---
 ### Places Package
 #### cemeteries.py
-*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)
+*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
 	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
 
-*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)
+*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
 	A class that represents a cemetery.
 
 #### emergency.py
-*enum* emergency.**EmergencyServiceTypes**
+*enum* emergency.**EmergencyServiceTypes**\
 	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
 
 ##### Options
@@ -160,14 +160,14 @@ if not city3:
 - FIRE
 - HEALTH
 
-*class* emergency.**EmergencyService**(*name: str*, *service: EmergencyServiceTypes*, /, *population: int = None*, *\*\*kwargs*)
+*class* emergency.**EmergencyService**(*name: str*, *service: EmergencyServiceTypes*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an emergency service.
 
 #### places.py
 
 These classes can receive extended functionality by specifying the population keyword argument.
 
-*enum* places.**PlaceTypes**
+*enum* places.**PlaceTypes**\
 	An enum that represents the type of place. The BUILDING option should be the default unless there is another option that more accurately represents the place.
 
 ##### Options
@@ -237,7 +237,7 @@ These classes can receive extended functionality by specifying the population ke
 - TAOISM
 - ZOROASTRIANISM
 
-*enum* religious.**WorshipStructureTypes**
+*enum* religious.**WorshipStructureTypes**\
 	An enum that represents the type of worship structure. The TEMPLE option should be the default unless there is another option that more accurately represents the worship structure.
 
 ##### Options
@@ -261,7 +261,7 @@ These classes can receive extended functionality by specifying the population ke
 - AGYARI
 - DADGAH
 
-*enum* religious.**DenominationTypes**
+*enum* religious.**DenominationTypes**\
 	An enum that represents the type of Christian denomination. The NONE option should be the default unless there is another option that more accurately represents the Christian denomination.
 
 ##### Options
@@ -277,10 +277,10 @@ These classes can receive extended functionality by specifying the population ke
 - COPTIC
 - NONDENOMINATIONAL
 
-*class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)
+*class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)\
 	A class that represents a religion.
 
-*class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)
+*class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a house of worship.
 
 ### areas.py
@@ -290,27 +290,27 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *enum* areas.**AreaTypes**
 	An enum that represents the types of areas. The NEIGHBORHOOD option should be the default unless there is another option that more accurately represents your area.
 
-*class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a neighbor or a generic area of a city. 
 
-*class* areas.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a college campus.
 
-*class* areas.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a university campus.
 
-*class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a fort.
 
-*class* areas.**Port**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**Port**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a port.
 
-*class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an airport.
 
 ### cities.py
 
-*enum* cities.**CityTypes**
+*enum* cities.**CityTypes**\
 	An enum that represents the type/status of a city. The UNKNOWN option should be the default unless there is another option that more accurately represents the city. I am picky about how you use these but I cannot enforce my standards but I will list them below.
 #### Options
 - UNKNOWN - General use or if you are not sure what type of city it is.
@@ -320,7 +320,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - TOWN - A city that is incorporated but lacks non-volunteer social services like fire department and police department.
 - CITY - A city that is incorporated and has social services.
 
-*enum* cities.**AdministrativeTypes**
+*enum* cities.**AdministrativeTypes**\
 	An enum that represents the administrative importance of a city. The NONE option should be the default unless there is another option that more accurately represents the city.
 
 #### Options
@@ -331,38 +331,38 @@ All classes in this module subclass divisions.Division, therefore it receives su
 Some cities are about a county seat and a capital. An example is Austin, Texas. CAPITAL should be used in this case.
 
 
-*class* cities.**City**(*name: str*, *citytype: CityTypes, admintype: AdministrativeTypes*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* cities.**City**(*name: str*, *citytype: CityTypes, admintype: AdministrativeTypes*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a city. This class subclasses divisions.Division, therefore it receives subdivision functionality by default. This class can receive extended functionality by specifying the population keyword argument.
 
 ##### Properties
 
-City.**incorporated**
+City.**incorporated**\
 	A property that returns whether the city is incorporated. The city type must be greater than or equal to CityTypes.TOWN to be true.
 
-City.**abandoned**
+City.**abandoned**\
 	A property that returns whether a city is abandoned. The city type must be less than CityTypes.COMMUNITY and not CityTypes.UNKNOWN to be true.
 
-City.**historical**
+City.**historical**\
 	A property that returns whether a city is historical. The city type must be CityTypes.SITE to be true. **This is subject to change. May make this a user decision.**
 
 ### continents.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
 
-*class* continents.**Continent**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int =None*, *\*\*kwargs*)
+*class* continents.**Continent**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int =None*, *\*\*kwargs*)\
 	A class that represents a continent.
 
 ### counties.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* counties.**County**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* counties.**County**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a county.
 
-*class* counties.**Parish**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* counties.**Parish**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a parish. Functionally the same as a county.
 	
-*class* counties.**Shire**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* counties.**Shire**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a shire. Functionally the same as a county.
 
 #### Methods
@@ -374,12 +374,12 @@ County.**seat**()
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* countries.**Country**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *prefix: str = ""*, *\*\*kwargs*)
+*class* countries.**Country**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *prefix: str = ""*, *\*\*kwargs*)\
 	A class that represents a country. *Prefix* should only be specified if a key in *kwargs* is government.
 
 ### divisions.py
 
-*enum* divisions.**DivisionTypes**
+*enum* divisions.**DivisionTypes**\
 	An enum that represents the division type of a division. The AREA option should be the default unless there is another option that more accurately represents the division.
 
 #### Options
@@ -394,49 +394,49 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - GALAXY
 - UNIVERSE
 
-*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a division. This is a base class for a majority of class in the districts package.
 
 #### Methods
-Division.**get**(*func: Callable*)
+Division.**get**(*func: Callable*)\
 	Gets a subdivision based on a function. An example would be when you have the population functionality activated you can use Population.largest to get the largest subdivision by population.
 
-divisions.**add_subdivisions**(cls, *subdivisions: list[Division] | Division*)
+divisions.**add_subdivisions**(cls, *subdivisions: list[Division] | Division*)\
 	Adds subdivision functionality to *cls*. **This is still in development and could be removed entirely in the future.**
 
 ### galaxies.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* galaxies.**Galaxy**(*name: str*, /, *subdivisions: list[Division] | Division*, *population: int = None*, *\*\*kwargs*)
+*class* galaxies.**Galaxy**(*name: str*, /, *subdivisions: list[Division] | Division*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a galaxy.
 
 ### planetarysystems.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* planetarysystems.**PlanetarySystem**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* planetarysystems.**PlanetarySystem**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a planetary system. This is known as a solar system though it is not the correct term (to my understanding) as solar refers to our Sun.
 
 ### planets.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* planets.**Planet**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* planets.**Planet**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a planet.
 
 ### states.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* states.**State**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* states.**State**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a state.
 
 ### universes.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument.
 
-*class* universes.**Universe**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
+*class* universes.**Universe**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a universe.
 
 ----
@@ -444,7 +444,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 ---
 ### law
 
-*enum* bills.**BillStatus**
+*enum* bills.**BillStatus**\
 	An enum that represents the status of a bill. The BUILDING option should be the default unless there is another option that more accurately represents the place.
 
 #### Options
@@ -454,13 +454,13 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - PASSED - Bill has been passed/approved.
 - ABSOLUTE - Bill that is in the Constitution or is a God Given right.
 
-*class* bills.**Bill**(*name: str*, *status: BillStatus*, *description: str = ""*)
+*class* bills.**Bill**(*name: str*, *status: BillStatus*, *description: str = ""*)\
 	A class that represents a bill for a law.
 
-*class* bills.**Constitution**(*bills: list[Bill]*)
+*class* bills.**Constitution**(*bills: list[Bill]*)\
 	A class that represents a Constitution.
 
-*enum* laws.**LawPolicy**
+*enum* laws.**LawPolicy**\
 	An enum that represents the law policy of a government. The NONE option should be the default unless there is another option that more accurately represents the government law policy.
 
 #### Options
@@ -470,12 +470,12 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - EYE_FOR_AN_EYE - Punishment fits the crime to the closest degree through a judicial system in which criminals are innocent until proven guilty in a court of law or by a jury of their peers. Places with the death penalty tend to be in this category. An example of this would be Texas.
 - LAW_AND_ORDER - Punishment is excessive or inhumane through a judicial system that is rigged or is corrupted in which criminals are considered guilty until proven innocent. An example of this would be China.
 
-*class* laws.**Law**(*policy: LawPolicy*, /, *bills: list[Bills] = None*)
+*class* laws.**Law**(*policy: LawPolicy*, /, *bills: list[Bills] = None*)\
 	A class that represents the rule of law.
 
 ### economics.py
 
-*enum* economics.**EconomicPolicy**
+*enum* economics.**EconomicPolicy**\
 	An enum that represents the economic policy. The NONE option should be the default unless there is another option that more accurately represents the economy.
 
 #### Options
@@ -484,23 +484,23 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - SOCIALIST
 - COMMUNIST
 
-*class* economics.**Economy**(*policy: EconomicPolicy*)
+*class* economics.**Economy**(*policy: EconomicPolicy*)\
 	A class that represents an economy.
 
 ### government.py
 
-*class* government.**Government**(*leader: Leader*, *economy: Economy*, *law: Law*)
+*class* government.**Government**(*leader: Leader*, *economy: Economy*, *law: Law*)\
 	A class that represents a government.
 
-government.**add_government**(*cls*, *govt: Government*)
+government.**add_government**(*cls*, *govt: Government*)\
 	A function that adds government functionality to a class. **This is still being worked on and may be removed in a future update.**
 
-government.**add_administrator**(*cls*, *admin: Administrator*)
+government.**add_administrator**(*cls*, *admin: Administrator*)\
 	A function that adds administrator functionality to a class. **This is still being worked on and may be removed in a future update.**
 
 ### leaders.py
 
-*enum* leaders.**LeaderPolicy**
+*enum* leaders.**LeaderPolicy**\
 	An enum that represents the leader policy. The NONE option should be the default unless there is another option that more accurately represents the economy.
 
 #### Options
@@ -512,19 +512,19 @@ government.**add_administrator**(*cls*, *admin: Administrator*)
 - MONARCHY
 - AUTHORITARIAN
 
-*class* leaders.**Administrator**(*name: str = ""*, *title: str = ""*, /, *leader: Leader = None*)
+*class* leaders.**Administrator**(*name: str = ""*, *title: str = ""*, /, *leader: Leader = None*)\
 	A class that represents an administrator. This is similar to leaders.Leader but is used for an individual with very little or no policy but an administrative function. An example would be the Chief of Police.
 
-*class* leaders.**Leader**(*name: str*, *policy: LeaderPolicy*, /, *title: str = "President"*)
+*class* leaders.**Leader**(*name: str*, *policy: LeaderPolicy*, /, *title: str = "President"*)\
 	A class that represents a leader.
 
 #### Methods
-Leader.**as_Administrator**()
+Leader.**as_Administrator**()\
 	A function that returns the Leader object as a Administrator object.
 
 ### languages.py
 
-*enum* languages.**Languages**
+*enum* languages.**Languages**\
 	An enum that represents a language.
 
 #### Options
@@ -532,18 +532,18 @@ Leader.**as_Administrator**()
 - LATIN
 - NORWEGIAN
 
-languages.**getNameInLanguage**(*division: Division*, *language: Languages*)
+languages.**getNameInLanguage**(*division: Division*, *language: Languages*)\
 	A function that returns the division name in another language. If the name is not found then an Exception is thrown.
 
 ### zipcodes.py
 
-*enum* zipcodes.**ZipCodeTypes**
+*enum* zipcodes.**ZipCodeTypes**\
 	An enum that represents a zip code type.
 
 #### Options
 - AMERICA
 
-*class* zipcodes.**ZipCode**(*zip_code: int*, *type_: ZipCodeTypes*)
+*class* zipcodes.**ZipCode**(*zip_code: int*, *type_: ZipCodeTypes*)\
 	A class that represents a zip code. This is also known as a postal code, post code, PIN, or mailing code in some places.
 
 ----
@@ -551,15 +551,15 @@ languages.**getNameInLanguage**(*division: Division*, *language: Languages*)
 ----
 ### addresses.py
 
-*class* addresses.**Address**(*street: str*, *city: City*, *county: County*, *country: Country*, *zipcode: ZipCode*)
+*class* addresses.**Address**(*street: str*, *city: City*, *county: County*, *country: Country*, *zipcode: ZipCode*)\
 	A class that represents an address.
 
 ### coordinates.py
 
-*class* coordinates.**Coordinates**(*longitude: float*, *latitude: float*)
+*class* coordinates.**Coordinates**(*longitude: float*, *latitude: float*)\
 	A class that represents a coordinate set.
 
 ### locations.py
 
-*class* locations.**Location**(*name: str*, *divisions: list[Division] = []*)
+*class* locations.**Location**(*name: str*, *divisions: list[Division] = []*)\
 	A class that represents a location. The division list should be smallest to largest division.
