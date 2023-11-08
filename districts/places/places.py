@@ -9,15 +9,11 @@
 
 from enum import IntEnum, auto
 from ..divisions import Division, DivisionTypes
-from .religious import ReligionTypes, WorshipStructureTypes, \
-     DenominationTypes, Religion
-from .emergency import EmergencyServiceTypes
 
-__all__ = ("PlaceTypes", "ReligionTypes", "WorshipStructureTypes",
-           "DenominationTypes", "Religion", "EmergencyServiceTypes",
-           "Place", "Building", "Stadium", "CityHall", "Courthouse",
-           "Fort", "Port", "Airport", "HouseOfWorship", "Cemetery",
-           "Bank", "EmergencyService", "Hospital", "PostOffice")
+__all__ = ("PlaceTypes", "Place", "Building",
+           "Stadium", "CityHall", "Courthouse",
+           "Fort", "Port", "Airport", "Bank",
+           "Hospital", "PostOffice")
 
 
 # --- PlaceTypes Enum --- #
@@ -126,35 +122,6 @@ class Airport(Place):
     def __init__(self, name: str, /, population: int = None, **kwargs):
 
         super().__init__(name, PlaceTypes.AIRPORT, population, **kwargs)
-    
-
-# --- HouseOfWorship Class --- #
-
-class HouseOfWorship(Place):
-    def __init__(self, name: str, religion: Religion,
-                 /,
-                 population: int = None,
-                 **kwargs):
-
-        super().__init__(name, PlaceTypes.HOUSE_OF_WORSHIP, population, **kwargs)
-
-        self.religion = religion
-
-    def __format__(self, format_spec = "") -> str:
-        if any(i in format_spec for i in {"F", "O", "L", "l"}):
-            if self.religion.type_ == ReligionTypes.CHRISTIANITY:
-                return f"{self.name} {self.religion.denomination} {self.religion.structure}"
-            return f"{self.name} {self.religion.structure}"
-
-        return str(self)
-    
-
-# --- Cemetery Class --- #
-
-class Cemetery(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.CEMETERY, population, **kwargs)
 
 
 # --- Bank Class --- #
@@ -163,16 +130,6 @@ class Bank(Place):
     def __init__(self, name: str, /, population: int = None, **kwargs):
 
         super().__init__(name, PlaceTypes.BANK, population, **kwargs)
-
-
-# --- EmergencyService Class --- #
-
-class EmergencyService(Place):
-    def __init__(self, name: str, service: EmergencyServiceTypes, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.EMERGENCY_SERVICE, population, **kwargs)
-
-        self.service = service
 
 
 # --- Hospital Class --- #
