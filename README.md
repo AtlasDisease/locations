@@ -23,7 +23,9 @@ from locations.districts.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.places.cemeteries import Grave
 from locations.districts.areas import AreaTypes, Neighborhood, University
-from locations.districts import Division, DivisionTypes, City, County,\ Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
+from locations.districts.areas.schools import SchoolTypes
+from locations.districts import Division, DivisionTypes, City, County,\
+Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
 Universe
 from locations.districts.cities import CityTypes, AdministrativeTypes
 from locations.districts.extensions import Population
@@ -66,8 +68,9 @@ Quaker Oats Co. for 25 years.""")
 cemetery = Cemetery("Blackjack", graves = [grave])
 church = HouseOfWorship("First", religion)
 stadium = Place("Kyle Field", PlaceTypes.STADIUM)
-university = Division("Texas A&M", AreaTypes.SCHOOL) #Can create a university like this
-university = University("Texas A&M") #This is a better way
+university = Division("Texas A&M", AreaTypes.SCHOOL) #Can create a university-like object like this
+university = Division("Texas A&M", SchoolTypes.UNIVERSITY) #Can create a university like this too which is more accurate
+university = University("Texas A&M") #This is the best way
 neighborhood = Neighborhood("Downtown",
                             subdivisions = [stadium])
 city = City("College Station",
