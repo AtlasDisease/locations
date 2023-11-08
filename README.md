@@ -40,7 +40,7 @@ from locations.politics.leaders import Leader, LeaderPolicy, Administrator
 from locations.politics.economics import Economy, EconomicPolicy
 from locations.politics.law import Law, LawPolicy, Bill, BillStatus, Constitution
 
-from locations.position import Address, Coordinates, Location
+from locations.positional import Address, Coordinates, Location
 
 from locations.zipcodes import ZipCode, ZipCodeTypes
 
