@@ -1,8 +1,10 @@
 # locations - Object oriented locations
 ---
-This package offers lots classes for dealing with locations in an object oriented way. It also includes some extended classes and functions for handling things that are usually associated with locations.
+This package offers lots classes for dealing with locations in an object oriented way. It also includes some extended classes and functions for handling things that are usually associated with certain locations but not required.
 
+----
 ## Basic Usage
+---
 
 Below shows the basic usage of the package using a real-world example.
 
@@ -15,8 +17,11 @@ from locations.districts.divisions import Division, DivisionTypes
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.districts.places import Place, PlaceTypes, HouseOfWorship
-from locations.districts.places.religious import ReligionTypes, WorshipStructureTypes, DenominationTypes, Religion
+from locations.districts.places import Place, PlaceTypes, HouseOfWorship, \
+     Cemetery
+from locations.districts.places.religious import ReligionTypes, \
+     WorshipStructureTypes, DenominationTypes, Religion
+from locations.districts.places.cemeteries import Grave
 from locations.districts.areas import AreaTypes, Neighborhood
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
 from locations.districts.counties import County, Parish
@@ -61,6 +66,10 @@ coordinates = Coordinates(0.001545, 51.477928) #Prime Meridian
 religion = Religion(ReligionTypes.CHRISTIANITY,
                     WorshipStructureTypes.CHURCH,
                     denomination = DenominationTypes.PRESBYTERIAN)
+grave = Grave("Rosie Lee Moore", dt.date(1899, 6, 22), dt.date(1967, 2, 12),
+              description = """Rosie was \" Aunt Jemima\" for
+Quaker Oats Co. for 25 years.""")
+cemetery = Cemetery("Blackjack", graves = [grave])
 church = HouseOfWorship("First", religion)
 stadium = Place("Kyle Field", PlaceTypes.STADIUM)
 university = Division("Texas A&M", AreaTypes.UNIVERSITY)
@@ -107,6 +116,9 @@ location = Location("Universe", [church, neighborhood, city, county,
                                 country, continent, planet, solarsystem,
                                 galaxy, universe])
 
+print(cemetery)
+for grave in cemetery.graves:
+	print(f"{grave}: O")
 print(location)
 print()
 print(government)
@@ -128,11 +140,18 @@ if not city3:
     print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
 ```
 
+----
 ## Districts Package
-
+---
 ### Places Package
-#### emergency.py
+#### cemeteries.py
+*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)
+	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
 
+*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)
+	A class that represents a cemetery.
+
+#### emergency.py
 *enum* emergency.**EmergencyServiceTypes**
 	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
 
@@ -140,6 +159,9 @@ if not city3:
 - POLICE
 - FIRE
 - HEALTH
+
+*class* emergency.**EmergencyService**(*name: str*, *service: EmergencyServiceTypes*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents an emergency service.
 
 #### places.py
 
@@ -186,18 +208,9 @@ These classes can receive extended functionality by specifying the population ke
 
 *class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents an airport.
-
-*class* places.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a house of worship.
-
-*class* places.**Cemetery**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents a cemetery.
 	
 *class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents a bank.
-
-*class* places.**EmergencyService**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
-	A class that represents an emergency service.
 
 *class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
 	A class that represents a hospital.
@@ -266,6 +279,9 @@ These classes can receive extended functionality by specifying the population ke
 
 *class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)
 	A class that represents a religion.
+
+*class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)
+	A class that represents a house of worship.
 
 ### areas.py
 
@@ -423,7 +439,9 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* universes.**Universe**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)
 	A class that represents a universe.
 
+----
 ## Politics Package
+---
 ### law
 
 *enum* bills.**BillStatus**
@@ -528,7 +546,9 @@ languages.**getNameInLanguage**(*division: Division*, *language: Languages*)
 *class* zipcodes.**ZipCode**(*zip_code: int*, *type_: ZipCodeTypes*)
 	A class that represents a zip code. This is also known as a postal code, post code, PIN, or mailing code in some places.
 
+----
 ## Position Package
+----
 ### addresses.py
 
 *class* addresses.**Address**(*street: str*, *city: City*, *county: County*, *country: Country*, *zipcode: ZipCode*)
