@@ -23,6 +23,7 @@ from locations.districts.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.places.cemeteries import Grave
 from locations.districts.areas import AreaTypes, Neighborhood
+from locations.districts.areas.schools import University
 from locations.districts.cities import City, CityTypes, AdministrativeTypes
 from locations.districts.counties import County, Parish
 from locations.districts.states import State
@@ -72,7 +73,8 @@ Quaker Oats Co. for 25 years.""")
 cemetery = Cemetery("Blackjack", graves = [grave])
 church = HouseOfWorship("First", religion)
 stadium = Place("Kyle Field", PlaceTypes.STADIUM)
-university = Division("Texas A&M", AreaTypes.UNIVERSITY)
+university = Division("Texas A&M", AreaTypes.SCHOOL) #Can create a university like this
+university = University("Texas A&M") #This is a better way
 neighborhood = Neighborhood("Downtown",
                             subdivisions = [stadium])
 city = City("College Station",
@@ -143,6 +145,56 @@ if not city3:
 ----
 ## Districts Package
 ---
+### Areas Package
+#### areas.py
+
+All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
+
+*enum* areas.**AreaTypes**
+	An enum that represents the types of areas. The NEIGHBORHOOD option should be the default unless there is another option that more accurately represents your area.
+
+#### Options
+- NEIGHBORHOOD - General use
+- SCHOOL
+- FORT
+- PORT
+- AIRPORT
+
+*class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a neighbor or a generic area of a city. 
+
+*class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a fort.
+
+*class* areas.**Port**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a port.
+
+*class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents an airport.
+
+#### schools.py
+
+*enum* schools.**SchoolTypes**
+	An enum that represents the types of schools. The SCHOOL option should be the default unless there is another option that more accurately represents your place of learning.
+
+#### Options
+- SCHOOL - General use
+- COLLEGE
+- UNIVERSITY
+- TECHNICAL
+
+*class* schools.**School**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a school.
+
+*class* schools.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a college campus.
+
+*class* schools.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a university campus.
+
+*class* schools.**Technical**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a technical school.
+
 ### Places Package
 #### cemeteries.py
 *class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
@@ -184,6 +236,7 @@ These classes can receive extended functionality by specifying the population ke
 - EMERGENCY_SERVICE
 - HOSPITAL
 - POST_OFFICE
+- SCHOOL
 
 *class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
@@ -217,6 +270,9 @@ These classes can receive extended functionality by specifying the population ke
 
 *class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a post office.
+
+*class* places.**School**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a school.
 
 #### religious.py
 *enum* religious.**ReligionTypes**
@@ -282,31 +338,6 @@ These classes can receive extended functionality by specifying the population ke
 
 *class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a house of worship.
-
-### areas.py
-
-All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
-
-*enum* areas.**AreaTypes**
-	An enum that represents the types of areas. The NEIGHBORHOOD option should be the default unless there is another option that more accurately represents your area.
-
-*class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a neighbor or a generic area of a city. 
-
-*class* areas.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a college campus.
-
-*class* areas.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a university campus.
-
-*class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a fort.
-
-*class* areas.**Port**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a port.
-
-*class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents an airport.
 
 ### cities.py
 
