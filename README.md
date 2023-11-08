@@ -11,7 +11,7 @@ Below shows the basic usage of the package using a real-world example.
 ```python
 # --- Imports --- #
 
-from locations.districts.divisions import Division, DivisionTypes
+import datetime as dt
 # Religion is a complex thing as it is tied into places very
 # closely but a separate idea so doing something like districts.religions
 # makes it seem like they rely on each other which does not make sense
@@ -23,8 +23,8 @@ from locations.districts.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
 from locations.districts.places.cemeteries import Grave
 from locations.districts.areas import AreaTypes, Neighborhood, University
-from locations.districts import City, County, Parish, State, Country, \
-     Continent, Planet, PlanetarySystem, Galaxy, Universe
+from locations.districts import Division, DivisionTypes, City, County,\ Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
+Universe
 from locations.districts.cities import CityTypes, AdministrativeTypes
 from locations.districts.extensions import Population
 
