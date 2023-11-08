@@ -185,37 +185,37 @@ These classes can receive extended functionality by specifying the population ke
 - HOSPITAL
 - POST_OFFICE
 
-*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
 
-*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a building.
 
-*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a stadium.
 
-*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a city hall.
 
-*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a courthouse.
 
-*class* places.**Fort**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Fort**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a fort.
 
-*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a port.
 
-*class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an airport.
 	
-*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a bank.
 
-*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a hospital.
 
-*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)
+*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a post office.
 
 #### religious.py
