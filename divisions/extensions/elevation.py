@@ -1,6 +1,6 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: This module contains the Area class that extends
+# Description: This module contains the Elevation class that extends
 # the functionality of a class in the districts package.
 
 # --- Imports --- #
@@ -9,51 +9,50 @@ from typing import Callable
 from enum import IntEnum, auto
 from ..divisions import Division, DivisionTypes
 
-__all__ = ("Area", "add_area", "AreaMeasurementTypes",
-           "kilometers", "miles")
+__all__ = ("Elevation", "add_elevation", "meters",
+           "feet", "ElevationMeasurementTypes")
 
 
-# NEED TO ADD SQ KILOMETERS, use SQ MILES currently
+# --- ElevationMeasurementTypes Enum --- #
 
-# --- MeasurementTypes Enum --- #
-
-class AreaMeasurementTypes(IntEnum):
-    KILOMETERS = auto()
-    MILES = auto()
+class ElevationMeasurementTypes(IntEnum):
+    METERS = auto()
+    FEET = auto()
 
     def __str__(self) -> str:
-        if self == AreaMeasurementTypes.MILES:
-            return "sq mi"
-        return "km2"
+        if self == ElevationMeasurementTypes.FEET:
+            return "ft"
+        return "m"
 
     def __format__(self, format_spec = ""):
         return str(self)
 
 
-# --- Area Class --- #
 
-class Area(float):
+# --- Elevation Class --- #
+
+class Elevation(int):
     """Basically an integer but with formatting when converted to string
 and some additional functions to help with comparisons"""
 
     def __new__(self, value, *args):
-        return float.__new__(self, value)
+        return int.__new__(self, value)
+    
+    def __init__(self, elevation: int = 0, measurement: ElevationMeasurementTypes = ElevationMeasurementTypes.METERS):
 
-    def __init__(self, area: float = 0, measurement: AreaMeasurementTypes = AreaMeasurementTypes.KILOMETERS):
-        
         super().__init__()
         self.measurement = measurement
 
     def __str__(self) -> str:
-        return f"{self:,.2f} {self.measurement}"
+        return f"{self:,} {self.measurement}"
 
     def __gt__(self, other) -> bool:
 
         if self.measurement != other.measurement:
-            if self.measurement == AreaMeasurementTypes.MILES:
-                num = miles(other)
-            elif self.measurement == AreaMeasurementTypes.KILOMETERS:
-                num = kilometers(other)
+            if self.measurement == ElevationMeasurementTypes.FEET:
+                num = feet(other)
+            elif self.measurement == ElevationMeasurementTypes.METERS:
+                num = meters(other)
                 
             other = Area(num, self.measurement)
         
@@ -73,11 +72,11 @@ and some additional functions to help with comparisons"""
         def inner1(*args, **kwargs):
 
             division = args[0]
-            if any((not hasattr(x, "area") for x in division.subdivisions)):
-                raise NotImplementedError("Subdivisions are required to have a area variable in order to use this function.")
+            if any((not hasattr(x, "elevation") for x in division.subdivisions)):
+                raise NotImplementedError("Subdivisions are required to have a elevation variable in order to use this function.")
         
             if len(division.subdivisions) <= 0:
-                return Division("New", DivisionTypes.AREA, area = 0)
+                return Division("New", DivisionTypes.AREA, elevation = 0)
 
             return func(*args, **kwargs)
         
@@ -98,23 +97,23 @@ and some additional functions to help with comparisons"""
     @staticmethod
     @__errorcheck
     def largest(division: Division) -> Division:
-        return Area.__get(division, lambda x, y: x.area <= y.area \
-               and x.area.measurement == y.area.measurement)
+        return Elevation.__get(division, lambda x, y: x.elevation <= y.elevation \
+               and x.elevation.measurement == y.elevation.measurement)
     
     @staticmethod
     @__errorcheck
     def smallest(division: Division) -> Division:
-        return Area.__get(division, lambda x, y: x.area >= y.area \
-               and x.area.measurement == y.area.measurement)
+        return Elevation.__get(division, lambda x, y: x.elevation >= y.elevation \
+               and x.elevation.measurement == y.elevation.measurement)
 
 
 # --- Extending Functionality Definitions --- #
 
-def add_area(cls, area: float) -> None:
-    cls.area = area
+def add_elevation(cls, elevation: int) -> None:
+    cls.elevation = elevation
 
-def kilometers(area: Area) -> Area:
-    return Area(area * 1.609344, AreaMeasurementTypes.KILOMETERS)
+def meters(elevation: Elevation) -> Elevation:
+    return Elevation(elevation * 0.3048, ElevationMeasurementTypes.METERS)
 
-def miles(area: Area) -> Area:
-    return Area(area / 1.609344, AreaMeasurementTypes.MILES)
+def feet(elevation: Elevation) -> Elevation:
+    return Elevation(elevation / 0.3048, ElevationMeasurementTypes.FEET)

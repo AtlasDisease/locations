@@ -37,6 +37,7 @@ class Division:
                  subdivisions: list[Self] | Self = None,
                  population: int = None,
                  area: int = None,
+                 elevation: int = None,
                  #prefix: str = "",
                  **kwargs):
 
@@ -52,6 +53,9 @@ class Division:
 
         if area != None:
             self.area = area
+
+        if elevation != None:
+            self.elevation = elevation
 
         if subdivisions and not self.subdivisions:
             add_subdivisions(self, subdivisions)

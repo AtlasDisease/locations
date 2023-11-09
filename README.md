@@ -28,7 +28,8 @@ from locations.divisions import Division, DivisionTypes, City, County,\
 Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
 Universe
 from locations.divisions.cities import CityTypes, AdministrativeTypes
-from locations.divisions.extensions import Population
+from locations.divisions.extensions import Population, Area, kilometers, \
+     Elevation, meters, AreaMeasurementTypes, ElevationMeasurementTypes
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -74,18 +75,24 @@ university = University("Texas A&M") #This is the best way
 neighborhood = Neighborhood("Downtown",
                             subdivisions = [stadium])
 city = City("College Station",
-			CityTypes.CITY,
-			AdministrativeTypes.NONE,
-			population = Population(115_000),
-			subdivisions = [neighborhood, church, university])
-city2 = City("Bryan",
             CityTypes.CITY,
-            AdministrativeTypes.SEAT,
-            population = Population(200_000))
-city3 = City("Boonville",
-            CityTypes.SITE,
             AdministrativeTypes.NONE,
-            population = Population(0))
+            population = Population(115_000),
+            subdivisions = [neighborhood, university],
+            area = Area(51.30, AreaMeasurementTypes.MILES),
+            elevation = Elevation(289, ElevationMeasurementTypes.FEET))
+city2 = City("Bryan",
+             CityTypes.CITY,
+             AdministrativeTypes.SEAT,
+             population = Population(200_000),
+             area = Area(54.26, AreaMeasurementTypes.MILES),
+             elevation = Elevation(361, ElevationMeasurementTypes.FEET))
+city3 = City("Boonville",
+             CityTypes.SITE,
+             AdministrativeTypes.NONE,
+             population = Population(0),
+             area = Area(0, AreaMeasurementTypes.MILES),
+             elevation = Elevation(359, ElevationMeasurementTypes.FEET))
 county = County("Brazos",
                 population = Population(233_849),
                 subdivisions = [city, city2, city3])
@@ -121,6 +128,8 @@ print(location)
 print()
 print(government)
 print()
+print(kilometers(city2.area))
+print(meters(city.elevation))
 
 # These do the same thing, prefer the bottom one
 print(leader.as_Administrator())
@@ -136,6 +145,26 @@ if not city3:
 city3 = county.get(func = Population.smallest)
 if not city3:
     print(city3, city3.population, city3.incorporated, city3.abandoned, city3.historical)
+
+city3 = county.get(func = Area.largest)
+if city3:
+    print(city3, city3.area, city3.incorporated, city3.abandoned,
+          city3.historical)
+    
+city3 = county.get(func = Area.smallest)
+if city3:
+    print(city3, city3.area, city3.incorporated, city3.abandoned,
+          city3.historical)
+
+city3 = county.get(func = Elevation.largest)
+if city3:
+    print(city3, city3.elevation, city3.incorporated, city3.abandoned,
+          city3.historical)
+    
+city3 = county.get(func = Elevation.smallest)
+if city3:
+    print(city3, city3.elevation, city3.incorporated, city3.abandoned,
+          city3.historical)
 ```
 
 ----
@@ -193,14 +222,14 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 ### Extensions Packages
 #### area.py
-*enum* area.**MeasurementTypes**
+*enum* area.**AreaMeasurementTypes**
 	An enum that represents the types of measurements. The KILOMETERS option should be the default unless there is another option that more accurately represents the measurement.
 
 #### Options
 - KILOMETERS - General use
 - MILES
 
-*class* area.**Area**(*area: float = 0*, *measurement: MeasurementTypes = MeasurementTypes.KILOMETERS*, *\*\*kwargs*)\
+*class* area.**Area**(*area: float = 0*, *measurement: AreaMeasurementTypes = AreaMeasurementTypes.KILOMETERS*, *\*\*kwargs*)\
 	A class that represents an area.
 
 ##### Methods
@@ -220,6 +249,34 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *def* area.**miles**(*area: Area*)\
 	Converts an area to miles.
 
+#### elevation.py
+*enum* elevation.**ElevationMeasurementTypes**
+	An enum that represents the types of measurements. The METERS option should be the default unless there is another option that more accurately represents the measurement.
+
+#### Options
+- METERS - General use
+- FEET
+
+*class* elevation.**Elevation**(*elevation: int = 0*, *measurement: ElevationMeasurementTypes = ElevationMeasurementTypes.METERS, *\*\*kwargs*)\
+	A class that represents an elevation.
+
+##### Methods
+*def* Elevation.**largest**(*division: Division*)\
+	Gets the highest elevation in a Division.
+
+*def* Elevation.**smallest**(*division: Division*)\
+	Gets the lowest elevation in a Division
+
+##### Module Methods
+*def* elevation.**add_elevation**(*cls*, *elevation: int*)\
+	Adds area to a class.
+
+*def* elevation.**meters**(*elevation: Elevation*)\
+	Converts an elevation to meters.
+
+*def* elevation.**feet**(*elevation: Elevation*)\
+	Converts an elevation to feet.
+	
 #### population.py
 *class* population.**Population**(*population: int = 0*)\
 	A class that represents a population.
@@ -465,7 +522,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - GALAXY
 - UNIVERSE
 
-*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *area: float = None*, *elevation: int = None* *\*\*kwargs*)\
 	A class that represents a division. This is a base class for a majority of class in the districts package.
 
 #### Methods

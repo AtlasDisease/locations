@@ -6,4 +6,5 @@
 # --- Imports --- #
 
 from .population import Population, add_population
-from .area import Area, add_area, MeasurementTypes, kilometers, miles
+from .area import Area, add_area, AreaMeasurementTypes, kilometers, miles
+from .elevation import Elevation, add_elevation, meters, ElevationMeasurementTypes
