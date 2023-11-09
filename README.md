@@ -17,18 +17,18 @@ import datetime as dt
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.districts.places import Place, PlaceTypes, HouseOfWorship, \
+from locations.divisions.places import Place, PlaceTypes, HouseOfWorship, \
      Cemetery
-from locations.districts.places.religious import ReligionTypes, \
+from locations.divisions.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
-from locations.districts.places.cemeteries import Grave
-from locations.districts.areas import AreaTypes, Neighborhood, University
-from locations.districts.areas.schools import SchoolTypes
-from locations.districts import Division, DivisionTypes, City, County,\
+from locations.divisions.places.cemeteries import Grave
+from locations.divisions.districts import AreaTypes, Neighborhood, University
+from locations.divisions.districts.schools import SchoolTypes
+from locations.divisions import Division, DivisionTypes, City, County,\
 Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
 Universe
-from locations.districts.cities import CityTypes, AdministrativeTypes
-from locations.districts.extensions import Population
+from locations.divisions.cities import CityTypes, AdministrativeTypes
+from locations.divisions.extensions import Population
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -139,9 +139,9 @@ if not city3:
 ```
 
 ----
-## Districts Package
+## Divisions Package
 ---
-### Areas Package
+### Districts Package
 #### areas.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
@@ -190,6 +190,50 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* schools.**Technical**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a technical school.
+
+### Extensions Packages
+#### area.py
+*enum* area.**MeasurementTypes**
+	An enum that represents the types of measurements. The KILOMETERS option should be the default unless there is another option that more accurately represents the measurement.
+
+#### Options
+- KILOMETERS - General use
+- MILES
+
+*class* area.**Area**(*area: float = 0*, *measurement: MeasurementTypes = MeasurementTypes.KILOMETERS*, *\*\*kwargs*)\
+	A class that represents an area.
+
+##### Methods
+*def* Area.**largest**(*division: Division*)\
+	Gets the largest population in a Division.
+
+*def* Area.**smallest**(*division: Division*)\
+	Gets the smallest population in a Division
+
+##### Module Methods
+*def* area.**add_area**(*cls*, *area: float*)\
+	Adds area to a class.
+
+*def* area.**kilometers**(*area: Area*)\
+	Converts an area to kilometers.
+
+*def* area.**miles**(*area: Area*)\
+	Converts an area to miles.
+
+#### population.py
+*class* population.**Population**(*population: int = 0*)\
+	A class that represents a population.
+
+##### Methods
+*def* Population.**largest**(*division: Division*)\
+	Gets the largest population in a Division.
+
+*def* Population.**smallest**(*division: Division*)\
+	Gets the smallest population in a Division.
+
+##### Module Methods
+*def* population.**add_population**(*cls*, *population: float*)\
+	Adds population to a class.
 
 ### Places Package
 #### cemeteries.py
