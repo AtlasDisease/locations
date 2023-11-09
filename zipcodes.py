@@ -15,27 +15,27 @@ from enum import Enum
 # --- ZipCodeTypes Enum --- #
 
 class ZipCodeTypes(Enum):
-	AMERICA = "^(\d{5})(-?)((\d{5})?)"
+    AMERICA = "^(\d{5})(-?)((\d{5})?)"
 
 
 # --- ZipCode Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class ZipCode:
-	zip_code: int
-	type_: ZipCodeTypes
+    zip_code: int
+    type_: ZipCodeTypes
 
-	def __post_init__(self):
+    def __post_init__(self):
+        if (not re.fullmatch(self.type_.value, str(self.zip_code))):
+            raise Exception("Zip code must be 5 numbers or 10 numbers.")
 
-		if (not re.fullmatch(self.type_.value, str(self.zip_code))):
-			raise Exception("Zip code must be 5 numbers or 10 numbers.")
+    def __len__(self):
+        return len(str(self.zip_code))
 
-	def __len__(self):
-		return len(str(self.zip_code))
-
-	def __str__(self):
-		match (self.type_):
-			case ZipCodeTypes.AMERICA:
-				if len(self) == 10:
-					return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
-		return str(self.zip_code)
+    def __str__(self):
+        match (self.type_):
+            case ZipCodeTypes.AMERICA:
+                if len(self) == 10:
+                    return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
+                
+        return str(self.zip_code)

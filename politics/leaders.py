@@ -40,7 +40,7 @@ but has an administrative function."""
         self.name = name
         self.title = title
 
-        if (leader != None):
+        if leader:
             self.name = leader.name
             self.title = leader.title
 

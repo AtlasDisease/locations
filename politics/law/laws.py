@@ -26,7 +26,7 @@ class Law:
     def __init__(self, policy: LawPolicy, /, bills: list[Bill] = None):
 
         self.policy = policy
-        self.bills = bills if bills != None else []
+        self.bills = bills if bills else []
 
     def __str__(self):
         return "\r\n\r\n".join((str(bill) for bill in self.bills))

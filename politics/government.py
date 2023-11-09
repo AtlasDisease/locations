@@ -6,6 +6,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass
 from .leaders import Leader, Administrator
 from .economics import Economy
 from .law import Law
@@ -15,12 +16,11 @@ __all__ = ("Government", "add_government", "add_administrator",)
 
 # --- Government Class --- #
 
+@dataclass(slots = True)
 class Government:
-    def __init__(self, leader: Leader, economy: Economy, law: Law):
-
-        self.leader = leader
-        self.economy = economy
-        self.law = law
+    leader: Leader
+    economy: Economy
+    law: Law
 
     def __str__(self):
         return f"{self.leader}\r\n{self.economy}\r\n{self.law}"
