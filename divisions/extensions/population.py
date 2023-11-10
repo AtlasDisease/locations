@@ -5,16 +5,15 @@
 
 # --- Imports --- #
 
-from typing import Callable
 from ..divisions import Division
-from .extenders import Extender, errorcheck
+from .extenders import Extension, errorcheck
 
 __all__ = ("Population", "add_population")
 
 
 # --- Population Class --- #
 
-class Population(int, Extender):
+class Population(int, Extension):
     """Basically an integer but with formatting when converted to string
 and some additional functions to help with comparisons"""
 

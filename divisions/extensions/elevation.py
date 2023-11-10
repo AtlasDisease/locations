@@ -5,10 +5,8 @@
 
 # --- Imports --- #
 
-from typing import Callable
-from enum import IntEnum, auto
 from ..divisions import Division
-from .extenders import Extender, errorcheck
+from .extenders import Extension, errorcheck
 
 __all__ = ("Elevation", "Meters", "Feet", \
     "meters", "feet", "add_elevation" )
@@ -16,7 +14,7 @@ __all__ = ("Elevation", "Meters", "Feet", \
 
 # --- Elevation Class --- #
 
-class Elevation(Extender):
+class Elevation(Extension):
     @staticmethod
     @errorcheck
     def highest(division: Division) -> Division:

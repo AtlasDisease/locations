@@ -1,6 +1,6 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: This module contains the Extender class that extends
+# Description: This module contains the Extension class that extends
 # the functionality of a class in the extensions package.
 
 # --- Imports --- #
@@ -15,7 +15,7 @@ def errorcheck(func: Callable):
 
         division = args[0]
 
-        # This is a hacky way to get class that called this so we can make sure division has a certain attribute
+        # This is a hacky way to get the class that called this so we can make sure division has a certain attribute
         varname = "subdivisions"
         if "." in varname:
             varname = func.__qualname__.split(".")[0].lower() #Area.largest = area, Population.smallest = population
@@ -31,9 +31,9 @@ def errorcheck(func: Callable):
     return inner1
 
 
-# --- Extenders Class --- #
+# --- Extension Class --- #
 
-class Extender:
+class Extension:
     @staticmethod
     def _get(division: Division, func: Callable) -> Division:
         result = division.subdivisions[0]

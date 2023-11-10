@@ -5,18 +5,17 @@
 
 # --- Imports --- #
 
-from typing import Callable
-from enum import IntEnum, auto
 from ..divisions import Division
-from .extenders import Extender, errorcheck
+from .extenders import Extension, errorcheck
 
 __all__ = ("Area", "Kilometers", "Miles", \
     "kilometers", "miles", "add_area")
 
 
+
 # --- Area Class --- #
 
-class Area(Extender):
+class Area(Extension):
     @staticmethod
     @errorcheck
     def largest(division: Division) -> Division:
@@ -30,7 +29,7 @@ class Area(Extender):
 
 # --- Kilometers Class --- #
 
-class Kilometers(float, Extender):
+class Kilometers(float):
     def __str__(self) -> str:
         return f"{self:,.2f} km2"
 
@@ -55,7 +54,7 @@ class Kilometers(float, Extender):
 
 # --- Miles Class --- #
 
-class Miles(float, Extender):
+class Miles(float):
     def __str__(self) -> str:
         return f"{self:,.2f} sq mi"
 
