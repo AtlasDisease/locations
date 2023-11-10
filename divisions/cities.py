@@ -41,12 +41,15 @@ class AdministrativeTypes(IntEnum):
 # --- City Class --- #
 
 class City(Division):
-    def __init__(self, name: str, citytype: CityTypes, admintype: AdministrativeTypes, /,
+    def __init__(self, name: str, citytype: CityTypes, admintype: AdministrativeTypes,
+                 /,
                  subdivisions: list[Division] | Division = None,
-                 population: int = None,   
+                 *,
+                 population: int = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.CITY, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.CITY, subdivisions,
+                         population = population, **kwargs)
         self.city_type = citytype
         self.admin_type = admintype
 

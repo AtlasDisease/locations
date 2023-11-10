@@ -32,7 +32,7 @@ class School(Division):
                  population: int = None,     
                  **kwargs):
 
-        super().__init__(name, AreaTypes.SCHOOL, subdivisions, population, **kwargs)
+        super().__init__(name, AreaTypes.SCHOOL, subdivisions, population = population, **kwargs)
 
         self.school_type = school_type
 

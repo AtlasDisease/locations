@@ -17,9 +17,12 @@ __all__ = ("State",)
 # --- State Class --- #
 
 class State(Division):
-    def __init__(self, name: str, /,
+    def __init__(self, name: str,
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,    
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.STATE, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.STATE, subdivisions,
+                         population = population, **kwargs)

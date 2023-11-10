@@ -13,12 +13,15 @@ __all__ = ("County", "Parish", "Shire")
 # --- County Class --- #
 
 class County(Division):
-    def __init__(self, name: str, /,
+    def __init__(self, name: str,
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,   
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.COUNTY, subdivisions, population, **kwargs)   
+        super().__init__(name, DivisionTypes.COUNTY, subdivisions,
+                         population = population, **kwargs)
 
     def seat(self) -> Division:
         """Gets the county seat; this is a function (instead of a property)

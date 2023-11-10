@@ -15,12 +15,15 @@ __all__ = ("PlanetarySystem",)
 # --- PlanetarySystem Class --- #
 
 class PlanetarySystem(Division):
-    def __init__(self, name: str, /,
+    def __init__(self, name: str,
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,  
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.PLANETARY_SYSTEM, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.PLANETARY_SYSTEM, subdivisions,
+                         population = population, **kwargs)
 
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:

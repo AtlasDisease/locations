@@ -12,12 +12,15 @@ __all__ = ("Universe",)
 # --- Universe Class --- #
 
 class Universe(Division):
-    def __init__(self, name: str = "", /,
+    def __init__(self, name: str = "",
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.UNIVERSE, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.UNIVERSE, subdivisions,
+                         population = population, **kwargs)
 
     def __str__(self):
         return f"{self.name} {self.__class__.__name__}".strip()

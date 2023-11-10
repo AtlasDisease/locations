@@ -12,14 +12,16 @@ __all__ = ("Country",)
 # --- Country Class --- #
 
 class Country(Division):
-    def __init__(self, name: str, /,
+    def __init__(self, name: str,
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,
                  prefix: str = "",
                  **kwargs):
 
         super().__init__(name, DivisionTypes.COUNTRY, subdivisions,
-                         population, **kwargs)
+                         population = population, **kwargs)
 
         if prefix != "":
             self.prefix = prefix

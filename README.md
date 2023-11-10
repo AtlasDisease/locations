@@ -28,8 +28,7 @@ from locations.divisions import Division, DivisionTypes, City, County,\
 Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
 Universe
 from locations.divisions.cities import CityTypes, AdministrativeTypes
-from locations.divisions.extensions import Population, Area, Kilometers, Miles, kilometers, \
-     Elevation, Meters, Feet, meters
+from locations.divisions.extensions import Population, Area, Kilometers, \ Miles, kilometers, Elevation, Meters, Feet, meters
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -78,8 +77,8 @@ neighborhood = Neighborhood("Downtown",
 city = City("College Station",
             CityTypes.CITY,
             AdministrativeTypes.NONE,
-            population = Population(115_000),
             subdivisions = [neighborhood, university],
+            population = Population(115_000),
             area = Miles(51.30),
             elevation = Feet(289))
 city2 = City("Bryan",
@@ -95,29 +94,29 @@ city3 = City("Boonville",
              area = Miles(0),
              elevation = Feet(359))
 county = County("Brazos",
-                population = Population(233_849),
-                subdivisions = [city, city2, city3])
+				subdivisions = [city, city2, city3],
+                population = Population(233_849))
 
 # Louisiana uses Parishes instead of Counties, same concept
 parish = Parish("Acadia")
 louisiana = State("Louisiana", subdivisions = [parish])
 texas = State("Texas",
-			  population = Population(27_000_000),
-			  subdivisions = [county])
+			  subdivisions = [county],
+			  population = Population(27_000_000))
 country = Country("United States of America",
                     subdivisions = [texas, louisiana])
 continent = Continent("North America",
                     subdivisions = [country])
 planet = Planet("Earth",
-                population = Population(8_000_000_000),
-                subdivisions = [continent])
+				subdivisions = [continent],
+                population = Population(8_000_000_000))
 solarsystem = PlanetarySystem("Solis",
 							  subdivisions = [planet])
 galaxy = Galaxy("Milky Way",
 				subdivisions = [solarsystem])
 universe = Universe("My Universe",
-					population = float('inf'),
-                    subdivisions = [galaxy])
+                    subdivisions = [galaxy],
+                    population = float('inf'))
 location = Location("Universe", [church, neighborhood, city, county,
                                 country, continent, planet, solarsystem,
                                 galaxy, universe])
@@ -131,11 +130,9 @@ print(government)
 print()
 print(kilometers(city2.area))
 print(meters(city.elevation))
-print(Miles(100) == Kilometers(100)) #This is a known issue
-print(Feet(100) == Meters(100)) #This is a known issue
+print(Miles(100) == Kilometers(100))
+print(Feet(100) == Meters(100))
 
-# These do the same thing, prefer the bottom one
-# print(leader.as_Administrator())
 print(Administrator(leader = leader))
 
 print(f"{county.seat(): O}") #Implying there is a cost to this
@@ -225,15 +222,17 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 ### Extensions Packages
 #### area.py
-*enum* area.**AreaMeasurementTypes**
-	An enum that represents the types of measurements. The KILOMETERS option should be the default unless there is another option that more accurately represents the measurement.
-
-#### Options
-- KILOMETERS - General use
-- MILES
-
-*class* area.**Area**(*area: float = 0*, *measurement: AreaMeasurementTypes = AreaMeasurementTypes.KILOMETERS*, *\*\*kwargs*)\
+*class* area.**Area**()\
 	A class that represents an area.
+
+*class* area.**AreaUnit**(*num: float*)\
+	A class that represents an area unit.
+
+*class* area.**Miles**()\
+	A subclass of AreaUnit.
+
+*class* area.**Kilometers**()\
+	A subclass of AreaUnit.
 
 ##### Methods
 *def* Area.**largest**(*division: Division*)\
@@ -253,25 +252,27 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	Converts an area to miles.
 
 #### elevation.py
-*enum* elevation.**ElevationMeasurementTypes**
-	An enum that represents the types of measurements. The METERS option should be the default unless there is another option that more accurately represents the measurement.
+*class* elevation.**Elevation**()\
+	A class that represents an elevation. Basically a wrapper for the methods.
 
-#### Options
-- METERS - General use
-- FEET
+*class* elevation.**ElevationUnit**(*num: int = 0*)\
+	A class that represents an elevation unit.
 
-*class* elevation.**Elevation**(*elevation: int = 0*, *measurement: ElevationMeasurementTypes = ElevationMeasurementTypes.METERS, *\*\*kwargs*)\
-	A class that represents an elevation.
+*class* elevation.**Meters**()\
+	A subclass of ElevationUnit.
 
+*class* elevation.**Feet**()\
+	A subclass of ElevationUnit.
+	
 ##### Methods
-*def* Elevation.**largest**(*division: Division*)\
+*def* Elevation.**highest**(*division: Division*)\
 	Gets the highest elevation in a Division.
 
-*def* Elevation.**smallest**(*division: Division*)\
-	Gets the lowest elevation in a Division
+*def* Elevation.**lowest**(*division: Division*)\
+	Gets the lowest elevation in a Division.
 
 ##### Module Methods
-*def* elevation.**add_elevation**(*cls*, *elevation: int*)\
+*def* elevation.**add_elevation**(*cls*, *elevation: int = 0*)\
 	Adds area to a class.
 
 *def* elevation.**meters**(*elevation: Elevation*)\
@@ -525,7 +526,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - GALAXY
 - UNIVERSE
 
-*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *area: float = None*, *elevation: int = None* *\*\*kwargs*)\
+*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, **population: int = None*, *area: float = None*, *elevation: int = None* *\*\*kwargs*)\
 	A class that represents a division. This is a base class for a majority of class in the districts package.
 
 #### Methods

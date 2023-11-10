@@ -34,7 +34,7 @@ class Neighborhood(Division):
                  population: int = None, 
                  **kwargs):
 
-        super().__init__(name, AreaTypes.NEIGHBORHOOD, subdivisions, population, **kwargs)
+        super().__init__(name, AreaTypes.NEIGHBORHOOD, subdivisions, population = population, **kwargs)
 
 
 # --- Fort Class --- #

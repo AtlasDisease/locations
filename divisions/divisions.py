@@ -35,11 +35,10 @@ class Division:
                  type_: IntEnum = DivisionTypes.AREA,
                  /,
                  subdivisions: list[Self] | Self = None,
-                 population: int = None,
                  *,
+                 population: int = None,
                  area: int = None,
                  elevation: int = None,
-                 #prefix: str = "",
                  **kwargs):
 
         self.name = name
@@ -48,9 +47,6 @@ class Division:
 
         if subdivisions and not self.subdivisions:
             add_subdivisions(self, subdivisions)
-
-##        if prefix != "":
-##            self.prefix = prefix
 
         if population != None:
             self.population = population
@@ -65,6 +61,11 @@ class Division:
         if "administrator" in kwargs and "government" in kwargs:
             if kwargs["administrator"] and kwargs["government"]:
                 raise Exception("You cannot have both government and administrator populated")
+
+            if kwargs["administrator"]:
+                self.administrator = kwargs["administrator"]
+            if kwargs["government"]:
+                self.government = kwargs["government"]
 
         self.__dict__ |= kwargs
 
@@ -87,7 +88,6 @@ class Division:
     def __bool__(self) -> bool:
         return self.name != "New" and self.name \
                and self.type_ != DivisionTypes.AREA
-               #and len(self.subdivisions) > 0
 
     def __iter__(self):
         return iter(self.subdivisions)

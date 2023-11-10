@@ -12,12 +12,15 @@ __all__ = ("Continent",)
 # --- Continent Class --- #
 
 class Continent(Division):
-    def __init__(self, name: str, /,
+    def __init__(self, name: str,
+                 /,
                  subdivisions: list[Division] | Division = None,
+                 *,
                  population: int = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.CONTINENT, subdivisions, population, **kwargs)
+        super().__init__(name, DivisionTypes.CONTINENT, subdivisions,
+                         population = population, **kwargs)
 
     def __format__(self, format_spec = "") -> str:
 
