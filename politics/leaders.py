@@ -35,7 +35,7 @@ but has an administrative function."""
 
     __slots__ = ("name", "title")
     
-    def __init__(self, name: str = "", title: str = "", /, leader = None):
+    def __init__(self, name: str = "", title: str = "", *, leader = None):
 
         self.name = name
         self.title = title
@@ -58,5 +58,8 @@ class Leader(Administrator):
     _: KW_ONLY
     title: str = "President"
 
-    def as_Administrator(self) -> Administrator:
-        return Administrator(self.name, self.title)
+
+# --- Convertion Functions --- #
+
+# def administrator(obj: Leader) -> Administrator:
+#     return Administrator(obj.name,  obj.title)

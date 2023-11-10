@@ -36,6 +36,7 @@ class Division:
                  /,
                  subdivisions: list[Self] | Self = None,
                  population: int = None,
+                 *,
                  area: int = None,
                  elevation: int = None,
                  #prefix: str = "",
@@ -44,6 +45,9 @@ class Division:
         self.name = name
         self.type_ = type_
         self.subdivisions = []
+
+        if subdivisions and not self.subdivisions:
+            add_subdivisions(self, subdivisions)
 
 ##        if prefix != "":
 ##            self.prefix = prefix
@@ -56,9 +60,6 @@ class Division:
 
         if elevation != None:
             self.elevation = elevation
-
-        if subdivisions and not self.subdivisions:
-            add_subdivisions(self, subdivisions)
 
         #I do not like this as it ties districts and politics together
         if "administrator" in kwargs and "government" in kwargs:

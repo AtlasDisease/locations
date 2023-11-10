@@ -28,15 +28,16 @@ from locations.divisions import Division, DivisionTypes, City, County,\
 Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
 Universe
 from locations.divisions.cities import CityTypes, AdministrativeTypes
-from locations.divisions.extensions import Population, Area, kilometers, \
-     Elevation, meters, AreaMeasurementTypes, ElevationMeasurementTypes
+from locations.divisions.extensions import Population, Area, Kilometers, Miles, kilometers, \
+     Elevation, Meters, Feet, meters
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the politics package could be used on its own
 # without the districts being used.
-from locations.politics import Government, Leader, Administrator, \Economy, Law, Bill, Constitution
+from locations.politics import Government, Leader, Administrator, \
+    Economy, Law, Bill, Constitution
 from locations.politics.leaders import LeaderPolicy
 from locations.politics.economics import EconomicPolicy
 from locations.politics.law import LawPolicy, BillStatus
@@ -79,20 +80,20 @@ city = City("College Station",
             AdministrativeTypes.NONE,
             population = Population(115_000),
             subdivisions = [neighborhood, university],
-            area = Area(51.30, AreaMeasurementTypes.MILES),
-            elevation = Elevation(289, ElevationMeasurementTypes.FEET))
+            area = Miles(51.30),
+            elevation = Feet(289))
 city2 = City("Bryan",
              CityTypes.CITY,
              AdministrativeTypes.SEAT,
              population = Population(200_000),
-             area = Area(54.26, AreaMeasurementTypes.MILES),
-             elevation = Elevation(361, ElevationMeasurementTypes.FEET))
+             area = Miles(54.26),
+             elevation = Feet(361))
 city3 = City("Boonville",
              CityTypes.SITE,
              AdministrativeTypes.NONE,
              population = Population(0),
-             area = Area(0, AreaMeasurementTypes.MILES),
-             elevation = Elevation(359, ElevationMeasurementTypes.FEET))
+             area = Miles(0),
+             elevation = Feet(359))
 county = County("Brazos",
                 population = Population(233_849),
                 subdivisions = [city, city2, city3])
@@ -103,10 +104,10 @@ louisiana = State("Louisiana", subdivisions = [parish])
 texas = State("Texas",
 			  population = Population(27_000_000),
 			  subdivisions = [county])
-country2 = Country("United States of America",
+country = Country("United States of America",
                     subdivisions = [texas, louisiana])
 continent = Continent("North America",
-                    subdivisions = [country, country2])
+                    subdivisions = [country])
 planet = Planet("Earth",
                 population = Population(8_000_000_000),
                 subdivisions = [continent])
@@ -130,9 +131,11 @@ print(government)
 print()
 print(kilometers(city2.area))
 print(meters(city.elevation))
+print(Miles(100) == Kilometers(100)) #This is a known issue
+print(Feet(100) == Meters(100)) #This is a known issue
 
 # These do the same thing, prefer the bottom one
-print(leader.as_Administrator())
+# print(leader.as_Administrator())
 print(Administrator(leader = leader))
 
 print(f"{county.seat(): O}") #Implying there is a cost to this
@@ -156,12 +159,12 @@ if city3:
     print(city3, city3.area, city3.incorporated, city3.abandoned,
           city3.historical)
 
-city3 = county.get(func = Elevation.largest)
+city3 = county.get(func = Elevation.highest)
 if city3:
     print(city3, city3.elevation, city3.incorporated, city3.abandoned,
           city3.historical)
     
-city3 = county.get(func = Elevation.smallest)
+city3 = county.get(func = Elevation.lowest)
 if city3:
     print(city3, city3.elevation, city3.incorporated, city3.abandoned,
           city3.historical)
@@ -646,8 +649,8 @@ government.**add_administrator**(*cls*, *admin: Administrator*)\
 *class* leaders.**Leader**(*name: str*, *policy: LeaderPolicy*, /, *title: str = "President"*)\
 	A class that represents a leader.
 
-#### Methods
-Leader.**as_Administrator**()\
+#### Module Methods
+leaders.**administrator**(*obj: Leader*)\
 	A function that returns the Leader object as a Administrator object.
 
 ### languages.py

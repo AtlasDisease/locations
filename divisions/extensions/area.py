@@ -7,105 +7,75 @@
 
 from typing import Callable
 from enum import IntEnum, auto
-from ..divisions import Division, DivisionTypes
+from ..divisions import Division
+from .extenders import Extender, errorcheck
 
-__all__ = ("Area", "add_area", "AreaMeasurementTypes",
-           "kilometers", "miles")
-
-
-# NEED TO ADD SQ KILOMETERS, use SQ MILES currently
-
-# --- MeasurementTypes Enum --- #
-
-class AreaMeasurementTypes(IntEnum):
-    KILOMETERS = auto()
-    MILES = auto()
-
-    def __str__(self) -> str:
-        if self == AreaMeasurementTypes.MILES:
-            return "sq mi"
-        return "km2"
-
-    def __format__(self, format_spec = ""):
-        return str(self)
+__all__ = ("Area", "Kilometers", "Miles", \
+    "kilometers", "miles", "add_area")
 
 
 # --- Area Class --- #
 
-class Area(float):
-    """Basically an integer but with formatting when converted to string
-and some additional functions to help with comparisons"""
-
-    def __new__(self, value, *args):
-        return float.__new__(self, value)
-
-    def __init__(self, area: float = 0, measurement: AreaMeasurementTypes = AreaMeasurementTypes.KILOMETERS):
-        
-        super().__init__()
-        self.measurement = measurement
-
-    def __str__(self) -> str:
-        return f"{self:,.2f} {self.measurement}"
-
-    def __gt__(self, other) -> bool:
-
-        if self.measurement != other.measurement:
-            if self.measurement == AreaMeasurementTypes.MILES:
-                num = miles(other)
-            elif self.measurement == AreaMeasurementTypes.KILOMETERS:
-                num = kilometers(other)
-                
-            other = Area(num, self.measurement)
-        
-        return self.area > other.area \
-               and self.measurement == other.measurement
-
-    def __lt__(self, other) -> bool:
-        return self < other \
-               and self.measurement == other.measurement
-
-    def __eq__(self, other) -> bool:
-        return self.area == other.area \
-               and self.measurement == other.measurement
-
+class Area(Extender):
     @staticmethod
-    def __errorcheck(func):
-        def inner1(*args, **kwargs):
-
-            division = args[0]
-            if any((not hasattr(x, "area") for x in division.subdivisions)):
-                raise NotImplementedError("Subdivisions are required to have a area variable in order to use this function.")
-        
-            if len(division.subdivisions) <= 0:
-                return Division("New", DivisionTypes.AREA, area = 0)
-
-            return func(*args, **kwargs)
-        
-        return inner1
-
-    @staticmethod
-    def __get(division: Division, func: Callable) -> Division:
-        result = division.subdivisions[0]
-    
-        for subdivision in division.subdivisions:
-            if func(subdivision, result):
-                continue
-        
-            result = subdivision
-
-        return result
-
-    @staticmethod
-    @__errorcheck
+    @errorcheck
     def largest(division: Division) -> Division:
-        return Area.__get(division, lambda x, y: x.area <= y.area \
-               and x.area.measurement == y.area.measurement)
+        return Area._get(division, lambda x, y: x.area <= y.area)
     
     @staticmethod
-    @__errorcheck
+    @errorcheck
     def smallest(division: Division) -> Division:
-        return Area.__get(division, lambda x, y: x.area >= y.area \
-               and x.area.measurement == y.area.measurement)
+        return Area._get(division, lambda x, y: x.area >= y.area)
+
+
+# --- Kilometers Class --- #
+
+class Kilometers(float, Extender):
+    def __str__(self) -> str:
+        return f"{self:,.2f} km2"
+
+    # def __gt__(self, other) -> bool:
+    #     if isinstance(other, Miles):
+    #         other = kilometers(other)
+
+    #     return self > other
+
+    # def __lt__(self, other) -> bool:
+    #     if isinstance(other, Miles):
+    #         other = kilometers(other)
+
+    #     return self < other
+
+    # def __eq__(self, other) -> bool:
+    #     if isinstance(other, Miles):
+    #         other = kilometers(other)
+
+    #     return super(int).__eq__(other)
+
+
+# --- Miles Class --- #
+
+class Miles(float, Extender):
+    def __str__(self) -> str:
+        return f"{self:,.2f} sq mi"
+
+    # def __gt__(self, other) -> bool:
+    #     if isinstance(other, Kilometers):
+    #         other = miles(other)
+
+    #     return self > other
+
+    # def __lt__(self, other) -> bool:
+    #     if isinstance(other, Kilometers):
+    #         other = miles(other)
+
+    #     return self < other
+
+    # def __eq__(self, other) -> bool:
+    #     if isinstance(other, Kilometers):
+    #         other = miles(other)
+
+    #     return super(int).__eq__(other)
 
 
 # --- Extending Functionality Definitions --- #
@@ -113,8 +83,8 @@ and some additional functions to help with comparisons"""
 def add_area(cls, area: float) -> None:
     cls.area = area
 
-def kilometers(area: Area) -> Area:
-    return Area(area * 1.609344, AreaMeasurementTypes.KILOMETERS)
+def kilometers(area: Miles) -> Kilometers:
+    return Kilometers(area * 1.609344) 
 
-def miles(area: Area) -> Area:
-    return Area(area / 1.609344, AreaMeasurementTypes.MILES)
+def miles(area: Kilometers) -> Miles:
+    return Miles(area / 1.609344)

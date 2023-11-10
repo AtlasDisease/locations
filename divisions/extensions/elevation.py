@@ -7,104 +7,75 @@
 
 from typing import Callable
 from enum import IntEnum, auto
-from ..divisions import Division, DivisionTypes
+from ..divisions import Division
+from .extenders import Extender, errorcheck
 
-__all__ = ("Elevation", "add_elevation", "meters",
-           "feet", "ElevationMeasurementTypes")
-
-
-# --- ElevationMeasurementTypes Enum --- #
-
-class ElevationMeasurementTypes(IntEnum):
-    METERS = auto()
-    FEET = auto()
-
-    def __str__(self) -> str:
-        if self == ElevationMeasurementTypes.FEET:
-            return "ft"
-        return "m"
-
-    def __format__(self, format_spec = ""):
-        return str(self)
-
+__all__ = ("Elevation", "Meters", "Feet", \
+    "meters", "feet", "add_elevation" )
 
 
 # --- Elevation Class --- #
 
-class Elevation(int):
-    """Basically an integer but with formatting when converted to string
-and some additional functions to help with comparisons"""
-
-    def __new__(self, value, *args):
-        return int.__new__(self, value)
+class Elevation(Extender):
+    @staticmethod
+    @errorcheck
+    def highest(division: Division) -> Division:
+        return Elevation._get(division, lambda x, y: x.elevation <= y.elevation)
     
-    def __init__(self, elevation: int = 0, measurement: ElevationMeasurementTypes = ElevationMeasurementTypes.METERS):
+    @staticmethod
+    @errorcheck
+    def lowest(division: Division) -> Division:
+        return Elevation._get(division, lambda x, y: x.elevation >= y.elevation)
 
-        super().__init__()
-        self.measurement = measurement
 
+# --- Meters Class --- #
+
+class Meters(int):
     def __str__(self) -> str:
-        return f"{self:,} {self.measurement}"
+        return f"{self:,.2f} m"
 
-    def __gt__(self, other) -> bool:
+    # def __gt__(self, other) -> bool:
+    #     if isinstance(other, Feet):
+    #         other = feet(other)
 
-        if self.measurement != other.measurement:
-            if self.measurement == ElevationMeasurementTypes.FEET:
-                num = feet(other)
-            elif self.measurement == ElevationMeasurementTypes.METERS:
-                num = meters(other)
-                
-            other = Area(num, self.measurement)
-        
-        return self.area > other.area \
-               and self.measurement == other.measurement
+    #     return self > other
 
-    def __lt__(self, other) -> bool:
-        return self < other \
-               and self.measurement == other.measurement
+    # def __lt__(self, other) -> bool:
+    #     if isinstance(other, Feet):
+    #         other = feet(other)
 
-    def __eq__(self, other) -> bool:
-        return self.area == other.area \
-               and self.measurement == other.measurement
+    #     return self < other
 
-    @staticmethod
-    def __errorcheck(func):
-        def inner1(*args, **kwargs):
+    # def __eq__(self, other) -> bool:
+    #     if isinstance(other, Feet):
+    #         other = feet(other)
 
-            division = args[0]
-            if any((not hasattr(x, "elevation") for x in division.subdivisions)):
-                raise NotImplementedError("Subdivisions are required to have a elevation variable in order to use this function.")
-        
-            if len(division.subdivisions) <= 0:
-                return Division("New", DivisionTypes.AREA, elevation = 0)
+    #     return self == other
 
-            return func(*args, **kwargs)
-        
-        return inner1
 
-    @staticmethod
-    def __get(division: Division, func: Callable) -> Division:
-        result = division.subdivisions[0]
-    
-        for subdivision in division.subdivisions:
-            if func(subdivision, result):
-                continue
-        
-            result = subdivision
+# --- Feet Class --- #
 
-        return result
+class Feet(int):
+    def __str__(self) -> str:
+        return f"{self:,.2f} ft"
 
-    @staticmethod
-    @__errorcheck
-    def largest(division: Division) -> Division:
-        return Elevation.__get(division, lambda x, y: x.elevation <= y.elevation \
-               and x.elevation.measurement == y.elevation.measurement)
-    
-    @staticmethod
-    @__errorcheck
-    def smallest(division: Division) -> Division:
-        return Elevation.__get(division, lambda x, y: x.elevation >= y.elevation \
-               and x.elevation.measurement == y.elevation.measurement)
+    # def __gt__(self, other) -> bool:
+    #     if isinstance(other, Meters):
+    #         other = meters(other)
+
+    #     return self > other
+
+    # def __lt__(self, other) -> bool:
+    #     if isinstance(other, Meters):
+    #         other = meters(other)
+
+    #     return self < other
+
+    # def __eq__(self, other) -> bool:
+    #     if isinstance(other, Meters):
+    #         other = meters(other)
+
+    #     return self == other
 
 
 # --- Extending Functionality Definitions --- #
@@ -112,8 +83,8 @@ and some additional functions to help with comparisons"""
 def add_elevation(cls, elevation: int) -> None:
     cls.elevation = elevation
 
-def meters(elevation: Elevation) -> Elevation:
-    return Elevation(elevation * 0.3048, ElevationMeasurementTypes.METERS)
+def meters(elevation: Feet) -> Meters:
+    return Meters(elevation * 0.3048)
 
-def feet(elevation: Elevation) -> Elevation:
-    return Elevation(elevation / 0.3048, ElevationMeasurementTypes.FEET)
+def feet(elevation: Meters) -> Feet:
+    return Feet(elevation / 0.3048)
