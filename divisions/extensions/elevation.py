@@ -34,23 +34,23 @@ class Meters(int):
     def __str__(self) -> str:
         return f"{self:,.2f} m"
 
-    # def __gt__(self, other) -> bool:
-    #     if isinstance(other, Feet):
-    #         other = feet(other)
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Feet):
+            other = feet(other)
 
-    #     return self > other
+        return int.__gt__(self, other)
 
-    # def __lt__(self, other) -> bool:
-    #     if isinstance(other, Feet):
-    #         other = feet(other)
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Feet):
+            other = feet(other)
 
-    #     return self < other
+        return int.__lt__(self, other)
 
-    # def __eq__(self, other) -> bool:
-    #     if isinstance(other, Feet):
-    #         other = feet(other)
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Feet):
+            other = feet(other)
 
-    #     return self == other
+        return int.__eq__(self, other)
 
 
 # --- Feet Class --- #
@@ -59,23 +59,23 @@ class Feet(int):
     def __str__(self) -> str:
         return f"{self:,.2f} ft"
 
-    # def __gt__(self, other) -> bool:
-    #     if isinstance(other, Meters):
-    #         other = meters(other)
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Meters):
+            other = meters(other)
 
-    #     return self > other
+        return int.__gt__(self, other)
 
-    # def __lt__(self, other) -> bool:
-    #     if isinstance(other, Meters):
-    #         other = meters(other)
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Meters):
+            other = meters(other)
 
-    #     return self < other
+        return int.__lt__(self, other)
 
-    # def __eq__(self, other) -> bool:
-    #     if isinstance(other, Meters):
-    #         other = meters(other)
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Meters):
+            other = meters(other)
 
-    #     return self == other
+        return int.__eq__(self, other)
 
 
 # --- Extending Functionality Definitions --- #

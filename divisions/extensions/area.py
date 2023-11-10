@@ -34,23 +34,23 @@ class Kilometers(float, Extender):
     def __str__(self) -> str:
         return f"{self:,.2f} km2"
 
-    # def __gt__(self, other) -> bool:
-    #     if isinstance(other, Miles):
-    #         other = kilometers(other)
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Miles):
+            other = kilometers(other)
 
-    #     return self > other
+        return float.__gt__(self, other)
 
-    # def __lt__(self, other) -> bool:
-    #     if isinstance(other, Miles):
-    #         other = kilometers(other)
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Miles):
+            other = kilometers(other)
 
-    #     return self < other
+        return float.__lt__(self, other)
 
-    # def __eq__(self, other) -> bool:
-    #     if isinstance(other, Miles):
-    #         other = kilometers(other)
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Miles):
+            other = kilometers(other)
 
-    #     return super(int).__eq__(other)
+        return float.__eq__(self, other)
 
 
 # --- Miles Class --- #
@@ -59,23 +59,23 @@ class Miles(float, Extender):
     def __str__(self) -> str:
         return f"{self:,.2f} sq mi"
 
-    # def __gt__(self, other) -> bool:
-    #     if isinstance(other, Kilometers):
-    #         other = miles(other)
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Kilometers):
+            other = miles(other)
 
-    #     return self > other
+        return float.__gt__(self, other)
 
-    # def __lt__(self, other) -> bool:
-    #     if isinstance(other, Kilometers):
-    #         other = miles(other)
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Kilometers):
+            other = miles(other)
 
-    #     return self < other
+        return float.__lt__(self, other)
 
-    # def __eq__(self, other) -> bool:
-    #     if isinstance(other, Kilometers):
-    #         other = miles(other)
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Kilometers):
+            other = miles(other)
 
-    #     return super(int).__eq__(other)
+        return float.__eq__(self, other)
 
 
 # --- Extending Functionality Definitions --- #
