@@ -39,9 +39,9 @@ class AreaUnit(float):
                 else:
                     other = miles(other)
 
-                return func(first, other)
+            return func(first, other)
                 
-            return inner1
+        return inner1
 
     @convert
     def __gt__(self, other) -> bool:
@@ -62,9 +62,10 @@ class Kilometers(AreaUnit):
     def __str__(self) -> str:
         return f"{self:,.2f} km2"
 
+
 # --- Miles Class --- #
 
-class Miles(AreaUnit):
+class Miles(AreaUnit):  
     def __str__(self) -> str:
         return f"{self:,.2f} sq mi"
 

@@ -38,7 +38,7 @@ class ElevationUnit(int):
                     other = feet(other)
                 else:
                     other = meters(other)
-
+                    
             return func(first, other)
 
         return inner1
