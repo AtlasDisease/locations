@@ -5,6 +5,7 @@
 
 # --- Imports --- #
 
+from typing import Callable
 from ..divisions import Division
 from .extenders import Extension, errorcheck
 
@@ -26,54 +27,47 @@ class Elevation(Extension):
         return Elevation._get(division, lambda x, y: x.elevation >= y.elevation)
 
 
-# --- Meters Class --- #
+# --- ElevationUnit Class --- #
 
-class Meters(int):
-    def __str__(self) -> str:
-        return f"{self:,.2f} m"
+class ElevationUnit(int):
+    @staticmethod
+    def convert(func: Callable):
+        def inner1(first, other):
+            if type(first) != type(other):
+                if isinstance(other, Feet):
+                    other = feet(other)
+                else:
+                    other = meters(other)
 
+            return func(first, other)
+
+        return inner1
+
+    @convert
     def __gt__(self, other) -> bool:
-        if isinstance(other, Feet):
-            other = feet(other)
-
         return int.__gt__(self, other)
 
+    @convert
     def __lt__(self, other) -> bool:
-        if isinstance(other, Feet):
-            other = feet(other)
-
         return int.__lt__(self, other)
 
+    @convert
     def __eq__(self, other) -> bool:
-        if isinstance(other, Feet):
-            other = feet(other)
-
         return int.__eq__(self, other)
+
+
+# --- Meters Class --- #
+
+class Meters(ElevationUnit):
+    def __str__(self) -> str:
+        return f"{self:,.2f} m"
 
 
 # --- Feet Class --- #
 
-class Feet(int):
+class Feet(ElevationUnit):
     def __str__(self) -> str:
         return f"{self:,.2f} ft"
-
-    def __gt__(self, other) -> bool:
-        if isinstance(other, Meters):
-            other = meters(other)
-
-        return int.__gt__(self, other)
-
-    def __lt__(self, other) -> bool:
-        if isinstance(other, Meters):
-            other = meters(other)
-
-        return int.__lt__(self, other)
-
-    def __eq__(self, other) -> bool:
-        if isinstance(other, Meters):
-            other = meters(other)
-
-        return int.__eq__(self, other)
 
 
 # --- Extending Functionality Definitions --- #

@@ -5,12 +5,12 @@
 
 # --- Imports --- #
 
+from typing import Callable
 from ..divisions import Division
 from .extenders import Extension, errorcheck
 
 __all__ = ("Area", "Kilometers", "Miles", \
     "kilometers", "miles", "add_area")
-
 
 
 # --- Area Class --- #
@@ -27,54 +27,46 @@ class Area(Extension):
         return Area._get(division, lambda x, y: x.area >= y.area)
 
 
+# --- AreaUnit Class --- #
+
+class AreaUnit(float):
+    @staticmethod
+    def convert(func: Callable):
+        def inner1(first, other):
+            if type(first) != type(other):
+                if isinstance(other, Miles):
+                    other = kilometers(other)
+                else:
+                    other = miles(other)
+
+                return func(first, other)
+                
+            return inner1
+
+    @convert
+    def __gt__(self, other) -> bool:
+        return float.__gt__(self, other)
+
+    @convert
+    def __lt__(self, other) -> bool:
+        return float.__lt__(self, other)
+
+    @convert
+    def __eq__(self, other) -> bool:
+        return float.__eq__(self, other)
+
+
 # --- Kilometers Class --- #
 
-class Kilometers(float):
+class Kilometers(AreaUnit):
     def __str__(self) -> str:
         return f"{self:,.2f} km2"
 
-    def __gt__(self, other) -> bool:
-        if isinstance(other, Miles):
-            other = kilometers(other)
-
-        return float.__gt__(self, other)
-
-    def __lt__(self, other) -> bool:
-        if isinstance(other, Miles):
-            other = kilometers(other)
-
-        return float.__lt__(self, other)
-
-    def __eq__(self, other) -> bool:
-        if isinstance(other, Miles):
-            other = kilometers(other)
-
-        return float.__eq__(self, other)
-
-
 # --- Miles Class --- #
 
-class Miles(float):
+class Miles(AreaUnit):
     def __str__(self) -> str:
         return f"{self:,.2f} sq mi"
-
-    def __gt__(self, other) -> bool:
-        if isinstance(other, Kilometers):
-            other = miles(other)
-
-        return float.__gt__(self, other)
-
-    def __lt__(self, other) -> bool:
-        if isinstance(other, Kilometers):
-            other = miles(other)
-
-        return float.__lt__(self, other)
-
-    def __eq__(self, other) -> bool:
-        if isinstance(other, Kilometers):
-            other = miles(other)
-
-        return float.__eq__(self, other)
 
 
 # --- Extending Functionality Definitions --- #
