@@ -11,7 +11,7 @@ from enum import IntEnum, auto
 from dataclasses import dataclass
 from ..divisions import Division
 
-__all__ = ("AreaTypes", "District", "Neighborhood", "Fort", "Port", "Airport")
+__all__ = ("AreaTypes", "District", "Neighborhood")
 
 
 # --- AreaTypes Enum --- #
@@ -44,6 +44,14 @@ class District(Division): #A type that can have subdivisions or not
         if kwargs:
             self.__dict__ |= kwargs
 
+    def __format__(self, format_spec = "") -> str:
+        if "F" in format_spec or "O" in format_spec:
+            if self.type_.name == "FORT":
+                return f"{self.type_} {self.name}"
+            return f"{self.name} {self.type_}"
+        
+        return str(self)
+
     @property
     def hasSubdivisions(self) -> bool:
         return bool(self.subdivisions)
@@ -56,30 +64,3 @@ class Neighborhood(District):
     def __post_init__(self):
 
         self.type_ = AreaTypes.NEIGHBORHOOD
-
-
-# --- Fort Class --- #
-
-@dataclass(init = False)
-class Fort(District):
-    def __post_init__(self):
-        
-        self.type_ = AreaTypes.FORT  
-
-
-# --- Port Class --- #
-
-@dataclass(init = False)
-class Port(District):
-    def __post_init__(self):
-        
-        self.type_ = AreaTypes.PORT
-
-
-# --- Airport Class --- #
-
-@dataclass(init = False)
-class Airport(District):
-     def __post_init__(self):
-         
-         self.type_ = AreaTypes.AIRPORT

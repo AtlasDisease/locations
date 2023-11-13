@@ -9,12 +9,11 @@
 
 from enum import IntEnum, auto
 from dataclasses import dataclass
-from ..divisions import Division, DivisionTypes
+from ..divisions import Division
 from ..districts.areas import District
 
 __all__ = ("PlaceTypes", "Place", "Building", "CityHall",
-           "Courthouse", "Fort", "Port", "Airport", "Bank",
-           "Hospital", "PostOffice")
+           "Courthouse", "Port", "Bank", "Hospital", "PostOffice")
 
 
 # --- PlaceTypes Enum --- #
@@ -24,7 +23,6 @@ class PlaceTypes(IntEnum):
     STADIUM = auto()
     CITY_HALL = auto()
     COURTHOUSE = auto()
-    FORT = auto()
     PORT = auto()
     AIRPORT = auto()
     HOUSE_OF_WORSHIP = auto()
@@ -40,11 +38,10 @@ class PlaceTypes(IntEnum):
 # --- Place Class --- #
 
 class Place:
-    def __init__(self, name: str,
+    def __init__(self, name: str = "",
                  type_: PlaceTypes = PlaceTypes.BUILDING,
-                 /,
-                 population: int = None,
                  *,
+                 population: int = None,
                  district: District = None,
                  **kwargs):
 
@@ -64,7 +61,7 @@ class Place:
     
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:
-            if self.type_ == PlaceTypes.FORT:
+            if self.type_.name == "FORT":
                 return f"{self.type_} {self.name}"
             return f"{self.name} {self.type_}"
 
@@ -102,15 +99,6 @@ class Courthouse(Place):
         self.type_ = PlaceTypes.COURTHOUSE
 
 
-# --- Fort Class --- #
-
-@dataclass(init = False)
-class Fort(Place):
-    def __post_init__(self):
-        
-        self.type_ = PlaceTypes.FORT
-
-
 # --- Port Class --- #
 
 @dataclass(init = False)
@@ -118,15 +106,6 @@ class Port(Place):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.PORT
-        
-
-# --- Airport Class --- #
-
-@dataclass(init = False)
-class Airport(Place):
-    def __post_init__(self):
-        
-        self.type_ = PlaceTypes.AIRPORT
 
 
 # --- Bank Class --- #

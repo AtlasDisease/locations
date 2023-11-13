@@ -97,7 +97,7 @@ class HouseOfWorship(Place):
                  population: int = None,
                  **kwargs):
 
-        super().__init__(name, PlaceTypes.HOUSE_OF_WORSHIP, population, **kwargs)
+        super().__init__(name, PlaceTypes.HOUSE_OF_WORSHIP, population = population, **kwargs)
 
         self.religion = religion
 
