@@ -5,8 +5,9 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
+from dataclasses import dataclass
 from ..divisions import Division
-from .areas import AreaTypes
+from .areas import AreaTypes, District
 
 __all__ = ("School", "College", "University", "Technical")
 
@@ -25,7 +26,7 @@ class SchoolTypes(IntEnum):
 
 # --- School Class --- #
 
-class School(Division):
+class School(District):
      def __init__(self, name: str, school_type: SchoolTypes = SchoolTypes.SCHOOL,
                   /,
                  subdivisions: list[Division] | Division = None,
@@ -39,32 +40,26 @@ class School(Division):
 
 # --- College Class --- #
 
+@dataclass(init = False)
 class College(School):
-    def __init__(self, name: str, /,
-                 subdivisions: list[Division] | Division = None,
-                 population: int = None,   
-                 **kwargs):
-
-        super().__init__(name, SchoolTypes.COLLEGE, subdivisions, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = SchoolTypes.COLLEGE
 
 
 # --- University Class --- #
 
+@dataclass(init = False)
 class University(School):
-    def __init__(self, name: str, /,
-                 subdivisions: list[Division] | Division = None,
-                 population: int = None,  
-                 **kwargs):
-
-        super().__init__(name, SchoolTypes.UNIVERSITY, subdivisions, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = SchoolTypes.UNIVERSITY
 
 
 # --- Technical Class --- #
 
+@dataclass(init = False)
 class Technical(School):
-    def __init__(self, name: str, /,
-                 subdivisions: list[Division] | Division = None,
-                 population: int = None,  
-                 **kwargs):
-
-        super().__init__(name, SchoolTypes.TECHNICAL, subdivisions, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = SchoolTypes.TECHNICAL

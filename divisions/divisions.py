@@ -57,7 +57,7 @@ class Division:
         if elevation != None:
             self.elevation = elevation
 
-        #I do not like this as it ties districts and politics together
+        #I do not like this as it ties districts and politics together a bit
         if "administrator" in kwargs and "government" in kwargs:
             if kwargs["administrator"] and kwargs["government"]:
                 raise Exception("You cannot have both government and administrator populated")

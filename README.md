@@ -17,12 +17,12 @@ import datetime as dt
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.divisions.places import Place, PlaceTypes, HouseOfWorship, \
-     Cemetery
+from locations.divisions.places import Place, PlaceTypes, HouseOfWorship
 from locations.divisions.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
-from locations.divisions.places.cemeteries import Grave
-from locations.divisions.districts import AreaTypes, Neighborhood, University
+from locations.divisions.districts import AreaTypes, Neighborhood, University, \
+Cemetery
+from locations.divisions.districts.cemeteries import Grave
 from locations.divisions.districts.schools import SchoolTypes
 from locations.divisions import Division, DivisionTypes, City, County,\
 Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
@@ -73,7 +73,8 @@ university = Division("Texas A&M", AreaTypes.SCHOOL) #Can create a university-li
 university = Division("Texas A&M", SchoolTypes.UNIVERSITY) #Can create a university like this too which is more accurate
 university = University("Texas A&M") #This is the best way
 neighborhood = Neighborhood("Downtown",
-                            subdivisions = [stadium])
+                            subdivisions = [stadium],
+                            myCustomAttr = "Hello")
 city = City("College Station",
             CityTypes.CITY,
             AdministrativeTypes.NONE,
@@ -184,9 +185,13 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - FORT
 - PORT
 - AIRPORT
+- CEMETERY
+
+*class* areas.**District**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a type similar to a Division but it may not have subdivisions and is is limited in its ability to have Division-based extensions.
 
 *class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a neighbor or a generic area of a city. 
+	A class that represents a neighborhood or a generic area of a city. 
 
 *class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a fort.
@@ -196,6 +201,13 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an airport.
+
+#### cemeteries.py
+*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
+	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
+
+*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
+	A class that represents a cemetery.
 
 #### schools.py
 
@@ -297,13 +309,6 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	Adds population to a class.
 
 ### Places Package
-#### cemeteries.py
-*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
-	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
-
-*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
-	A class that represents a cemetery.
-
 #### emergency.py
 *enum* emergency.**EmergencyServiceTypes**\
 	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
@@ -332,12 +337,10 @@ These classes can receive extended functionality by specifying the population ke
 - PORT
 - AIRPORT
 - HOUSE_OF_WORSHIP
-- CEMETERY
 - BANK
 - EMERGENCY_SERVICE
 - HOSPITAL
 - POST_OFFICE
-- SCHOOL
 
 *class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
@@ -371,9 +374,6 @@ These classes can receive extended functionality by specifying the population ke
 
 *class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a post office.
-
-*class* places.**School**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a school.
 
 #### religious.py
 *enum* religious.**ReligionTypes**
@@ -526,7 +526,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - GALAXY
 - UNIVERSE
 
-*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, **population: int = None*, *area: float = None*, *elevation: int = None* *\*\*kwargs*)\
+*class* divisions.**Division**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, *population: int = None*, *area: float = None*, *elevation: int = None* *\*\*kwargs*)\
 	A class that represents a division. This is a base class for a majority of class in the districts package.
 
 #### Methods

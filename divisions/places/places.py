@@ -8,11 +8,13 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
+from dataclasses import dataclass
 from ..divisions import Division, DivisionTypes
+from ..districts.areas import District
 
 __all__ = ("PlaceTypes", "Place", "Building", "CityHall",
            "Courthouse", "Fort", "Port", "Airport", "Bank",
-           "Hospital", "PostOffice", "School")
+           "Hospital", "PostOffice")
 
 
 # --- PlaceTypes Enum --- #
@@ -26,12 +28,10 @@ class PlaceTypes(IntEnum):
     PORT = auto()
     AIRPORT = auto()
     HOUSE_OF_WORSHIP = auto()
-    CEMETERY = auto()
     BANK = auto()
     EMERGENCY_SERVICE = auto()
     HOSPITAL = auto()
     POST_OFFICE = auto()
-    SCHOOL = auto()
 
     def __str__(self) -> str:
         return self.name.replace("_", " ").title()
@@ -43,14 +43,21 @@ class Place:
     def __init__(self, name: str,
                  type_: PlaceTypes = PlaceTypes.BUILDING,
                  /,
-                 population: int = None, 
+                 population: int = None,
+                 *,
+                 district: District = None,
                  **kwargs):
 
         self.name = name
         self.type_ = type_
 
-        if population != None:
-            add_population(self, population)
+        if population:
+            self.population = population
+
+        if district: #Type conversion
+            self.name = district.name
+            self.type_ = district.type_
+            
 
     def __str__(self) -> str:
         return self.name
@@ -70,79 +77,80 @@ class Place:
 
 # --- Building Class --- #
 
+@dataclass(init = False)
 class Building(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.BUILDING, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.BUILDING
 
 
 # --- CityHall Class --- #
 
+@dataclass(init = False)
 class CityHall(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.CITY_HALL, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.CITY_HALL
 
 
 # --- Courthouse Class --- #
 
+@dataclass(init = False)
 class Courthouse(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.COURTHOUSE, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.COURTHOUSE
 
 
 # --- Fort Class --- #
 
+@dataclass(init = False)
 class Fort(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.FORT, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.FORT
 
 
 # --- Port Class --- #
 
+@dataclass(init = False)
 class Port(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.PORT, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.PORT
         
 
 # --- Airport Class --- #
 
+@dataclass(init = False)
 class Airport(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.AIRPORT, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.AIRPORT
 
 
 # --- Bank Class --- #
 
+@dataclass(init = False)
 class Bank(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.BANK, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.BANK
 
 
 # --- Hospital Class --- #
 
+@dataclass(init = False)
 class Hospital(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.HOSPITAL, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.HOSPITAL
 
 
 # --- PostOffice Class --- #
 
+@dataclass(init = False)
 class PostOffice(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.POST_OFFICE, population, **kwargs)
-
-
-# --- School Class --- #
-
-class School(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
-
-        super().__init__(name, PlaceTypes.SCHOOL, population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = PlaceTypes.POST_OFFICE
