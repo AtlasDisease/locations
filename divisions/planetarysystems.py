@@ -7,6 +7,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 
 __all__ = ("PlanetarySystem",)
@@ -14,16 +15,11 @@ __all__ = ("PlanetarySystem",)
 
 # --- PlanetarySystem Class --- #
 
+@dataclass(init = False)
 class PlanetarySystem(Division):
-    def __init__(self, name: str,
-                 /,
-                 subdivisions: list[Division] | Division = None,
-                 *,
-                 population: int = None,  
-                 **kwargs):
-
-        super().__init__(name, DivisionTypes.PLANETARY_SYSTEM, subdivisions,
-                         population = population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = DivisionTypes.PLANETARY_SYSTEM
 
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:

@@ -9,6 +9,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 
 __all__ = ("State",)
@@ -16,13 +17,8 @@ __all__ = ("State",)
 
 # --- State Class --- #
 
+@dataclass(init = False)
 class State(Division):
-    def __init__(self, name: str,
-                 /,
-                 subdivisions: list[Division] | Division = None,
-                 *,
-                 population: int = None,    
-                 **kwargs):
-
-        super().__init__(name, DivisionTypes.STATE, subdivisions,
-                         population = population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = DivisionTypes.STATE

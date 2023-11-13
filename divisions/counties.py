@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 from .cities import AdministrativeTypes
 
@@ -12,16 +13,11 @@ __all__ = ("County", "Parish", "Shire")
 
 # --- County Class --- #
 
+@dataclass(init = False)
 class County(Division):
-    def __init__(self, name: str,
-                 /,
-                 subdivisions: list[Division] | Division = None,
-                 *,
-                 population: int = None,   
-                 **kwargs):
-
-        super().__init__(name, DivisionTypes.COUNTY, subdivisions,
-                         population = population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = DivisionTypes.COUNTY
 
     def seat(self) -> Division:
         """Gets the county seat; this is a function (instead of a property)

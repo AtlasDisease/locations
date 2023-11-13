@@ -17,9 +17,12 @@ import datetime as dt
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions package could be used on its own
 # without the districts being used.
-from locations.divisions.places import Place, PlaceTypes, HouseOfWorship
+from locations.divisions.places import Place, PlaceTypes, HouseOfWorship, \
+     Fort
 from locations.divisions.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
+from locations.divisions.places.forts import FortAreaTypes
+from locations.divisions.places.rooms import Room
 from locations.divisions.districts import AreaTypes, Neighborhood, University, \
 Cemetery
 from locations.divisions.districts.cemeteries import Grave
@@ -44,6 +47,8 @@ from locations.politics.law import LawPolicy, BillStatus
 from locations.positional import Address, Coordinates, Location
 
 from locations.zipcodes import ZipCode, ZipCodeTypes
+
+from locations.climate import Climate, ClimateTypes
 
 
 # --- Main Logic --- #
@@ -75,6 +80,11 @@ university = University("Texas A&M") #This is the best way
 neighborhood = Neighborhood("Downtown",
                             subdivisions = [stadium],
                             myCustomAttr = "Hello")
+fort = Fort("Concho", [
+    Room("Barracks 1", FortAreaTypes.BARRACKS),
+    Room("Officer Quarters 1", FortAreaTypes.OFFICER_QUARTERS),
+    Room("Parade Grounds", FortAreaTypes.PARADE)
+    ])
 city = City("College Station",
             CityTypes.CITY,
             AdministrativeTypes.NONE,
@@ -121,6 +131,9 @@ universe = Universe("My Universe",
 location = Location("Universe", [church, neighborhood, city, county,
                                 country, continent, planet, solarsystem,
                                 galaxy, universe])
+
+climate = Climate(ClimateTypes.CFA)
+print(climate)
 
 print(cemetery)
 for grave in cemetery.graves:

@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 
 __all__ = ("Planet",)
@@ -11,16 +12,11 @@ __all__ = ("Planet",)
 
 # --- Planet Class --- #
 
+@dataclass(init = False)
 class Planet(Division):
-    def __init__(self, name: str,
-                 /,
-                 subdivisions: list[Division] | Division = None,
-                 *,
-                 population: int = None,     
-                 **kwargs):
-
-        super().__init__(name, DivisionTypes.PLANET, subdivisions,
-                         population = population, **kwargs)
+    def __post_init__(self):
+        
+        self.type_ = DivisionTypes.PLANET
 
     def __format__(self, format_spec = "") -> str:
 
