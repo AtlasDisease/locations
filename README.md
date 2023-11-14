@@ -18,21 +18,23 @@ import datetime as dt
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions module could be used on its own
 # without the districts being used.
-from locations.divisions.places import Place, PlaceTypes, HouseOfWorship
-from locations.divisions.places.religious import ReligionTypes, \
-     WorshipStructureTypes, DenominationTypes, Religion
-from locations.divisions.places.rooms import Room
-from locations.divisions.districts import AreaTypes, Neighborhood#, University, \
-     #Cemetery, Fort
-from locations.infrastructure.forts import FortAreaTypes, Fort
-from locations.infrastructure.cemeteries import Grave, Cemetery
-from locations.infrastructure.schools import SchoolTypes, University
-from locations.divisions import Division, City, County, \
-     Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
-     Universe
+from locations.divisions.rooms import Room
+from locations.divisions.districts import AreaTypes, Neighborhood
+from locations.divisions import Division, City, County, Parish, State, \
+     Country, Continent, Planet, PlanetarySystem, Galaxy, Universe
 from locations.divisions.cities import CityTypes, AdministrativeTypes
 from locations.divisions.extensions import Population, Area, Kilometers, \
      Miles, Elevation, Feet, Meters
+
+from locations.infrastructure.religious import ReligionTypes, \
+     WorshipStructureTypes, DenominationTypes, Religion, HouseOfWorship
+from locations.infrastructure.forts import FortAreaTypes, Fort
+from locations.infrastructure.cemeteries import Grave, Cemetery
+from locations.infrastructure.schools import SchoolTypes, University
+from locations.infrastructure.airports.airplanes import Airplane, \
+     AirplaneManufacturer, Seat
+from locations.infrastructure.airports import Airline, Flight
+from locations.infrastructure.residential import Apartment, House
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -50,10 +52,6 @@ from locations.positional import Coordinates, Location
 from locations.zipcodes import ZipCode, ZipCodeTypes
 
 from locations.climate import Climate, ClimateTypes
-
-from locations.infrastructure.airports.airplanes import Airplane, \
-     AirplaneManufacturer, Seat
-from locations.infrastructure.airports import Airline, Flight
 
 
 # --- Main Logic --- #
@@ -142,6 +140,7 @@ climate = Climate(ClimateTypes.CFA)
 location2 = Location("College Station", [city, county, country])
 city1 = City("Dallas", CityTypes.CITY, AdministrativeTypes.SEAT)
 location3 = Location("Houston", [city1, County("Dallas", [city1]), country])
+apt = Apartment("My Apt", population = Population(150))
 
 seat = Seat(15, "B")
 airplane = Airplane("787 Dreamliner", AirplaneManufacturer.BOEING)
@@ -154,6 +153,7 @@ flight = Flight(Airline("Delta Airlines"),
                 dt.datetime.today(),
                 dt.datetime.today() + dt.timedelta(minutes = 45))
 
+print(apt)
 print(seat, airplane)
 print()
 print(f"{flight: D}")
@@ -337,138 +337,6 @@ if city3:
 *def* population.**add_population**(*cls*, *population: float*)\
 	Adds population to a class.
 
-### Places Package
-#### emergency.py
-*enum* emergency.**EmergencyServiceTypes**\
-	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
-
-##### Options
-- POLICE
-- FIRE
-- HEALTH
-
-*class* emergency.**EmergencyService**(*name: str*, *service: EmergencyServiceTypes*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents an emergency service.
-
-#### places.py
-
-These classes can receive extended functionality by specifying the population keyword argument.
-
-*enum* places.**PlaceTypes**\
-	An enum that represents the type of place. The BUILDING option should be the default unless there is another option that more accurately represents the place.
-
-##### Options
-- BUILDING - General use.
-- STADIUM
-- CITY_HALL
-- COURTHOUSE
-- FORT
-- PORT
-- AIRPORT
-- HOUSE_OF_WORSHIP
-- BANK
-- EMERGENCY_SERVICE
-- HOSPITAL
-- POST_OFFICE
-
-*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
-
-*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a building.
-
-*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a stadium.
-
-*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a city hall.
-
-*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a courthouse.
-
-*class* places.**Fort**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a fort.
-
-*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a port.
-
-*class* places.**Airport**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents an airport.
-	
-*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a bank.
-
-*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a hospital.
-
-*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a post office.
-
-#### religious.py
-*enum* religious.**ReligionTypes**
-	An enum that represents the type of religion. The UNKNOWN option should be the default unless there is another option that more accurately represents the religion.
-
-##### Options
-- UNKNOWN - General use.
-- ATHEIST
-- CHRISTIANITY
-- JEWISH
-- MUSLIM
-- BUDDHIST
-- HINDU
-- PAGAN
-- JAINISM
-- SHINTO
-- SIKHISM
-- TAOISM
-- ZOROASTRIANISM
-
-*enum* religious.**WorshipStructureTypes**\
-	An enum that represents the type of worship structure. The TEMPLE option should be the default unless there is another option that more accurately represents the worship structure.
-
-##### Options
-- TEMPLE - General use.
-- CHURCH
-- CATHEDRAL
-- CHAPEL
-- HALL
-- SYNAGOGUE
-- MOSQUE
-- DERASAR
-- BASADI
-- MANDI
-- MASHKHANNA
-- BETH_MANDA
-- HOF
-- JINJA
-- GURDWARA
-- DAOGUAN
-- ATASH_BEHRAM
-- AGYARI
-- DADGAH
-
-*enum* religious.**DenominationTypes**\
-	An enum that represents the type of Christian denomination. The NONE option should be the default unless there is another option that more accurately represents the Christian denomination.
-
-##### Options
-- NONE - General use.
-- METHODIST
-- PRESBYTERIAN
-- BAPTIST
-- LUTHERAN
-- ANGLICAN
-- PENTECOSTAL
-- ORTHODOX
-- CATHOLIC
-- COPTIC
-- NONDENOMINATIONAL
-
-*class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)\
-	A class that represents a religion.
-
-*class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a house of worship.
-
 ### cities.py
 
 *enum* cities.**CityTypes**\
@@ -538,7 +406,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* countries.**Country**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *prefix: str = ""*, *\*\*kwargs*)\
 	A class that represents a country. *Prefix* should only be specified if a key in *kwargs* is government.
 
-#### districts.py
+### districts.py
 
 All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
 
@@ -592,6 +460,30 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* galaxies.**Galaxy**(*name: str*, /, *subdivisions: list[Division] | Division*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a galaxy.
+
+### places.py
+
+These classes can receive extended functionality by specifying the population keyword argument.
+
+*enum* places.**PlaceTypes**\
+	An enum that represents the type of place. The BUILDING option should be the default unless there is another option that more accurately represents the place.
+
+##### Options
+- BUILDING - General use.
+- STADIUM
+- CITY_HALL
+- COURTHOUSE
+- FORT
+- PORT
+- AIRPORT
+- HOUSE_OF_WORSHIP
+- BANK
+- EMERGENCY_SERVICE
+- HOSPITAL
+- POST_OFFICE
+
+*class* places.**Place**(*name: str*, *type_: PlaceTypes*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a place. A place is a division that cannot be subdivided anymore. This is the smallest unit in the districts package.
 
 ### planetarysystems.py
 
@@ -670,12 +562,122 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
 	A class that represents a cemetery.
+
+### emergency.py
+*enum* emergency.**EmergencyServiceTypes**\
+	An enum that represents the type of emergency service. The POLICE option is the default unless there is another option that more accurately represents the emergency service.
+
+##### Options
+- POLICE
+- FIRE
+- HEALTH
+
+*class* emergency.**EmergencyService**(*name: str*, *service: EmergencyServiceTypes*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents an emergency service.
+	
 ### forts.py
 
 *class* forts.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a fort.
 
-#### schools.py
+### infrastructure.py
+*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a building.
+
+*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a city hall.
+
+*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a courthouse..
+
+*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a port.
+	
+*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a bank.
+
+*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a hospital.
+
+*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a post office.
+
+### religious.py
+*enum* religious.**ReligionTypes**
+	An enum that represents the type of religion. The UNKNOWN option should be the default unless there is another option that more accurately represents the religion.
+
+##### Options
+- UNKNOWN - General use.
+- ATHEIST
+- CHRISTIANITY
+- JEWISH
+- MUSLIM
+- BUDDHIST
+- HINDU
+- PAGAN
+- JAINISM
+- SHINTO
+- SIKHISM
+- TAOISM
+- ZOROASTRIANISM
+
+*enum* religious.**WorshipStructureTypes**\
+	An enum that represents the type of worship structure. The TEMPLE option should be the default unless there is another option that more accurately represents the worship structure.
+
+##### Options
+- TEMPLE - General use.
+- CHURCH
+- CATHEDRAL
+- CHAPEL
+- HALL
+- SYNAGOGUE
+- MOSQUE
+- DERASAR
+- BASADI
+- MANDI
+- MASHKHANNA
+- BETH_MANDA
+- HOF
+- JINJA
+- GURDWARA
+- DAOGUAN
+- ATASH_BEHRAM
+- AGYARI
+- DADGAH
+
+*enum* religious.**DenominationTypes**\
+	An enum that represents the type of Christian denomination. The NONE option should be the default unless there is another option that more accurately represents the Christian denomination.
+
+##### Options
+- NONE - General use.
+- METHODIST
+- PRESBYTERIAN
+- BAPTIST
+- LUTHERAN
+- ANGLICAN
+- PENTECOSTAL
+- ORTHODOX
+- CATHOLIC
+- COPTIC
+- NONDENOMINATIONAL
+
+*class* religious.**Religion**(*name: str*, *religion: ReligionTypes*, *worship_type: WorshipStructureTypes = WorshipStructureTypes.TEMPLE*, /, *denomination: DenominationTypes = DenominationTypes.NONE*)\
+	A class that represents a religion.
+
+*class* religious.**HouseOfWorship**(*name: str*, *religion: Religion*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a house of worship.
+
+### residential.py
+
+*class* residential.**ResidentialBuilding**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a residence.
+
+*class* residential.**Apartment**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents an apartment.
+
+*class* schools.**University**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a house.
+### schools.py
 
 *enum* schools.**SchoolTypes**
 	An enum that represents the types of schools. The SCHOOL option should be the default unless there is another option that more accurately represents your place of learning.
@@ -697,6 +699,11 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* schools.**Technical**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a technical school.
+
+### stadiums.py
+
+*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a stadium.
 
 ----
 ## Politics Package
