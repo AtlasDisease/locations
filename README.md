@@ -11,8 +11,6 @@ Below shows the basic usage of the package using a real-world example.
 ```python
 # --- Imports --- #
 
-# --- Imports --- #
-
 import datetime as dt
 
 # Religion is a complex thing as it is tied into places very
@@ -206,70 +204,63 @@ if city3:
           city3.historical)
 ```
 
+--- 
+## Climate Package
+---
+### climate.py
+
+*enum* climate.**ClimateTypes**
+	An enum that represents the types of climates. The UNKNOWN option should be the default unless there is another option that more accurately represents the climate.
+
+#### Options
+- UNKNOWN - General use
+- A
+- AF
+- AM
+- AW
+- AS
+- B
+- BW
+- BWH
+- BWK
+- BS
+- BSH
+- BSK
+- C
+- CS
+- CSA
+- CSB
+- CSC
+- CFA
+- CFB
+- CFC
+- CW
+- CWA
+- CWB
+- CWC
+- D
+- DFA
+- DWA
+- DSA
+- DFB
+- DWB
+- DSB
+- DFC
+- DWC
+- DSC
+- DFD
+- DWD
+- DSD
+- E
+- ET
+- EF
+
+*class* climate.**Climate**(*classification: ClimateTypes*)\
+	A class that represents a type of climate.
+
 ----
 ## Divisions Package
 ---
-### Districts Package
-#### areas.py
-
-All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
-
-*enum* areas.**AreaTypes**
-	An enum that represents the types of areas. The NEIGHBORHOOD option should be the default unless there is another option that more accurately represents your area.
-
-#### Options
-- NEIGHBORHOOD - General use
-- SCHOOL
-- FORT
-- PORT
-- AIRPORT
-- CEMETERY
-
-*class* areas.**District**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a type similar to a Division but it may not have subdivisions and is is limited in its ability to have Division-based extensions.
-
-*class* areas.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a neighborhood or a generic area of a city. 
-
-*class* areas.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a fort.
-
-*class* areas.**Port**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a port.
-
-*class* areas.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents an airport.
-
-#### cemeteries.py
-*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
-	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
-
-*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
-	A class that represents a cemetery.
-
-#### schools.py
-
-*enum* schools.**SchoolTypes**
-	An enum that represents the types of schools. The SCHOOL option should be the default unless there is another option that more accurately represents your place of learning.
-
-#### Options
-- SCHOOL - General use
-- COLLEGE
-- UNIVERSITY
-- TECHNICAL
-
-*class* schools.**School**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a school.
-
-*class* schools.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a college campus.
-
-*class* schools.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a university campus.
-
-*class* schools.**Technical**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a technical school.
-
 ### Extensions Packages
 #### area.py
 *class* area.**Area**()\
@@ -547,6 +538,27 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* countries.**Country**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *prefix: str = ""*, *\*\*kwargs*)\
 	A class that represents a country. *Prefix* should only be specified if a key in *kwargs* is government.
 
+#### districts.py
+
+All classes in this module subclass divisions.Division, therefore it receives subdivision functionality by default. These classes can receive extended functionality by specifying the population keyword argument. These classes do not have additional functionality currently.
+
+*enum* districts.**AreaTypes**
+	An enum that represents the types of areas. The NEIGHBORHOOD option should be the default unless there is another option that more accurately represents your area.
+
+#### Options
+- NEIGHBORHOOD - General use
+- SCHOOL
+- FORT
+- PORT
+- AIRPORT
+- CEMETERY
+
+*class* districts.**District**(*name: str*, *type_: IntEnum*, /, *subdivisions: list[Division] | Division = None*, *\**, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a type similar to a Division but it may not have subdivisions and is is limited in its ability to have Division-based extensions.
+
+*class* districts.**Neighborhood**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a neighborhood or a generic area of a city. 
+	
 ### divisions.py
 
 *enum* divisions.**DivisionTypes**\
@@ -608,6 +620,83 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 *class* universes.**Universe**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a universe.
+
+---
+## Infrastructure Package
+---
+### Airports Package
+#### airplanes.py
+
+*enum* airplanes.**AirplaneManufacturer**
+	An enum that represents the list of airplane manufacturers. The UNKNOWN option should be the default unless there is another option that more accurately represents the manufacturer.
+
+#### Options
+- UNKNOWN - General use
+- BOEING
+- AIRBUS
+- OTHER
+
+*class* airplanes.**Seat**(*aisle: int*, *seat: chr*)\
+	A class that represents a seat on an airplane.
+
+*class* airplanes.**Airplane**(*type_: str*, *manufacturer: AirplaneManufacturer = AirplaneManufacturer.UNKNOWN*, *capcacity: int = -1*)\
+	A class that represents an airplane.
+
+#### airports.py
+*enum* airports.**FlightStatus**
+	An enum that represents the types of flight statuses. The CONFIRMED option should be the default unless there is another option that more accurately represents the status.
+
+#### Options
+- CONFIRMED - General use
+- BOARDED
+- IN_FLIGHT
+- LANDED
+
+*class* airports.**Gate**(*terminal: chr*, *gate: str*)\
+	A class that represents a gate at the airport.
+
+*class* airports.**Airline**(*name: str*)\
+	A class that represents an airline.
+
+*class* airports.**Flight**(*airline: Airline*, *from_: Location*, *to: Location*, *flight: int*, *seats: list[Seat] = [], equipment: Airplane = Airplane()*, *depart: dt.datetime = dt.date.min*, *arrival: dt.date.max*, *status: FlightStatus = FlightStatus.CONFIRMED*, *stops: int = 0*)\
+	A class that represents a flight.
+
+*class* airports.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents an airport.
+
+### cemeteries.py
+*class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
+	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
+
+*class* cemeteries.**Cemetery**(*name: str*, /, *population: int = None*, *graves: list[Grave] = None*, *\*\*kwargs*)\
+	A class that represents a cemetery.
+### forts.py
+
+*class* forts.**Fort**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a fort.
+
+#### schools.py
+
+*enum* schools.**SchoolTypes**
+	An enum that represents the types of schools. The SCHOOL option should be the default unless there is another option that more accurately represents your place of learning.
+
+#### Options
+- SCHOOL - General use
+- COLLEGE
+- UNIVERSITY
+- TECHNICAL
+
+*class* schools.**School**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a school.
+
+*class* schools.**College**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a college campus.
+
+*class* schools.**University**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a university campus.
+
+*class* schools.**Technical**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a technical school.
 
 ----
 ## Politics Package
