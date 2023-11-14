@@ -11,44 +11,51 @@ Below shows the basic usage of the package using a real-world example.
 ```python
 # --- Imports --- #
 
+# --- Imports --- #
+
 import datetime as dt
+
 # Religion is a complex thing as it is tied into places very
 # closely but a separate idea so doing something like districts.religions
 # makes it seem like they rely on each other which does not make sense
-# to me especially since the religions package could be used on its own
+# to me especially since the religions module could be used on its own
 # without the districts being used.
-from locations.divisions.places import Place, PlaceTypes, HouseOfWorship, \
-     Fort
+from locations.divisions.places import Place, PlaceTypes, HouseOfWorship
 from locations.divisions.places.religious import ReligionTypes, \
      WorshipStructureTypes, DenominationTypes, Religion
-from locations.divisions.places.forts import FortAreaTypes
 from locations.divisions.places.rooms import Room
-from locations.divisions.districts import AreaTypes, Neighborhood, University, \
-Cemetery
-from locations.divisions.districts.cemeteries import Grave
-from locations.divisions.districts.schools import SchoolTypes
-from locations.divisions import Division, DivisionTypes, City, County,\
-Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
-Universe
+from locations.divisions.districts import AreaTypes, Neighborhood#, University, \
+     #Cemetery, Fort
+from locations.infrastructure.forts import FortAreaTypes, Fort
+from locations.infrastructure.cemeteries import Grave, Cemetery
+from locations.infrastructure.schools import SchoolTypes, University
+from locations.divisions import Division, City, County, \
+     Parish, State, Country, Continent, Planet, PlanetarySystem, Galaxy, \
+     Universe
 from locations.divisions.cities import CityTypes, AdministrativeTypes
-from locations.divisions.extensions import Population, Area, Kilometers, \ Miles, kilometers, Elevation, Meters, Feet, meters
+from locations.divisions.extensions import Population, Area, Kilometers, \
+     Miles, Elevation, Feet, Meters
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the politics package could be used on its own
 # without the districts being used.
-from locations.politics import Government, Leader, Administrator, \
-    Economy, Law, Bill, Constitution
+from locations.politics import Government, Leader, Administrator, Law, \
+     Bill, Economy
 from locations.politics.leaders import LeaderPolicy
 from locations.politics.economics import EconomicPolicy
 from locations.politics.law import LawPolicy, BillStatus
 
-from locations.positional import Address, Coordinates, Location
+from locations.positional import Coordinates, Location
 
 from locations.zipcodes import ZipCode, ZipCodeTypes
 
 from locations.climate import Climate, ClimateTypes
+
+from locations.infrastructure.airports.airplanes import Airplane, \
+     AirplaneManufacturer, Seat
+from locations.infrastructure.airports import Airline, Flight
 
 
 # --- Main Logic --- #
@@ -133,24 +140,42 @@ location = Location("Universe", [church, neighborhood, city, county,
                                 galaxy, universe])
 
 climate = Climate(ClimateTypes.CFA)
-print(climate)
 
+location2 = Location("College Station", [city, county, country])
+city1 = City("Dallas", CityTypes.CITY, AdministrativeTypes.SEAT)
+location3 = Location("Houston", [city1, County("Dallas", [city1]), country])
+
+seat = Seat(15, "B")
+airplane = Airplane("787 Dreamliner", AirplaneManufacturer.BOEING)
+flight = Flight(Airline("Delta Airlines"),
+                location2,
+                location3,
+                "12345",
+                [Seat(1, "A")],
+                airplane,
+                dt.datetime.today(),
+                dt.datetime.today() + dt.timedelta(minutes = 45))
+
+print(seat, airplane)
+print()
+print(f"{flight: D}")
+print()
 print(cemetery)
 for grave in cemetery.graves:
 	print(f"{grave}: O")
 print(location)
 print()
 print(government)
+print(Administrator(leader = leader))
 print()
+print(f"{county.seat(): O}") #Implying there is a cost to this
+print(list(county)) # Test for __iter__
 print(kilometers(city2.area))
 print(meters(city.elevation))
 print(Miles(100) == Kilometers(100))
 print(Feet(100) == Meters(100))
-
-print(Administrator(leader = leader))
-
-print(f"{county.seat(): O}") #Implying there is a cost to this
-print(list(county)) # Test for __iter__
+print(f"{fort: O}")
+print(climate)
 
 city3 = county.get(func = Population.largest)
 if not city3:

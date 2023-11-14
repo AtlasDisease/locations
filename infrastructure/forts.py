@@ -8,8 +8,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
-##from dataclasses import dataclass
-from .areas import AreaTypes, District
+from ..divisions.districts import AreaTypes, District
 
 
 # --- FortAreaTypes Enum --- #

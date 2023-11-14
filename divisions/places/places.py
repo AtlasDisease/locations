@@ -10,7 +10,7 @@
 from enum import IntEnum, auto
 from dataclasses import dataclass
 from ..divisions import Division
-from ..districts.areas import District
+from ..districts import District
 
 __all__ = ("PlaceTypes", "Place", "Building", "CityHall",
            "Courthouse", "Port", "Bank", "Hospital", "PostOffice")

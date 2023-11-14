@@ -7,7 +7,7 @@
 import datetime as dt
 from enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
-from .areas import AreaTypes, District
+from ..divisions.districts import AreaTypes, District
 
 __all__ = ("Cemetery",)
 
