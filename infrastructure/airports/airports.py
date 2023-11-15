@@ -4,26 +4,24 @@
 
 # --- Imports --- #
 
-import datetime as dt
 from enum import IntEnum, auto
-from dataclasses import dataclass, field
-from ...divisions.districts import AreaTypes, District
-from ...positional import Location
-from .airplanes import Seat, Airplane
+from dataclasses import dataclass
+from ..buildings import Building
+from ..rooms import Room
 
-__all__ = ("Airport", "Gate", "Airline", "Flight")
+__all__ = ("Airport", "Gate", "AirportTypes")
 
 
-# --- FlightStatus Enum --- #
+# --- AirportType Enum --- #
 
-class FlightStatus(IntEnum):
-    CONFIRMED = auto()
-    BOARDED = auto()
-    IN_FLIGHT = auto()
-    LANDED = auto()
+class AirportTypes(IntEnum):
+    UNKNOWN = auto()
+    MUNICIPALITY = auto()
+    REGIONAL = auto()
+    INTERNATIONAL = auto()
 
     def __str__(self) -> str:
-        return self.name.title().replace("_", " ")
+        return self.name.title()
 
 
 # --- Gate Class --- #
@@ -35,64 +33,22 @@ class Gate:
 
     def __str__(self) -> str:
         return f"{self.terminal}{self.gate}"
-
-
-# --- Airline Class --- #
-
-@dataclass
-class Airline:
-    name: str #I could make this an enum but I will let the user name things
-
-    def __str__(self) -> str:
-        return self.name
-
-
-# --- Flight Class --- #
-
-@dataclass
-class Flight:
-    airline: Airline
-    from_: Location
-    to: Location   
-    flight: int
-    seats: list[Seat] = field(default_factory = list)
-    equipment: Airplane = field(default_factory = Airplane)
-    depart: dt.date = dt.date.min
-    arrival: dt.date = dt.date.max
-    status: FlightStatus = FlightStatus.CONFIRMED
-    stops: int = 0
-
-    @property
-    def duration(self) -> dt.timedelta:
-        return arrival - depart
-
-    @property
-    def isNonstop(self) -> bool:
-        return not bool(self.stops)
-
-    def __str__(self) -> str:
-        return f"Flight {self.flight}"
-
-    def __format__(self, format_spec = "") -> str:
-        if "d" in format_spec or "D" in format_spec:
-            return f"""Airline: {self.airline}
-From: {self.from_}
-To: {self.to}
-Flight #: {self.flight}
-Seat(s): {", ".join([str(seat) for seat in self.seats])}
-Equipment: {self.equipment}
-Depart:{self.depart: %D, %H:%M}
-Arrival:{self.arrival: %D, %H:%M}
-Status: {self.status}
-Stops: {self.stops}"""
-
-        return str(self)
     
 
 # --- Airport Class --- #
 
-@dataclass(init = False)
-class Airport(District):
-     def __post_init__(self):
-         
-         self.type_ = AreaTypes.AIRPORT
+class Airport(Building):
+    def __init__(self, name: str, type_: AirportTypes,
+                 *,
+                 subdivisions: list[Room] = None,
+                 **kwargs):
+
+        super().__init__(name, type_, subdivisions = subdivisions)
+
+    def __format__(self, format_spec = "") -> str:
+        if any(letter in format_spec for letter in {"F", "O", "L", "l"}):
+            if self.type_ != AirportTypes.UNKNOWN:
+                return f"{self.name} {self.type_} {self.__class__.__name__}"
+            return f"{self.name} {self.__class__.__name__}"
+        
+        return str(self)

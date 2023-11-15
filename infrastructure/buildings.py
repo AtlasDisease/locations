@@ -10,6 +10,8 @@ from dataclasses import dataclass
 from ..divisions.places import PlaceTypes
 from .rooms import Room
 
+__all__ = ("Building", "ResidentialBuilding", "BuildingTypes")
+
 
 # --- BuildingTypes Enum --- #
 

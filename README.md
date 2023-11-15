@@ -32,7 +32,9 @@ from locations.infrastructure.cemeteries import Grave, Cemetery
 from locations.infrastructure.schools import SchoolTypes, University
 from locations.infrastructure.airports.airplanes import Airplane, \
      AirplaneManufacturer, Seat
-from locations.infrastructure.airports import Airline, Flight
+from locations.infrastructure.airports.airlines import Airline
+from locations.infrastructure.airports.flights import Flight
+from locations.infrastructure.airports import Airport, AirportTypes
 from locations.infrastructure.residential import Apartment, House
 from locations.infrastructure.rooms import Room
 
@@ -152,8 +154,10 @@ flight = Flight(Airline("Delta Airlines"),
                 airplane,
                 dt.datetime.today(),
                 dt.datetime.today() + dt.timedelta(minutes = 45))
+airport = Airport("Dallas-Fort Worth", AirportTypes.INTERNATIONAL)
 
 print(apt)
+print(f"{airport: O}")
 print(seat, airplane)
 print()
 print(f"{flight: D}")
@@ -517,6 +521,10 @@ All classes in this module subclass divisions.Division, therefore it receives su
 ## Infrastructure Package
 ---
 ### Airports Package
+#### airlines.py
+*class* airlines.**Airline**(*name: str*)\
+	A class that represents an airline.
+
 #### airplanes.py
 
 *enum* airplanes.**AirplaneManufacturer**
@@ -535,7 +543,23 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	A class that represents an airplane.
 
 #### airports.py
-*enum* airports.**FlightStatus**
+*enum* airports.**AirportTypes**
+	An enum that represents the types of airport types. The UNKNOWN option should be the default unless there is another option that more accurately represents the type.
+
+#### Options
+- UNKNOWN - General use
+- MUNCIPALITY
+- REGIONAL
+- INTERNATIONAL
+
+*class* airports.**Gate**(*terminal: chr*, *gate: str*)\
+	A class that represents a gate at the airport.
+
+*class* airports.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents an airport.
+
+#### flights.py
+*enum* flights.**FlightStatus**
 	An enum that represents the types of flight statuses. The CONFIRMED option should be the default unless there is another option that more accurately represents the status.
 
 #### Options
@@ -544,17 +568,8 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - IN_FLIGHT
 - LANDED
 
-*class* airports.**Gate**(*terminal: chr*, *gate: str*)\
-	A class that represents a gate at the airport.
-
-*class* airports.**Airline**(*name: str*)\
-	A class that represents an airline.
-
-*class* airports.**Flight**(*airline: Airline*, *from_: Location*, *to: Location*, *flight: int*, *seats: list[Seat] = [], equipment: Airplane = Airplane()*, *depart: dt.datetime = dt.date.min*, *arrival: dt.date.max*, *status: FlightStatus = FlightStatus.CONFIRMED*, *stops: int = 0*)\
+*class* flights.**Flight**(*airline: Airline*, *from_: Location*, *to: Location*, *flight: int*, *seats: list[Seat] = [], equipment: Airplane = Airplane()*, *depart: dt.datetime = dt.date.min*, *arrival: dt.date.max*, *status: FlightStatus = FlightStatus.CONFIRMED*, *stops: int = 0*)\
 	A class that represents a flight.
-
-*class* airports.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents an airport.
 
 ### buildings.py
 *enum* buildings.**BuildingTypes**\
@@ -564,10 +579,10 @@ All classes in this module subclass divisions.Division, therefore it receives su
 - COMMERICAL
 - RESIDENTIAL
 
-*class* places.**Building**(*name: str*, *type_: BuildingType = BuildingType.COMMERICAL*, /, *subdivisions: list[Room] = None*, *\*\*kwargs*)\
+*class* buildings.**Building**(*name: str*, *type_: BuildingType = BuildingType.COMMERICAL*, /, *subdivisions: list[Room] = None*, *\*\*kwargs*)\
 	A class that represents a building. This is very similar to divisions.places.Place.
 
-*class* residential.**ResidentialBuilding**(*name: str*, \*, *subdivisions: list[Room] = None*, *population: int = None*, *\*\*kwargs*)\
+*class* buildings.**ResidentialBuilding**(*name: str*, \*, *subdivisions: list[Room] = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a residence.
 
 ### cemeteries.py
@@ -595,22 +610,22 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	A class that represents a fort.
 
 ### infrastructure.py
-*class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a city hall.
 
-*class* places.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**Courthouse**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a courthouse..
 
-*class* places.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**Port**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a port.
 	
-*class* places.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**Bank**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a bank.
 
-*class* places.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**Hospital**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a hospital.
 
-*class* places.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* infrastructure.**PostOffice**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a post office.
 
 ### religious.py
@@ -682,7 +697,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* residential.**Apartment**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an apartment.
 
-*class* schools.**University**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
+*class* residential.**House**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a house.
 ### schools.py
 
@@ -709,7 +724,7 @@ All classes in this module subclass divisions.Division, therefore it receives su
 
 ### stadiums.py
 
-*class* places.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
+*class* stadiums.**Stadium**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a stadium.
 
 ----
