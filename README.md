@@ -18,7 +18,6 @@ import datetime as dt
 # makes it seem like they rely on each other which does not make sense
 # to me especially since the religions module could be used on its own
 # without the districts being used.
-from locations.divisions.rooms import Room
 from locations.divisions.districts import AreaTypes, Neighborhood
 from locations.divisions import Division, City, County, Parish, State, \
      Country, Continent, Planet, PlanetarySystem, Galaxy, Universe
@@ -35,6 +34,7 @@ from locations.infrastructure.airports.airplanes import Airplane, \
      AirplaneManufacturer, Seat
 from locations.infrastructure.airports import Airline, Flight
 from locations.infrastructure.residential import Apartment, House
+from locations.infrastructure.rooms import Room
 
 # Politics is a complex thing as it is tied into districts very
 # closely but a separate idea so doing something like districts.politics
@@ -556,6 +556,20 @@ All classes in this module subclass divisions.Division, therefore it receives su
 *class* airports.**Airport**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an airport.
 
+### buildings.py
+*enum* buildings.**BuildingTypes**\
+	An enum that represents the type of building. The COMMERICAL option is the default unless there is another option that more accurately represents the building type.
+
+##### Options
+- COMMERICAL
+- RESIDENTIAL
+
+*class* places.**Building**(*name: str*, *type_: BuildingType = BuildingType.COMMERICAL*, /, *subdivisions: list[Room] = None*, *\*\*kwargs*)\
+	A class that represents a building. This is very similar to divisions.places.Place.
+
+*class* residential.**ResidentialBuilding**(*name: str*, \*, *subdivisions: list[Room] = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a residence.
+
 ### cemeteries.py
 *class* cemeteries.**Grave**(*name: str*, *date_born: datetime.date = datetime.date.min*, *date_died: datetime.date = datetime.date.max*, /, *description: str = ""*)\
 	A class that represents a grave. This class is used when the extended *graves* keyword is used for Cemetery.
@@ -581,9 +595,6 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	A class that represents a fort.
 
 ### infrastructure.py
-*class* places.**Building**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a building.
-
 *class* places.**CityHall**(*name: str*, /, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a city hall.
 
@@ -668,10 +679,6 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	A class that represents a house of worship.
 
 ### residential.py
-
-*class* residential.**ResidentialBuilding**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
-	A class that represents a residence.
-
 *class* residential.**Apartment**(*name: str*, \*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents an apartment.
 

@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
-from ..divisions.places import Place, PlaceTypes
+from .buildings import Building, BuildingTypes
 
 __all__ = ("EmergencyService",)
 
@@ -13,6 +13,7 @@ __all__ = ("EmergencyService",)
 # --- Emergency Service Enum --- #
 
 class EmergencyServiceTypes(IntEnum):
+    EMERGENCY = auto() #Generic
     POLICE = auto()
     FIRE = auto()
     HEALTH = auto()
@@ -23,9 +24,11 @@ class EmergencyServiceTypes(IntEnum):
 
 # --- EmergencyService Class --- #
 
-class EmergencyService(Place):
-    def __init__(self, name: str, service: EmergencyServiceTypes, /, population: int = None, **kwargs):
+class EmergencyService(Building):
+    def __init__(self, name: str,
+                 service: EmergencyServiceTypes = EmergencyServiceTypes.EMERGENCY,
+                 **kwargs):
 
-        super().__init__(name, PlaceTypes.EMERGENCY_SERVICE, population, **kwargs)
+        super().__init__(name, BuildingTypes.COMMERICAL, **kwargs)
 
         self.service = service

@@ -6,7 +6,7 @@
 
 from enum import IntEnum, auto
 from dataclasses import dataclass, KW_ONLY
-from ..divisions.places import Place, PlaceTypes
+from .buildings import Building
 
 __all__ = ("HouseOfWorship",)
 
@@ -91,13 +91,11 @@ class Religion:
 
 # --- HouseOfWorship Class --- #
 
-class HouseOfWorship(Place):
+class HouseOfWorship(Building):
     def __init__(self, name: str, religion: Religion,
-                 /,
-                 population: int = None,
                  **kwargs):
 
-        super().__init__(name, PlaceTypes.HOUSE_OF_WORSHIP, population = population, **kwargs)
+        super().__init__(name, **kwargs)
 
         self.religion = religion
 

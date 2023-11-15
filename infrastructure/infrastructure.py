@@ -6,24 +6,17 @@
 
 import datetime as dt
 from dataclasses import dataclass
-from ..divisions.places import Place, PlaceTypes
+from .buildings import Building, PlaceTypes
 
-__all__ = ("Building", "CityHall", "Courthouse",
+__all__ = ("CityHall", "Courthouse",
            "Port", "Bank", "Hospital",
            "PostOffice")
-
-
-# --- Building Class --- #
-
-class Building(Place):
-    def __init__(self, name: str, **kwargs):
-        super().__init__(self, PlaceTypes.BUILDING)
         
 
 # --- CityHall Class --- #
 
 @dataclass(init = False)
-class CityHall(Place):
+class CityHall(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.CITY_HALL
@@ -32,7 +25,7 @@ class CityHall(Place):
 # --- Courthouse Class --- #
 
 @dataclass(init = False)
-class Courthouse(Place):
+class Courthouse(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.COURTHOUSE
@@ -41,7 +34,7 @@ class Courthouse(Place):
 # --- Port Class --- #
 
 @dataclass(init = False)
-class Port(Place):
+class Port(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.PORT
@@ -50,7 +43,7 @@ class Port(Place):
 # --- Bank Class --- #
 
 @dataclass(init = False)
-class Bank(Place):
+class Bank(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.BANK
@@ -59,7 +52,7 @@ class Bank(Place):
 # --- Hospital Class --- #
 
 @dataclass(init = False)
-class Hospital(Place):
+class Hospital(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.HOSPITAL
@@ -68,7 +61,7 @@ class Hospital(Place):
 # --- PostOffice Class --- #
 
 @dataclass(init = False)
-class PostOffice(Place):
+class PostOffice(Building):
     def __post_init__(self):
         
         self.type_ = PlaceTypes.POST_OFFICE

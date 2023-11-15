@@ -7,14 +7,7 @@
 import datetime as dt
 from enum import IntEnum, auto
 from dataclasses import dataclass
-from ..divisions.places import Place, PlaceTypes
-        
-
-# --- Building Class --- #
-
-class ResidentialBuilding(Place):
-    def __init__(self, name: str, *, population: int = 0, **kwargs):
-        super().__init__(name, PlaceTypes.BUILDING, population = population)
+from .buildings import ResidentialBuilding
 
 
 # --- Apartment Class --- #

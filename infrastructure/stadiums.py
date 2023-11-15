@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
-from ..divisions.places import Place, PlaceTypes
+from .buildings import Building
 
 __all__ = ("StadiumTypes", "Stadium")
 
@@ -20,7 +20,7 @@ class StadiumTypes(IntEnum):
 
 # --- Stadium Class --- #
 
-class Stadium(Place):
-    def __init__(self, name: str, /, population: int = None, **kwargs):
+class Stadium(Building):
+    def __init__(self, name: str, **kwargs):
 
-        super().__init__(name, PlaceTypes.STADIUM, population, **kwargs)
+        super().__init__(name, **kwargs)

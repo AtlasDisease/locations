@@ -1,9 +1,9 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a building. In my code this is
-# called a place. To create your own class, you can subclass Place
-# or Building. A place is supposed to be the smallest unit therefore
-# it should not have subdivisions.
+# Description: A module to handle a building as a place. A place lacks the
+# details (like subdivisions) that the infrastructure.buildings.Building has.
+# To create your own class, you can subclass Place.
+# A place is the smallest unit in the divisions package.
 
 # --- Imports --- #
 
@@ -34,7 +34,7 @@ class PlaceTypes(IntEnum):
 # --- Place Class --- #
 
 class Place:
-    def __init__(self, name: str = "",
+    def __init__(self, name: str,
                  type_: PlaceTypes = PlaceTypes.BUILDING,
                  *,
                  population: int = None,
@@ -66,3 +66,11 @@ class Place:
     def __bool__(self) -> bool:
         return self.name != "New" and self.name != "" \
                and self.type_ != PlaceTypes.BUILDING
+
+
+# --- place Functions --- #
+
+def place(obj: object) -> Place:
+    if isinstance(obj, District) \
+       or isinstance(obj, Building):
+        return Place(district = obj)

@@ -5,6 +5,7 @@
 
 # --- Imports --- #
 
+from typing import Self
 from enum import IntEnum, auto
 from .divisions import Division, DivisionTypes
 
@@ -24,6 +25,25 @@ class CityTypes(IntEnum):
     def __str__(self) -> str:
         return self.name.title()
 
+    def __add__(self, other) -> Self:
+        if isinstance(other, int):
+            other %= len(CityTypes)
+            if other == 0:
+                other = 3
+            other = CityTypes(other)
+
+        other = self.value + other.value
+        if other > len(CityTypes):
+            other %= len(CityTypes)
+            if other == 0:
+                other = 3
+            
+        return CityTypes(other)
+
+    def __iadd__(self, other) -> Self:
+        self = self + other
+        return self
+
 
 # --- AdministrativeTypes Enum --- #
 
@@ -36,6 +56,25 @@ class AdministrativeTypes(IntEnum):
         if self == AdministrativeTypes.SEAT:
             return f"County {self.name.title()}"
         return self.name.title()
+
+    def __add__(self, other) -> Self:
+        if isinstance(other, int):
+            other %= len(AdministrativeTypes)
+            if other == 0:
+                other = 3
+            other = AdministrativeTypes(other)
+
+        other = self.value + other.value
+        if other > len(AdministrativeTypes):
+            other %= len(AdministrativeTypes)
+            if other == 0:
+                other = 3
+            
+        return AdministrativeTypes(other)
+
+    def __iadd__(self, other) -> Self:
+        self = self + other
+        return self
 
 
 # --- City Class --- #

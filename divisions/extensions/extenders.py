@@ -8,6 +8,25 @@
 from typing import Callable
 from ..divisions import Division
 
+### --- Errorcheck Decorator --- #
+##
+##def check(func: Callable):
+##    def inner1(*args, **kwargs):
+##
+##        print(func, args)
+##        division = args[0]
+##        print(division)
+##        attr = args[1]
+##        print(attr)
+##
+##        if not hasattr(division, attr):
+##            return None
+##        
+##        return func(*args, **kwargs)
+##        
+##    return inner1
+
+
 # --- Errorcheck Decorator --- #
 
 def errorcheck(func: Callable):

@@ -45,12 +45,17 @@ class Cemetery(District): #Probably do not want to subclass Division here
     def __init__(self, name: str,
                  /,
                  graves: list[Grave] = None,
-                 *,
-                 population: int = None,
                  **kwargs):
 
-        super().__init__(name, AreaTypes.CEMETERY, graves, population = population, **kwargs)
+        super().__init__(name, AreaTypes.CEMETERY, graves, **kwargs)
 
     @property
     def graves(self):
         return self.subdivisions
+
+    @property
+    def population(self): #This overrides the possible kwarg of "population"
+        return len(self)
+
+    def __len__(self):
+        return len(iter(self))
