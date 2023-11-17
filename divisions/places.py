@@ -8,7 +8,6 @@
 # --- Imports --- #
 
 from enum import StrEnum, auto
-##from .districts import District
 from ..subdivisions import Subdivision
 
 __all__ = ("PlaceTypes", "Place")

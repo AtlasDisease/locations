@@ -5,9 +5,8 @@
 
 # --- Imports --- #
 
-# from typing import Callable, Self
 from enum import StrEnum
-from dataclasses import dataclass#, field
+from dataclasses import dataclass
 # from .temperature import TemperatureUnit
 
 __all__ = ("Climate", "ClimateTypes")

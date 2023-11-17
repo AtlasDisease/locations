@@ -8,9 +8,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, StrEnum, auto
-##from ..divisions.districts import AreaTypes, District
-##from ..subdivisions import Subdivision
-from ..divisions.divisions import Division
+from ..divisions import Division
 
 __all__ = ("Fort",)
 

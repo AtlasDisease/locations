@@ -7,7 +7,6 @@
 import datetime as dt
 from enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
-##from ..divisions.districts import AreaTypes
 
 __all__ = ("Cemetery",)
 
@@ -86,6 +85,6 @@ class Cemetery:
 
     def __format__(self, format_spec = "") -> str:
         if "F" in format_spec or "O" in format_spec:
-            return f"{self.name} {self.type_}"
+            return f"{self.name} {self.__class__.__name__}"
         
         return str(self)

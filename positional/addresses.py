@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from ..divisions import cities, counties, countries
-from ..zipcodes import ZipCode  #re
+from ..zipcodes import ZipCode
 
 __all__ = ("Address",)
 

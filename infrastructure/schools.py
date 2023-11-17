@@ -8,7 +8,6 @@ import sys, inspect
 from enum import IntEnum, auto
 from dataclasses import dataclass
 from ..divisions import Division
-##from ..divisions.districts import AreaTypes#, District
 from ..subdivisions import Subdivision
 
 __all__ = ("School", "College", "University", "Technical")

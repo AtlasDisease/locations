@@ -8,7 +8,6 @@ import datetime as dt
 from dataclasses import dataclass
 from enum import StrEnum, auto
 from .buildings import Building
-##from ..divisions.places import PlaceTypes
 
 __all__ = ("CityHall", "Courthouse",
            "Port", "Bank", "Hospital",

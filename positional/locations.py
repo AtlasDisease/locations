@@ -17,7 +17,7 @@ __all__ = ("Location",)
 
 @dataclass(slots = True)
 class Location:
-    name: str
+    name: str = ""
     divisions: list = field(default_factory=list)
 
     def __str__(self):
