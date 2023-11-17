@@ -150,7 +150,7 @@ flight = Flight(Airline("Delta Airlines"),
                 location2,
                 location3,
                 "12345",
-                [Seat(1, "A")],
+                seat,
                 airplane,
                 dt.datetime.today(),
                 dt.datetime.today() + dt.timedelta(minutes = 45))
@@ -158,8 +158,6 @@ airport = Airport("Dallas-Fort Worth", AirportTypes.INTERNATIONAL)
 
 print(apt)
 print(f"{airport: O}")
-print(seat, airplane)
-print()
 print(f"{flight: D}")
 print()
 print(cemetery)

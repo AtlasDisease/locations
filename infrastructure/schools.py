@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+import sys, inspect
 from enum import IntEnum, auto
 from dataclasses import dataclass
 from ..divisions import Division
@@ -14,28 +15,28 @@ __all__ = ("School", "College", "University", "Technical")
 
 # --- SchoolTypes Enum --- #
 
-class SchoolTypes(IntEnum):
-    SCHOOL = auto()
-    COLLEGE = auto()
-    UNIVERSITY = auto()
-    TECHNICAL = auto()
-
-    def __str__(self):
-        return self.name.title()
+##class SchoolTypes(IntEnum):
+##    SCHOOL = auto()
+##    COLLEGE = auto()
+##    UNIVERSITY = auto()
+##    TECHNICAL = auto()
+##
+##    def __str__(self):
+##        return self.name.title()
 
 
 # --- School Class --- #
 
 class School(District):
-     def __init__(self, name: str, school_type: SchoolTypes = SchoolTypes.SCHOOL,
+     def __init__(self, name: str, school_type: AreaTypes = AreaTypes.SCHOOL, #SchoolTypes = SchoolTypes.SCHOOL,
                   /,
                  subdivisions: list[Division] | Division = None,
-                 population: int = None,     
+                 population: int = None,
                  **kwargs):
 
         super().__init__(name, AreaTypes.SCHOOL, subdivisions, population = population, **kwargs)
 
-        self.school_type = school_type
+        self.type_ = school_type
 
 
 # --- College Class --- #
@@ -63,3 +64,12 @@ class Technical(School):
     def __post_init__(self):
         
         self.type_ = SchoolTypes.TECHNICAL
+
+
+# Experiment to take all classes in module and turn them into a IntEnum where the
+# names in the enum are the class names in all uppercase
+SchoolTypes = IntEnum("SchoolTypes",
+                     names = [name.upper() for name,obj in inspect.getmembers(sys.modules[__name__])
+       if inspect.isclass(obj) and obj.__module__ == __name__])
+
+SchoolTypes.__str__ = lambda self: self.name.title()

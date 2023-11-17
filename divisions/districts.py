@@ -45,7 +45,7 @@ class District(Division): #A type that can have subdivisions or not
 
         if kwargs:
             self.__dict__ |= kwargs
-
+            
     def __format__(self, format_spec = "") -> str:
         if "F" in format_spec or "O" in format_spec:
             if self.type_.name == "FORT":
