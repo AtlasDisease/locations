@@ -7,7 +7,7 @@
 import datetime as dt
 from enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
-from ..divisions.districts import AreaTypes, District
+from ..divisions.districts import AreaTypes
 
 __all__ = ("Cemetery",)
 
@@ -41,21 +41,45 @@ class Grave:
 
 # --- Cemetery Class --- #
 
-class Cemetery(District): #Probably do not want to subclass Division here
+class Cemetery:
     def __init__(self, name: str,
                  /,
                  graves: list[Grave] = None,
                  **kwargs):
 
-        super().__init__(name, AreaTypes.CEMETERY, graves, **kwargs)
+        self.name = name
+        self.type_ = AreaTypes.CEMETERY
+        self._subdivisions = graves
+
+        if kwargs:
+            self.__dict__ |= kwargs
+
+    @property
+    def hasSubdivisions(self) -> bool:
+        return bool(self.subdivisions)
 
     @property
     def graves(self):
-        return self.subdivisions
+        return self._subdivisions
 
     @property
     def population(self): #This overrides the possible kwarg of "population"
         return len(self)
 
+    def __str__(self) -> str:
+        return self.name
+
     def __len__(self):
         return len(iter(self))
+
+    def __iter__(self):
+        return iter(self.subdivisions)
+
+    def __bool__(self) -> bool:
+        return self.name != "New" and self.name and not self._subdivisions
+
+    def __format__(self, format_spec = "") -> str:
+        if "F" in format_spec or "O" in format_spec:
+            return f"{self.name} {self.type_}"
+        
+        return str(self)

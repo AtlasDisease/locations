@@ -7,7 +7,7 @@
 import datetime as dt
 from enum import StrEnum, auto
 from dataclasses import dataclass
-from ..divisions.places import PlaceTypes
+##from ..divisions.places import PlaceTypes
 from .rooms import Room
 
 __all__ = ("Building", "ResidentialBuilding", "BuildingTypes")
@@ -52,7 +52,10 @@ class Building: #Very similar to districts.places.Place
 
     def __bool__(self) -> bool:
         return self.name != "New" and self.name != "" \
-               and self.type_ != PlaceTypes.BUILDING
+               and self.type_ != BuildingTypes.BUILDING
+
+    def __iter__(self):
+        return self.subdivisions
 
 
 # --- ResidentialBuilding Class --- #

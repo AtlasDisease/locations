@@ -10,6 +10,7 @@
 from enum import StrEnum, auto
 from dataclasses import dataclass
 from .divisions import Division
+##from ..infrastructure.rooms import Room
 
 __all__ = ("AreaTypes", "District", "Neighborhood")
 
