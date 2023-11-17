@@ -7,8 +7,18 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
-from ..divisions.districts import AreaTypes, District
+from enum import IntEnum, StrEnum, auto
+##from ..divisions.districts import AreaTypes, District
+##from ..subdivisions import Subdivision
+from ..divisions.divisions import Division
+
+__all__ = ("Fort",)
+
+
+# --- FortTypes Enum --- #
+
+class FortTypes(IntEnum):
+    FORT = auto()
 
 
 # --- FortAreaTypes Enum --- #
@@ -29,7 +39,7 @@ class FortAreaTypes(StrEnum): #Can be used as a Building type or a Room Type
 
 # --- Fort Class --- #
 
-class Fort(District):
+class Fort(Division):
     def __init__(self, name: str,
                  /,
                  subdivisions: list = None,
@@ -37,4 +47,4 @@ class Fort(District):
                  population: int = None,
                  **kwargs):
         
-        super().__init__(name, AreaTypes.FORT, subdivisions, population = population)
+        super().__init__(name, FortTypes.FORT, subdivisions, population = population)

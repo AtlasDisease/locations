@@ -7,9 +7,15 @@
 import datetime as dt
 from enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
-from ..divisions.districts import AreaTypes
+##from ..divisions.districts import AreaTypes
 
 __all__ = ("Cemetery",)
+
+
+# --- CemeteryTypes Enum --- #
+
+class CemeteryTypes(IntEnum):
+    CEMETERY = auto()
 
 
 # --- Grave Class --- #
@@ -48,7 +54,7 @@ class Cemetery:
                  **kwargs):
 
         self.name = name
-        self.type_ = AreaTypes.CEMETERY
+        self.type_ = CemeteryTypes.CEMETERY
         self._subdivisions = graves
 
         if kwargs:

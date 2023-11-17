@@ -6,12 +6,24 @@
 
 import datetime as dt
 from dataclasses import dataclass
+from enum import StrEnum, auto
 from .buildings import Building
-from ..divisions.places import PlaceTypes
+##from ..divisions.places import PlaceTypes
 
 __all__ = ("CityHall", "Courthouse",
            "Port", "Bank", "Hospital",
            "PostOffice")
+
+
+# --- InfrastructureTypes Enum --- #
+
+class InfrastructureTypes(StrEnum):
+    CITY_HALL = auto()
+    COURTHOUSE = auto()
+    PORT = auto()
+    BANK = auto()
+    HOSPITAL = auto()
+    POST_OFFICE = auto()
         
 
 # --- CityHall Class --- #
@@ -20,7 +32,7 @@ __all__ = ("CityHall", "Courthouse",
 class CityHall(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.CITY_HALL
+        self.type_ = InfrastructureTypes.CITY_HALL
 
 
 # --- Courthouse Class --- #
@@ -29,7 +41,7 @@ class CityHall(Building):
 class Courthouse(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.COURTHOUSE
+        self.type_ = InfrastructureTypes.COURTHOUSE
 
 
 # --- Port Class --- #
@@ -38,7 +50,7 @@ class Courthouse(Building):
 class Port(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.PORT
+        self.type_ = InfrastructureTypes.PORT
 
 
 # --- Bank Class --- #
@@ -47,7 +59,7 @@ class Port(Building):
 class Bank(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.BANK
+        self.type_ = InfrastructureTypes.BANK
 
 
 # --- Hospital Class --- #
@@ -56,7 +68,7 @@ class Bank(Building):
 class Hospital(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.HOSPITAL
+        self.type_ = InfrastructureTypes.HOSPITAL
 
 
 # --- PostOffice Class --- #
@@ -65,4 +77,4 @@ class Hospital(Building):
 class PostOffice(Building):
     def __post_init__(self):
         
-        self.type_ = PlaceTypes.POST_OFFICE
+        self.type_ = InfrastructureTypes.POST_OFFICE

@@ -10,59 +10,15 @@
 from enum import StrEnum, auto
 from dataclasses import dataclass
 from .divisions import Division
-##from ..infrastructure.rooms import Room
+from ..subdivisions import Subdivision, SubdivisionTypes
 
-__all__ = ("AreaTypes", "District", "Neighborhood")
-
-
-# --- AreaTypes Enum --- #
-
-class AreaTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
-    NEIGHBORHOOD = auto() #General use
-    SCHOOL = auto()
-    FORT = auto()
-    PORT = auto()
-    AIRPORT = auto()
-    CEMETERY = auto()
-
-
-# --- District Class --- #
-
-class District(Division): #A type that can have subdivisions or not
-    def __init__(self, name: str, type_: StrEnum = AreaTypes.NEIGHBORHOOD,
-                 /,
-                 subdivisions: list = None,
-                 *,
-                 population: int = None,
-                 **kwargs):
-        super().__init__(name, type_, subdivisions, population = population)
-        # Do not give super() the kwargs as the only valid extensions for a
-        # district are listed as keyword arguments above
-
-        if kwargs:
-            self.__dict__ |= kwargs
-            
-    def __format__(self, format_spec = "") -> str:
-        if "F" in format_spec or "O" in format_spec:
-            if self.type_.name == "FORT":
-                return f"{self.type_} {self.name}"
-            return f"{self.name} {self.type_}"
-        
-        return str(self)
-
-    @property
-    def hasSubdivisions(self) -> bool:
-        return bool(self.subdivisions)
+__all__ = ("Neighborhood",)
 
 
 # --- Neighborhood Class --- #
 
 @dataclass(init = False)
-class Neighborhood(District):
+class Neighborhood(Division):
     def __post_init__(self):
 
-        self.type_ = AreaTypes.NEIGHBORHOOD
+        self.type_ = SubdivisionTypes.NEIGHBORHOOD

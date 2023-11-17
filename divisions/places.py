@@ -8,7 +8,8 @@
 # --- Imports --- #
 
 from enum import StrEnum, auto
-from .districts import District
+##from .districts import District
+from ..subdivisions import Subdivision
 
 __all__ = ("PlaceTypes", "Place")
 
@@ -39,7 +40,7 @@ class Place:
                  type_: PlaceTypes = PlaceTypes.BUILDING,
                  *,
                  population: int = None,
-                 district: District = None,
+                 district: Subdivision = None,
                  **kwargs):
 
         self.name = name
@@ -72,6 +73,7 @@ class Place:
 # --- place Functions --- #
 
 def place(obj: object) -> Place:
-    if isinstance(obj, District) \
-       or isinstance(obj, Building):
-        return Place(district = obj)
+    if not isinstance(obj, District) \
+       and not isinstance(obj, Building):
+        return Place()
+    return Place(district = obj)

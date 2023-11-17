@@ -44,9 +44,9 @@ class Division:
 
         self.name = name
         self.type_ = type_
-        self.subdivisions = []
+        self._subdivisions = []
 
-        if subdivisions and not self.subdivisions:
+        if subdivisions and not self._subdivisions:
             add_subdivisions(self, subdivisions)
 
         if population != None:
@@ -69,6 +69,10 @@ class Division:
                 self.government = kwargs["government"]
 
         self.__dict__ |= kwargs
+
+    @property
+    def subdivisions(self) -> list:
+        return self._subdivisions
 
     def __str__(self) -> str:
         return self.name
@@ -108,7 +112,7 @@ Ex. get largest or smallest subdivision by Population"""
 
 def add_subdivisions(cls, subdivisions: list[Division] | Division) -> None:
     if isinstance(subdivisions, list):
-        cls.subdivisions.extend(subdivisions)
+        cls._subdivisions.extend(subdivisions)
         return
     
-    cls.subdivisions.append(subdivisions)
+    cls._subdivisions.append(subdivisions)
