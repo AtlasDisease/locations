@@ -5,7 +5,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from dataclasses import dataclass, field
 
 __all__ = ("EconomicPolicy", "Economy")
@@ -13,14 +13,15 @@ __all__ = ("EconomicPolicy", "Economy")
 
 # --- EconomicPolicy Enum --- #
 
-class EconomicPolicy(IntEnum):
+class EconomicPolicy(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     NONE = auto()
     CAPITALIST = auto()
     SOCIALIST = auto()
     COMMUNIST = auto()
-
-    def __str__(self) -> str:
-        return self.name.title()
 
 
 # --- Economy Class --- #

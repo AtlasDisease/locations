@@ -7,7 +7,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from dataclasses import dataclass
 from .divisions import Division
 
@@ -16,7 +16,11 @@ __all__ = ("AreaTypes", "District", "Neighborhood")
 
 # --- AreaTypes Enum --- #
 
-class AreaTypes(IntEnum):
+class AreaTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     NEIGHBORHOOD = auto() #General use
     SCHOOL = auto()
     FORT = auto()
@@ -24,14 +28,11 @@ class AreaTypes(IntEnum):
     AIRPORT = auto()
     CEMETERY = auto()
 
-    def __str__(self):
-        return self.name.title()
-
 
 # --- District Class --- #
 
 class District(Division): #A type that can have subdivisions or not
-    def __init__(self, name: str, type_: IntEnum = AreaTypes.NEIGHBORHOOD,
+    def __init__(self, name: str, type_: StrEnum = AreaTypes.NEIGHBORHOOD,
                  /,
                  subdivisions: list = None,
                  *,

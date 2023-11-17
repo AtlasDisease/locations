@@ -13,6 +13,10 @@ __all__ = ("LeaderPolicy", "Administrator", "Leader",)
 # --- LeaderPolicy Enum --- #
 
 class LeaderPolicy(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     NONE = auto()
     ANARCHY = auto()
     DEMOCRACY = auto()
@@ -20,9 +24,6 @@ class LeaderPolicy(StrEnum):
     OLIGARCHY = auto()
     MONARCHY = auto()
     AUTHORITARIAN = auto()
-
-    def __str__(self) -> str:
-        return self.name.title()
 
 
 # --- Administrator Class --- #

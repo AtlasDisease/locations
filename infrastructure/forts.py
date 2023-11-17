@@ -7,13 +7,17 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from ..divisions.districts import AreaTypes, District
 
 
 # --- FortAreaTypes Enum --- #
 
-class FortAreaTypes(IntEnum): #Can be used as a Building type or a Room Type
+class FortAreaTypes(StrEnum): #Can be used as a Building type or a Room Type
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     UNDEFINED = auto()
     PARADE = auto()
     OFFICER_QUARTERS = auto()
@@ -21,9 +25,6 @@ class FortAreaTypes(IntEnum): #Can be used as a Building type or a Room Type
     POST_OFFICE = auto()
     WATCHTOWER = auto()
     HOSPITAL  = auto()
-
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
 
 
 # --- Fort Class --- #

@@ -7,7 +7,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from .districts import District
 
 __all__ = ("PlaceTypes", "Place")
@@ -15,7 +15,11 @@ __all__ = ("PlaceTypes", "Place")
 
 # --- PlaceTypes Enum --- #
 
-class PlaceTypes(IntEnum):
+class PlaceTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     BUILDING = auto() #General use
     STADIUM = auto()
     CITY_HALL = auto()
@@ -26,9 +30,6 @@ class PlaceTypes(IntEnum):
     EMERGENCY_SERVICE = auto()
     HOSPITAL = auto()
     POST_OFFICE = auto()
-
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
 
 
 # --- Place Class --- #

@@ -14,7 +14,7 @@ __all__ = ("CityTypes", "AdministrativeTypes", "City")
 
 # --- CityTypes Enum --- #
 
-class CityTypes(IntEnum):
+class CityTypes(IntEnum): #Upgradable
     UNKNOWN = auto() #General use
     LOST = auto() #This is incredibly rare
     SITE = auto()

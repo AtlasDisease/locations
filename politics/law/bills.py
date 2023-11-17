@@ -13,6 +13,10 @@ __all__ = ("BillStatus", "Bill", "Constitution")
 # --- BillStatus Enum --- #
 
 class BillStatus(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     UNASSIGNED = auto()
     ASSIGNED = auto()
     VOTED = auto()

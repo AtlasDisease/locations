@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 import datetime as dt
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from dataclasses import dataclass
 from ..divisions.places import PlaceTypes
 from .rooms import Room
@@ -15,12 +15,13 @@ __all__ = ("Building", "ResidentialBuilding", "BuildingTypes")
 
 # --- BuildingTypes Enum --- #
 
-class BuildingTypes(IntEnum):
+class BuildingTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     COMMERICAL = auto() #General use
     RESIDENTIAL = auto()
-
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
 
 
 # --- Building Class --- #

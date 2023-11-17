@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from typing import Self, Callable
 
 __all__ = ("DivisionTypes", "Division")
@@ -12,7 +12,11 @@ __all__ = ("DivisionTypes", "Division")
 
 # --- DivisionTypes Enum --- #
 
-class DivisionTypes(IntEnum):
+class DivisionTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     AREA = auto() #General Use
     CITY = auto()
     COUNTY = auto()
@@ -24,15 +28,12 @@ class DivisionTypes(IntEnum):
     GALAXY = auto()
     UNIVERSE = auto()
 
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
-
 
 # --- Division Class --- #
 
 class Division:
     def __init__(self, name: str,
-                 type_: IntEnum = DivisionTypes.AREA,
+                 type_: StrEnum = DivisionTypes.AREA,
                  /,
                  subdivisions: list[Self] | Self = None,
                  *,
@@ -96,6 +97,11 @@ class Division:
         """Gets a subdivision based of a certain function.
 Ex. get largest or smallest subdivision by Population"""
         return func(self)
+
+##    def search(name: str) -> Location:
+##        for subdivision in self.subdivisions:
+##            if
+        
 
 
 # --- Extending Functionality Definitions --- #

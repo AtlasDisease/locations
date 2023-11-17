@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, auto
+from enum import StrEnum, auto
 from dataclasses import dataclass, KW_ONLY
 from .buildings import Building
 
@@ -13,7 +13,11 @@ __all__ = ("HouseOfWorship",)
 
 # --- ReligionTypes Enum --- #
 
-class ReligionTypes(IntEnum):
+class ReligionTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     UNKNOWN = auto() #General use
     ATHEIST = auto()
     CHRISTIANITY = auto()
@@ -28,13 +32,14 @@ class ReligionTypes(IntEnum):
     TAOISM = auto()
     ZOROASTRIANISM = auto()
 
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
-
 
 # --- WorshipStructureTypes Enum --- #
 
-class WorshipStructureTypes(IntEnum):
+class WorshipStructureTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     TEMPLE = auto() #General use, Hinduism, Buddhism, Ancient Religions
     CHURCH = auto() # Christianity
     CATHEDRAL = auto() # Christianity
@@ -54,14 +59,15 @@ class WorshipStructureTypes(IntEnum):
     ATASH_BEHRAM = auto() #Zoroastrianism
     AGYARI = auto() #Zoroastrianism
     DADGAH = auto() #Zoroastrianism
-    
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
 
 
 # --- DenominationTypes Enum --- #
 
-class DenominationTypes(IntEnum):
+class DenominationTypes(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name.replace("_", " ").title()
+    
     NONE = auto() #General use
     METHODIST = auto()
     PRESBYTERIAN = auto()
@@ -73,9 +79,6 @@ class DenominationTypes(IntEnum):
     CATHOLIC = auto()
     COPTIC = auto()
     NONDENOMINATIONAL = auto()
-
-    def __str__(self) -> str:
-        return self.name.replace("_", " ").title()
 
 
 # --- Religion Class --- #
