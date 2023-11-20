@@ -46,3 +46,8 @@ class Fort(Division):
                  **kwargs):
         
         super().__init__(name, FortTypes.FORT, subdivisions, population = population)
+
+    def __format__(self, format_spec = ""):
+        if "F" in format_spec or "O" in format_spec:
+            return f"The {self.__class__.__name__} of {self.name}"
+        return f"{self.__class__.__name__} {self.name}"
