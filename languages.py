@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from enum import IntEnum, auto
-from districts.divisions import Division
+from .divisions import Division
 
 
 # --- Variables --- #
@@ -19,6 +19,7 @@ LANGUAGES = {"Norwegian": _NORSK_NAMES, "Latin": _LATIN_NAMES}
 # --- Loanguage Enum --- #
 
 class Language(IntEnum):
+    """A enum for the list of languages that are available"""
     ENGLISH = auto()
     LATIN = auto()
     NORWEGIAN = auto()
@@ -28,6 +29,7 @@ class Language(IntEnum):
 
 
 def getNameInLanguage(division: Division, language: Language):
+    """Translates a division name into a language"""
 
     # This should never happen with the enum unless you are in a development environment
     # if str(language) not in LANGUAGES:
