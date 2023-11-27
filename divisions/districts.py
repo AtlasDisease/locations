@@ -22,3 +22,9 @@ class Neighborhood(Division):
     def __post_init__(self):
 
         self.type_ = SubdivisionTypes.NEIGHBORHOOD
+
+
+# --- District Class --- #
+@dataclass(init = False)
+class District(Division):
+    pass
