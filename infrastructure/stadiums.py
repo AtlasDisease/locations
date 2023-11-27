@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto, unique
 from .buildings import Building
 
 __all__ = ("StadiumTypes", "Stadium")
@@ -12,11 +12,8 @@ __all__ = ("StadiumTypes", "Stadium")
 
 # --- Stadium Enums --- #
 
+@unique
 class StadiumTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     SPORTS = auto()
     CONCERT = auto()
     CONVENTION = auto() #Convention Center

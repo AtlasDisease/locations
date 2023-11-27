@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ...enum import StrEnum, auto, unique
 from .bills import Bill
 
 __all__ = ("LawPolicy", "Law")
@@ -12,11 +12,8 @@ __all__ = ("LawPolicy", "Law")
 
 # --- LawPolicy Enum --- #
 
-class LawPolicy(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+@unique
+class LawPolicy(StrEnum):   
     NONE = auto()
     REHABILITATION = auto()
     FAIR_AND_JUST = auto()

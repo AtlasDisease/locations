@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto, unique
+from ...enum import StrEnum, auto, unique
 from dataclasses import dataclass, field, KW_ONLY
 
 __all__ = ("Seat", "Airplane")
@@ -13,11 +13,7 @@ __all__ = ("Seat", "Airplane")
 # --- AirplaneRole Enum --- #
 
 @unique
-class AirplaneRole(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class AirplaneRole(StrEnum):   
     WIDE_BODY = auto() #Default
     FREIGHT = auto()
     MILITARY = auto()
@@ -26,11 +22,7 @@ class AirplaneRole(StrEnum):
 # --- AirplaneManufacturer Enum --- #
 
 @unique
-class AirplaneManufacturer(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class AirplaneManufacturer(StrEnum):   
     UNKNOWN = auto()
     BOEING = auto()
     AIRBUS = auto()

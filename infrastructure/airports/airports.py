@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from typing import Self
-from enum import IntEnum, auto
+from ...enum import UpgradableEnum, auto, unique
 from dataclasses import dataclass
 from ..buildings import Building
 from ..rooms import Room
@@ -15,33 +15,12 @@ __all__ = ("Airport", "Gate", "AirportTypes")
 
 # --- AirportType Enum --- #
 
-class AirportTypes(IntEnum): #Upgradable
+@unique
+class AirportTypes(UpgradableEnum): #Upgradable
     UNKNOWN = auto()
     MUNICIPALITY = auto()
     REGIONAL = auto()
     INTERNATIONAL = auto()
-
-    def __str__(self) -> str:
-        return self.name.title()
-
-    def __add__(self, other) -> Self:
-        if isinstance(other, int):
-            other %= len(AirportTypes)
-            if other == 0:
-                other = 3
-            other = AirportTypes(other)
-
-        other = self.value + other.value
-        if other > len(AirportTypes):
-            other %= len(AirportTypes)
-            if other == 0:
-                other = 3
-            
-        return AirportTypes(other)
-
-    def __iadd__(self, other) -> Self:
-        self = self + other
-        return self
 
 
 # --- Gate Class --- #

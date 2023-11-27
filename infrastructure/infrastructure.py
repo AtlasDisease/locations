@@ -6,7 +6,7 @@
 
 import datetime as dt
 from dataclasses import dataclass
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto, unique
 from .buildings import Building
 
 __all__ = ("CityHall", "Courthouse",
@@ -16,6 +16,7 @@ __all__ = ("CityHall", "Courthouse",
 
 # --- InfrastructureTypes Enum --- #
 
+@unique
 class InfrastructureTypes(StrEnum):
     CITY_HALL = auto()
     COURTHOUSE = auto()

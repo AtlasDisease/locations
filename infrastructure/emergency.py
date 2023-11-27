@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto
 from .buildings import Building, BuildingTypes
 
 __all__ = ("EmergencyService",)
@@ -12,11 +12,8 @@ __all__ = ("EmergencyService",)
 
 # --- Emergency Service Enum --- #
 
-class EmergencyServiceTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+@unique
+class EmergencyServiceTypes(StrEnum): 
     EMERGENCY = auto() #Generic
     POLICE = auto()
     FIRE = auto()

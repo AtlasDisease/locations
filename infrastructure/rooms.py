@@ -4,16 +4,13 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto, unique
 
 
 # --- RoomType Enum --- #
 
+@unique
 class RoomTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     LIVING_ROOM = auto()
     KITCHEN = auto()
     MASTER_BEDROOM = auto()

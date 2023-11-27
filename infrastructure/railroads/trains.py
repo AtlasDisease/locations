@@ -7,7 +7,7 @@
 import sys
 from typing import override
 from dataclasses import dataclass, field
-from enum import IntEnum, StrEnum, auto, unique
+from ...enum import IntEnum, StrEnum, auto, unique
 
 __all__ = ("Train", "PowerType", "UsageType",
 "FreightOperators", "PassengerOperators", "Operators")
@@ -32,10 +32,6 @@ class PowerType(IntEnum):
 
 @unique
 class UsageType(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     PASSENGER = auto()
     RAPID_TRANSIT = auto() #Basically, passenger but more specific
     FREIGHT = auto()
@@ -46,10 +42,6 @@ class UsageType(StrEnum):
 
 @unique
 class FreightOperators(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-
     OTHER = auto() #General use
     BNSF = auto()
     UNION_PACIFIC = auto()
@@ -62,10 +54,6 @@ class FreightOperators(StrEnum):
 
 @unique
 class PassengerOperators(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-
     OTHER = auto() #General use
     AMTRAK = auto()
 

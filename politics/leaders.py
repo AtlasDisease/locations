@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
 
 __all__ = ("LeaderPolicy", "Administrator", "Leader",)
@@ -13,10 +13,6 @@ __all__ = ("LeaderPolicy", "Administrator", "Leader",)
 # --- LeaderPolicy Enum --- #
 
 class LeaderPolicy(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     NONE = auto()
     ANARCHY = auto()
     DEMOCRACY = auto()

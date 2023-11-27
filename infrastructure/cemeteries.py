@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 import datetime as dt
-from enum import IntEnum, auto
+from ..enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
 
 __all__ = ("Cemetery",)

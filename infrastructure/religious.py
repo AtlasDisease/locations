@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto, unique
 from dataclasses import dataclass, KW_ONLY
 from .buildings import Building
 
@@ -13,11 +13,8 @@ __all__ = ("HouseOfWorship",)
 
 # --- ReligionTypes Enum --- #
 
+@unique
 class ReligionTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     UNKNOWN = auto() #General use
     ATHEIST = auto()
     CHRISTIANITY = auto()
@@ -35,11 +32,8 @@ class ReligionTypes(StrEnum):
 
 # --- WorshipStructureTypes Enum --- #
 
+@unique
 class WorshipStructureTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     TEMPLE = auto() #General use, Hinduism, Buddhism, Ancient Religions
     CHURCH = auto() # Christianity
     CATHEDRAL = auto() # Christianity
@@ -63,11 +57,8 @@ class WorshipStructureTypes(StrEnum):
 
 # --- DenominationTypes Enum --- #
 
+@unique
 class DenominationTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     NONE = auto() #General use
     METHODIST = auto()
     PRESBYTERIAN = auto()

@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass
-from enum import StrEnum, auto, unique
+from ...enum import StrEnum, UpgradableEnum, auto, unique
 
 __all__ = ("Railroad", "GaugeTypes")
 
@@ -13,11 +13,7 @@ __all__ = ("Railroad", "GaugeTypes")
 # --- RoadType Enum --- #
 
 @unique
-class GaugeTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class GaugeTypes(UpgradableEnum):
     STANDARD = auto()
     NARROW = auto()
     WIDE = auto()

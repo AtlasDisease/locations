@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 import sys, inspect
-from enum import IntEnum, auto
+from ..enum import IntEnum, auto
 from dataclasses import dataclass
 from ..divisions import Division
 from ..subdivisions import Subdivision
@@ -15,7 +15,7 @@ __all__ = ("School", "College", "University", "Technical")
 
 # --- SchoolTypes Enum --- #
 
-class SchoolTypes(IntEnum):
+class SchoolTypes(IntEnum): #Not upgradable due to Technical being a non-upgrade
     SCHOOL = auto()
     COLLEGE = auto()
     UNIVERSITY = auto()

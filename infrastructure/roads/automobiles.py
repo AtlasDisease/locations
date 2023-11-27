@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass, KW_ONLY
-from enum import StrEnum, auto, unique
+from ...enum import StrEnum, auto, unique
 
 __all__ = ("CarManufacturer", "TrailerTruckManufacturer",
            "AutomobilePowerType", "AutomobileManufacturer",
@@ -16,10 +16,6 @@ __all__ = ("CarManufacturer", "TrailerTruckManufacturer",
 
 @unique
 class CarManufacturer(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-
     UNKNOWN = auto() #General use
     BUICK = auto()
     CADILLAC = auto()
@@ -43,10 +39,6 @@ class CarManufacturer(StrEnum):
 
 @unique
 class TrailerTruckManufacturer(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     KENWORTH = auto()
     MACK = auto()
     PETERBILT = auto()
@@ -56,10 +48,6 @@ class TrailerTruckManufacturer(StrEnum):
 
 @unique
 class AutomobilePowerType(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     GAS = auto()
     DIESEL = auto()
     ELECTRIC = auto()

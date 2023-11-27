@@ -7,7 +7,7 @@
 
 # --- Imports --- #
 
-from enum import IntEnum, StrEnum, auto
+from ..enum import IntEnum, StrEnum, auto, unique
 from ..divisions import Division
 
 __all__ = ("Fort",)
@@ -21,11 +21,8 @@ class FortTypes(IntEnum):
 
 # --- FortAreaTypes Enum --- #
 
+@unique
 class FortAreaTypes(StrEnum): #Can be used as a Building type or a Room Type
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     UNDEFINED = auto()
     PARADE = auto()
     OFFICER_QUARTERS = auto()

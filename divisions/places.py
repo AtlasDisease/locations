@@ -7,7 +7,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto
 from ..subdivisions import Subdivision
 
 __all__ = ("PlaceTypes", "Place")
@@ -15,11 +15,7 @@ __all__ = ("PlaceTypes", "Place")
 
 # --- PlaceTypes Enum --- #
 
-class PlaceTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class PlaceTypes(StrEnum):   
     BUILDING = auto() #General use
     STADIUM = auto()
     CITY_HALL = auto()

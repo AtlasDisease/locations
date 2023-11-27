@@ -5,18 +5,15 @@
 # --- Imports --- #
 
 from dataclasses import dataclass, field
-from enum import StrEnum, auto
+from ...enum import StrEnum, auto, unique
 
 __all__ = ("BillStatus", "Bill", "Constitution")
 
 
 # --- BillStatus Enum --- #
 
+@unique
 class BillStatus(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     UNASSIGNED = auto()
     ASSIGNED = auto()
     VOTED = auto()

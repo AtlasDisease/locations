@@ -5,7 +5,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum
+from ..enum import StrEnum, auto
 from dataclasses import dataclass
 # from .temperature import TemperatureUnit
 
@@ -15,7 +15,7 @@ __all__ = ("Climate", "ClimateTypes")
 # --- ClimateTypes Enum --- #
 
 class ClimateTypes(StrEnum):
-    UNKNOWN = "Unknown"
+    UNKNOWN = auto()
     A = "Tropical"
     AF = "Tropical Rainforest"
     AM = "Tropical Monsoon"

@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto
 from typing import Self, Callable
 
 __all__ = ("DivisionTypes", "Division")
@@ -12,11 +12,7 @@ __all__ = ("DivisionTypes", "Division")
 
 # --- DivisionTypes Enum --- #
 
-class DivisionTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class DivisionTypes(StrEnum):    
     AREA = auto() #General Use
     CITY = auto()
     COUNTY = auto()

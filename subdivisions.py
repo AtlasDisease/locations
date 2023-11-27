@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
+from .enum import StrEnum, auto
 from .divisions.divisions import Division
 from .infrastructure.buildings import Building
 from .infrastructure.rooms import Room
@@ -20,10 +20,6 @@ type Subdivision = Building | Room
 # --- SubdivisionTypes Enum --- #
 
 class SubdivisionTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
     NEIGHBORHOOD = auto() #General use
     SCHOOL = auto()
     FORT = auto()

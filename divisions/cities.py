@@ -6,7 +6,7 @@
 # --- Imports --- #
 
 from typing import Self
-from enum import IntEnum, auto
+from ..enum import UpgradableEnum, auto
 from .divisions import Division, DivisionTypes
 
 __all__ = ("CityTypes", "AdministrativeTypes", "City")
@@ -14,7 +14,7 @@ __all__ = ("CityTypes", "AdministrativeTypes", "City")
 
 # --- CityTypes Enum --- #
 
-class CityTypes(IntEnum): #Upgradable
+class CityTypes(UpgradableEnum): #Upgradable
     UNKNOWN = auto() #General use
     LOST = auto() #This is incredibly rare
     SITE = auto()
@@ -22,32 +22,10 @@ class CityTypes(IntEnum): #Upgradable
     TOWN = auto() #No real definition, user decision, incorporated
     CITY = auto()
 
-    def __str__(self) -> str:
-        return self.name.title()
-
-    def __add__(self, other) -> Self:
-        if isinstance(other, int):
-            other %= len(CityTypes)
-            if other == 0:
-                other = 3
-            other = CityTypes(other)
-
-        other = self.value + other.value
-        if other > len(CityTypes):
-            other %= len(CityTypes)
-            if other == 0:
-                other = 3
-            
-        return CityTypes(other)
-
-    def __iadd__(self, other) -> Self:
-        self = self + other
-        return self
-
 
 # --- AdministrativeTypes Enum --- #
 
-class AdministrativeTypes(IntEnum):
+class AdministrativeTypes(UpgradableEnum): #Upgradable
     NONE = auto()
     SEAT = auto()
     CAPITAL = auto()
@@ -55,26 +33,7 @@ class AdministrativeTypes(IntEnum):
     def __str__(self) -> str:
         if self == AdministrativeTypes.SEAT:
             return f"County {self.name.title()}"
-        return self.name.title()
-
-    def __add__(self, other) -> Self:
-        if isinstance(other, int):
-            other %= len(AdministrativeTypes)
-            if other == 0:
-                other = 3
-            other = AdministrativeTypes(other)
-
-        other = self.value + other.value
-        if other > len(AdministrativeTypes):
-            other %= len(AdministrativeTypes)
-            if other == 0:
-                other = 3
-            
-        return AdministrativeTypes(other)
-
-    def __iadd__(self, other) -> Self:
-        self = self + other
-        return self
+        return super(self).__str__()
 
 
 # --- City Class --- #

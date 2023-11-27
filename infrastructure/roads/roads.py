@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass
-from enum import IntEnum, StrEnum, auto, unique
+from ...enum import IntEnum, StrEnum, UpgradableEnum, auto, unique
 
 __all__ = ("Road", "Intersection", "RoadTypes",
            "MaterialTypes", "IntersectionTypes", "Trail")
@@ -14,11 +14,7 @@ __all__ = ("Road", "Intersection", "RoadTypes",
 # --- RoadType Enum --- #
 
 @unique
-class RoadTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class RoadTypes(UpgradableEnum): #Upgradable
     PRIMITIVE = auto()
     PRIVATE = auto()
     LOW_CAPACITY = auto()
@@ -27,7 +23,8 @@ class RoadTypes(StrEnum):
 
 # --- MaterialTypes Enum --- #
 
-class MaterialTypes(IntEnum):
+@unique
+class MaterialTypes(UpgradableEnum): #Upgradable
     DIRT = auto()
     GRAVEL = auto()
     CONCRETE = auto()
@@ -37,11 +34,7 @@ class MaterialTypes(IntEnum):
 # --- IntersectionType Enum --- #
 
 @unique
-class IntersectionTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+class IntersectionTypes(StrEnum):   
     INTERSECTION = auto()
     ROUNDABOUT = auto()
     CONNECTOR = auto()

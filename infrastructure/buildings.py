@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 import datetime as dt
-from enum import StrEnum, auto
+from ..enum import StrEnum, auto, unique
 from dataclasses import dataclass
 from .rooms import Room
 
@@ -14,11 +14,8 @@ __all__ = ("Building", "ResidentialBuilding", "BuildingTypes")
 
 # --- BuildingTypes Enum --- #
 
-class BuildingTypes(StrEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return name.replace("_", " ").title()
-    
+@unique
+class BuildingTypes(StrEnum):  
     COMMERICAL = auto() #General use
     RESIDENTIAL = auto()
 
