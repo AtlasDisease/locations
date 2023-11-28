@@ -21,7 +21,7 @@ class GaugeTypes(UpgradableEnum):
 
 # --- Railroad Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Railroad:
     name: str
     type_: GaugeTypes = GaugeTypes.STANDARD

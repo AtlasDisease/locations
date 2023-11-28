@@ -65,14 +65,16 @@ type Operators = PassengerOperators | FreightOperators | str
 
 # --- Train Class --- #
 
+@dataclass
 class Train:
-    def __init__(self, name: str, /, type_: UsageType = UsageType.FREIGHT, power_type: PowerType = PowerType.DIESEL, operator: Operators = ""):
-        self.name = name
-        self.type_ = type_
-        self.power_type = power_type
+    name: str
+    type_: UsageType = UsageType.FREIGHT
+    power_type: PowerTypes = PowerTypes.DIESEL
+    operator: Operators = ""
+    
+    def __post_init__(self):
 
         # Try to determine operator if operator is not given
-        self.operator = operator
         if not self.operator and self.type_ == UsageType.FREIGHT:
             self.operator = FreightOperators.OTHER
         if not self.operator and (self.type_ == UsageType.PASSENGER or self.type_ == UsageType.RAPID_TRANSIT):

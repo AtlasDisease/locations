@@ -74,7 +74,7 @@ class DenominationTypes(StrEnum):
 
 # --- Religion Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Religion:
     
     type_: ReligionTypes

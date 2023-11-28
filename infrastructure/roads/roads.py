@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field, KW_ONLY
 from ...enum import IntEnum, StrEnum, UpgradableEnum, auto, unique
 
 __all__ = ("Road", "Intersection", "RoadTypes",
@@ -56,26 +56,25 @@ class Road:
 
 # --- Trail Class --- #
 
+@dataclass(init = False, match_args = False)
 class Trail(Road):
-    def __init__(self, name: str):
-        super().__init__(name, RoadTypes.PRIMITIVE, MaterialTypes.DIRT)
+    def __post_init__(self):
+
+        self.type_ = RoadTypes.PRIMITIVE
+        self.material = MaterialTypes.DIRT
 
 
 # --- Intersection Class --- #
 
 @dataclass
-class Intersection:
-    name: str
-    type_: IntersectionTypes = IntersectionTypes.INTERSECTION
-    material: MaterialTypes = MaterialTypes.ASPHALT
+class Intersection(Road):
+    type_: IntersectionTypes = field(default = IntersectionTypes.INTERSECTION)
+    _: KW_ONLY
+    roads: list[Road] = field(default_factory = list)
 
-    def __str__(self) -> str:
-        return self.name
-
-
-# --- Testing --- #
-
-if __name__ == "__main__":
-
-    road = Road(name = "Hello World", type_ = RoadTypes.HIGH_CAPACITY)
-    print(repr(road), str(road.type_))
+    def __format__(self, format_spec = ""):
+        return str(self)
+    
+    def __iter__(self):
+        return iter(self.roads)
+    

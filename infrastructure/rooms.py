@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from dataclasses import dataclass, field
 from ..enum import StrEnum, auto, unique
 
 
@@ -20,8 +21,7 @@ class RoomTypes(StrEnum):
 
 # --- Room Class --- #
 
+@dataclass
 class Room:
-    def __init__(self, name: str, type_: StrEnum):
-
-        self.name = name
-        self.type_ = type_
+    name: str
+    type_: RoomTypes

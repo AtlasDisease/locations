@@ -6,7 +6,7 @@
 
 import datetime as dt
 from ..enum import StrEnum, auto, unique
-from dataclasses import dataclass
+from dataclasses import dataclass, field, KW_ONLY
 from .rooms import Room
 
 __all__ = ("Building", "ResidentialBuilding", "BuildingTypes")
@@ -22,18 +22,12 @@ class BuildingTypes(StrEnum):
 
 # --- Building Class --- #
 
+@dataclass
 class Building: #Very similar to districts.places.Place
-    def __init__(self, name: str,
-                 type_: BuildingTypes = BuildingTypes.COMMERICAL,
-                 *,
-                 subdivisions: list[Room] = None,
-                 **kwargs):
-
-        self.name = name
-        self.type_ = type_
-
-        if subdivisions:
-            self.subdivisions = subdivisions
+    name: str
+    type_: BuildingTypes = BuildingTypes.COMMERICAL
+    _: KW_ONLY
+    subdivisions: list[Room] = field(default_factory = list)
 
     def __str__(self) -> str:
         return self.name

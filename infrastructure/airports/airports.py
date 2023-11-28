@@ -25,7 +25,7 @@ class AirportTypes(UpgradableEnum): #Upgradable
 
 # --- Gate Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Gate:
     terminal: chr
     gate: str

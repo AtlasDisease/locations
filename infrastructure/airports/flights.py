@@ -28,7 +28,7 @@ class FlightStatus(IntEnum):
 
 # --- Flight Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Flight:
     airline: Airline
     from_: Location

@@ -18,7 +18,7 @@ __all__ = ("Location",)
 @dataclass(slots = True)
 class Location:
     name: str = ""
-    divisions: list = field(default_factory=list)
+    divisions: list = field(default_factory = list)
 
     def __str__(self):
         return ", ".join((f"{division: L}".strip() for division in self.divisions))

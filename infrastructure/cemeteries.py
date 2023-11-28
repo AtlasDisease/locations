@@ -19,7 +19,7 @@ class CemeteryTypes(IntEnum):
 
 # --- Grave Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Grave:
     name: str
     born: dt.date = dt.date.min
