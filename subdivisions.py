@@ -26,3 +26,4 @@ class SubdivisionTypes(StrEnum):
     PORT = auto()
     AIRPORT = auto()
     CEMETERY = auto()
+    POWER_STATION = auto()

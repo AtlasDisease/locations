@@ -24,6 +24,7 @@ class InfrastructureTypes(StrEnum):
     BANK = auto()
     HOSPITAL = auto()
     POST_OFFICE = auto()
+    POWER_STATION = auto()
         
 
 # --- CityHall Class --- #
