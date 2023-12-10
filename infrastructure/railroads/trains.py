@@ -16,7 +16,7 @@ __all__ = ("Train", "PowerType", "UsageType",
 # --- PowerType Enum --- #
 
 @unique
-class PowerType(IntEnum):
+class PowerTypes(IntEnum):
     STEAM = auto()
     DIESEL = auto()
     ELECTRIC = auto()

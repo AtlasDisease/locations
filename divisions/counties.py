@@ -1,6 +1,6 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a County, Parish, and Shire.
+# Description: A module to handle a County, Parish, Shire, Oblast.
 
 # --- Imports --- #
 
@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 from .cities import AdministrativeTypes
 
-__all__ = ("County", "Parish", "Shire")
+__all__ = ("County", "Parish", "Shire", "Oblast")
         
 
 # --- County Class --- #
@@ -31,5 +31,9 @@ class Parish(County): #French version of a County
     pass
 
 
-class Shire(County): #English version of a County
+class Shire(County): #English (UK) version of a County
+    pass
+
+
+class Oblast(County): #Russian version of County
     pass

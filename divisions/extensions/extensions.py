@@ -8,6 +8,8 @@
 from typing import Callable
 from ..divisions import Division
 
+__all__ = ("errorcheck",)
+
 ### --- Errorcheck Decorator --- #
 ##
 ##def check(func: Callable):
@@ -52,15 +54,16 @@ def errorcheck(func: Callable):
 
 # --- Extension Class --- #
 
-class Extension:
-    @staticmethod
-    def _get(division: Division, func: Callable) -> Division:
-        result = division.subdivisions[0]
-    
-        for subdivision in division.subdivisions:
-            if func(subdivision, result):
-                continue
-        
-            result = subdivision
-
-        return result
+class Extension: #Past usage removed, new future use possibly
+    pass
+##    @staticmethod
+##    def _get(division: Division, func: Callable) -> Division:
+##        result = division.subdivisions[0]
+##    
+##        for subdivision in division.subdivisions:
+##            if func(subdivision, result):
+##                continue
+##        
+##            result = subdivision
+##
+##        return result

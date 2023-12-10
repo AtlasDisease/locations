@@ -51,6 +51,10 @@ class City(Division):
         self.city_type = citytype
         self.admin_type = admintype
 
+        if self.admin_type == AdministrativeTypes.CAPITAL \
+        or self.admin_type == AdministrativeTypes.SEAT: #Make sure our political importance works correctly
+            self.city_type = CityTypes.CITY
+
     def __format__(self, format_spec = "") -> str:
 
         if "F" in format_spec or "O" in format_spec:
@@ -71,3 +75,22 @@ class City(Division):
     @property
     def historical(self) -> bool:
         return self.city_type == CityTypes.SITE
+
+    @property
+    def importance(self) -> int:
+        """Returns the importance of the city.
+This is mostly for debugging if there is an issue with most_importance or least_importance functions."""
+        return self.admin_type.value + self.city_type.value
+
+    @staticmethod
+    def most_importance(division: Division) -> Self:
+        """Importance is determined by the administrative type and the city type values combined
+FIXME: Good for now, but hacky (and slightly unreliable) way to do this. This one should always be correct
+unlike least_importance."""
+        return max(division, key = lambda x: x.importance)
+
+    @staticmethod
+    def least_importance(division: Division) -> Self:
+        """Importance is determined by the administrative type and the city type values combined
+FIXME: Good for now, but hacky (and slightly unreliable) way to do this"""
+        return min(division, key = lambda x: x.importance)

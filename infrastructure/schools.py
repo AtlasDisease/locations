@@ -36,6 +36,10 @@ class School(Division):
 
         super().__init__(name, type_, subdivisions, population = population)
 
+##    def __format__(self, format_spec = "") -> str:
+##        if "F" in format_spec:
+##            return #Want to return "{self.name} {self.type}"
+
 
 # --- College Class --- #
 

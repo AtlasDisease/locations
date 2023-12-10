@@ -6,14 +6,14 @@
 # --- Imports --- #
 
 from ..divisions import Division
-from .extenders import Extension, errorcheck
+from .extensions import errorcheck
 
 __all__ = ("Population", "add_population")
 
 
 # --- Population Class --- #
 
-class Population(int, Extension):
+class Population(int):
     """Basically an integer but with formatting when converted to string
 and some additional functions to help with comparisons"""
 
@@ -23,14 +23,12 @@ and some additional functions to help with comparisons"""
     @staticmethod
     @errorcheck
     def largest(division: Division) -> Division:
-        return Population._get(division, \
-                                lambda x, y: x.population <= y.population)
-    
+        return max(division, key = lambda x: x.population)
+
     @staticmethod
     @errorcheck
     def smallest(division: Division) -> Division:
-        return Population._get(division, \
-                                lambda x, y: x.population >= y.population)
+        return min(division, key = lambda x: x.population)
 
 
 # --- Extending Functionality Definitions --- #

@@ -7,7 +7,7 @@
 
 from typing import Callable
 from ..divisions import Division
-from .extenders import Extension, errorcheck
+from .extensions import errorcheck
 
 __all__ = ("Elevation", "Meters", "Feet", \
     "meters", "feet", "add_elevation" )
@@ -15,16 +15,16 @@ __all__ = ("Elevation", "Meters", "Feet", \
 
 # --- Elevation Class --- #
 
-class Elevation(Extension):
+class Elevation(int):
     @staticmethod
     @errorcheck
     def highest(division: Division) -> Division:
-        return Elevation._get(division, lambda x, y: x.elevation <= y.elevation)
+        return max(division, key = lambda x: x.elevation)
     
     @staticmethod
     @errorcheck
     def lowest(division: Division) -> Division:
-        return Elevation._get(division, lambda x, y: x.elevation >= y.elevation)
+        return min(division, key = lambda x: x.elevation)
 
 
 # --- ElevationUnit Class --- #

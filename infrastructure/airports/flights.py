@@ -6,7 +6,7 @@
 
 import datetime as dt
 from ...enum import IntEnum, auto
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, KW_ONLY
 from ...positional import Location
 from .airlines import Airline
 from .airplanes import Airplane, Seat
@@ -40,6 +40,18 @@ class Flight:
     arrival: dt.date = dt.date.max
     status: FlightStatus = FlightStatus.CONFIRMED
     stops: int = 0
+    _: KW_ONLY
+    flight_time: dt.timedelta | None = None
+
+    def __post_init__(self):
+        if not self.flight_time:
+            return
+
+        if self.arrival == dt.date.max and self.flight_time:
+            self.arrival = self.depart + self.flight_time
+
+        if self.depart == dt.date.min and self.flight_time:
+            self.depart = self.arrival - self.flight_time
 
     @property
     def duration(self) -> dt.timedelta:

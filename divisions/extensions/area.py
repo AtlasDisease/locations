@@ -7,7 +7,7 @@
 
 from typing import Callable
 from ..divisions import Division
-from .extenders import Extension, errorcheck
+from .extensions import errorcheck
 
 __all__ = ("Area", "Kilometers", "Miles", \
     "kilometers", "miles", "add_area")
@@ -15,16 +15,16 @@ __all__ = ("Area", "Kilometers", "Miles", \
 
 # --- Area Class --- #
 
-class Area(Extension):
+class Area(float):
     @staticmethod
     @errorcheck
     def largest(division: Division) -> Division:
-        return Area._get(division, lambda x, y: x.area <= y.area)
+        return max(division, key = lambda x: x.area)
     
     @staticmethod
     @errorcheck
     def smallest(division: Division) -> Division:
-        return Area._get(division, lambda x, y: x.area >= y.area)
+        return min(division, key = lambda x: x.area)
 
 
 # --- AreaUnit Class --- #
