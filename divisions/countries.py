@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from typing import override
 from .divisions import Division, DivisionTypes
 
 __all__ = ("Country",)
@@ -26,6 +27,7 @@ class Country(Division):
         if prefix != "":
             self.prefix = prefix
 
+    @override
     def __format__(self, format_spec = ""):
 
         if "F" in format_spec or "O" in format_spec:

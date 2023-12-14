@@ -16,7 +16,7 @@ _NORSK_NAMES = {"Earth": "Jord"}
 LANGUAGES = {"Norwegian": _NORSK_NAMES, "Latin": _LATIN_NAMES}
 
 
-# --- Loanguage Enum --- #
+# --- Language Enum --- #
 
 class Language(IntEnum):
     """A enum for the list of languages that are available"""

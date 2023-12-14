@@ -5,8 +5,9 @@
 
 # --- Imports --- #
 
-from ..divisions import Division
+from dataclasses import dataclass
 from .extensions import errorcheck
+from ...subdivisions import Divisible
 
 __all__ = ("Population", "add_population")
 
@@ -22,16 +23,23 @@ and some additional functions to help with comparisons"""
 
     @staticmethod
     @errorcheck
-    def largest(division: Division) -> Division:
-        return max(division, key = lambda x: x.population)
+    def largest(division: Divisible) -> Divisible:
+        return max(division, key = lambda x: x._population)
 
     @staticmethod
     @errorcheck
-    def smallest(division: Division) -> Division:
-        return min(division, key = lambda x: x.population)
+    def smallest(division: Divisible) -> Divisible:
+        return min(division, key = lambda x: x._population)
 
 
-# --- Extending Functionality Definitions --- #
+# --- Population Functions --- #
 
-def add_population(cls, population: int) -> None:
-    cls.population = population
+def _get_population(self):
+    return self._population
+
+def _set_population(self, population: int):
+    self._population = population
+
+def add_population(self, population: int) -> None:
+    self._population = population
+    self.__class__.population = property(_get_population, _set_population)

@@ -7,6 +7,7 @@
 
 # --- Imports --- #
 
+from typing import override
 from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 
@@ -21,6 +22,7 @@ class PlanetarySystem(Division):
         
         self.type_ = DivisionTypes.PLANETARY_SYSTEM
 
+    @override
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:
             return f"The Planetary System of {self.name}"

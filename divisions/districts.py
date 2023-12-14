@@ -10,7 +10,7 @@
 from enum import StrEnum, auto
 from dataclasses import dataclass
 from .divisions import Division
-from ..subdivisions import Subdivision, SubdivisionTypes
+from ..subdivisions import SubdivisionTypes #Subdivision, 
 
 __all__ = ("Neighborhood",)
 
@@ -25,6 +25,7 @@ class Neighborhood(Division):
 
 
 # --- District Class --- #
+
 @dataclass(init = False)
 class District(Division):
     pass

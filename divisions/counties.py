@@ -1,6 +1,6 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a County, Parish, Shire, Oblast.
+# Description: A module to handle a County, Parish, Shire, and Oblast.
 
 # --- Imports --- #
 

@@ -4,9 +4,10 @@
 
 # --- Imports --- #
 
+from typing import override, Iterable
 from ..enum import StrEnum, auto, unique
 from dataclasses import dataclass, KW_ONLY
-from .buildings import Building
+from .buildings import Building, BuildingTypes
 
 __all__ = ("HouseOfWorship",)
 
@@ -28,6 +29,9 @@ class ReligionTypes(StrEnum):
     SIKHISM = auto()
     TAOISM = auto()
     ZOROASTRIANISM = auto()
+
+
+type ReligionType = ReligionTypes | str
 
 
 # --- WorshipStructureTypes Enum --- #
@@ -55,6 +59,9 @@ class WorshipStructureTypes(StrEnum):
     DADGAH = auto() #Zoroastrianism
 
 
+type WorshipStructure = WorshipStructureTypes | str
+
+
 # --- DenominationTypes Enum --- #
 
 @unique
@@ -72,15 +79,18 @@ class DenominationTypes(StrEnum):
     NONDENOMINATIONAL = auto()
 
 
+type Denomination = DenominationTypes | str
+
+
 # --- Religion Class --- #
 
 @dataclass(slots = True)
 class Religion:
     
-    type_: ReligionTypes
-    structure: WorshipStructureTypes
+    type_: ReligionType
+    structure: WorshipStructure
     _: KW_ONLY
-    denomination: DenominationTypes
+    denomination: Denomination
 
 
 # --- HouseOfWorship Class --- #
@@ -89,10 +99,11 @@ class HouseOfWorship(Building):
     def __init__(self, name: str, religion: Religion,
                  **kwargs):
 
-        super().__init__(name, **kwargs)
+        super().__init__(name, BuildingTypes.COMMERICAL)
 
         self.religion = religion
 
+    @override
     def __format__(self, format_spec = "") -> str:
         if any(i in format_spec for i in {"F", "O", "L", "l"}):
             if self.religion.type_ == ReligionTypes.CHRISTIANITY:
@@ -100,4 +111,14 @@ class HouseOfWorship(Building):
             return f"{self.name} {self.religion.structure}"
 
         return str(self)
-        
+
+    @staticmethod
+    def get_denominations(division,
+                     denomination: DenominationTypes) -> Iterable:
+        return filter(lambda x: x.religion.denomination == denomination,
+                      (x for x in division if hasattr(x, "religion")))
+    
+    @staticmethod
+    def religion(division, type_: ReligionTypes) -> Iterable:
+        return filter(lambda x: x.religion.type_ == type_,
+                      (x for x in division if hasattr(x, "religion")))

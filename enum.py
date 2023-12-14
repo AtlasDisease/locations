@@ -88,3 +88,8 @@ This will work as if an integer overflowed or underflowed by returning to the MA
     def __iadd__(self, other) -> Self:
         self = self + other
         return self
+
+
+# --- Type Variables --- #
+
+type Enums = StrEnum | IntEnum | UpgradableEnum | OverflowUpgradableEnum

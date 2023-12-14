@@ -29,7 +29,7 @@ class InfrastructureTypes(StrEnum):
 
 # --- CityHall Class --- #
 
-@dataclass
+@dataclass(init=False)
 class CityHall(Building):
     def __post_init__(self):
         
@@ -38,7 +38,7 @@ class CityHall(Building):
 
 # --- Courthouse Class --- #
 
-@dataclass
+@dataclass(init=False)
 class Courthouse(Building):
     def __post_init__(self):
         
@@ -47,7 +47,7 @@ class Courthouse(Building):
 
 # --- Port Class --- #
 
-@dataclass
+@dataclass(init=False)
 class Port(Building):
     def __post_init__(self):
         
@@ -56,7 +56,7 @@ class Port(Building):
 
 # --- Bank Class --- #
 
-@dataclass
+@dataclass(init=False)
 class Bank(Building):
     def __post_init__(self):
         
@@ -65,7 +65,7 @@ class Bank(Building):
 
 # --- Hospital Class --- #
 
-@dataclass
+@dataclass(init=False)
 class Hospital(Building):
     def __post_init__(self):
         
@@ -74,7 +74,7 @@ class Hospital(Building):
 
 # --- PostOffice Class --- #
 
-@dataclass
+@dataclass(init=False)
 class PostOffice(Building):
     def __post_init__(self):
         

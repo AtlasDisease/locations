@@ -5,7 +5,7 @@
 
 # --- Imports --- #
 
-from typing import Self
+from typing import Self, override
 from ..enum import UpgradableEnum, auto
 from .divisions import Division, DivisionTypes
 
@@ -39,7 +39,10 @@ class AdministrativeTypes(UpgradableEnum): #Upgradable
 # --- City Class --- #
 
 class City(Division):
-    def __init__(self, name: str, citytype: CityTypes, admintype: AdministrativeTypes,
+    def __init__(self,
+                 name: str,
+                 citytype: CityTypes,
+                 admintype: AdministrativeTypes,
                  /,
                  subdivisions: list[Division] | Division = None,
                  *,
@@ -55,6 +58,7 @@ class City(Division):
         or self.admin_type == AdministrativeTypes.SEAT: #Make sure our political importance works correctly
             self.city_type = CityTypes.CITY
 
+    @override
     def __format__(self, format_spec = "") -> str:
 
         if "F" in format_spec or "O" in format_spec:
@@ -64,13 +68,26 @@ class City(Division):
 
         return str(self)
 
+    def __eq__(self, other: Self) -> bool:
+        return self.city_type == other.city_type \
+               and self.admin_type == other.admin_type
+
+    def __gt__(self, other: Self) -> bool:
+        return self.city_type >= other.city_type \
+               and self.admin_type > other.admin_type
+
+    def __lt__(self, other: Self) -> bool:
+        return self.city_type <= other.city_type \
+               and self.admin_type < other.admin_type
+
     @property
     def incorporated(self) -> bool:
         return self.city_type >= CityTypes.TOWN
 
     @property
     def abandoned(self)-> bool:
-        return self.city_type < CityTypes.COMMUNITY and self.city_type != CityTypes.UNKNOWN
+        return self.city_type < CityTypes.COMMUNITY \
+               and self.city_type != CityTypes.UNKNOWN
 
     @property
     def historical(self) -> bool:

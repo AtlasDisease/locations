@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from typing import override
 from .divisions import Division, DivisionTypes
 
 __all__ = ("Continent",)
@@ -22,6 +23,7 @@ class Continent(Division):
         super().__init__(name, DivisionTypes.CONTINENT, subdivisions,
                          population = population, **kwargs)
 
+    @override
     def __format__(self, format_spec = "") -> str:
 
         if "L" in format_spec or "l" in format_spec:

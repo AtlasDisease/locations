@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+from typing import override
 from dataclasses import dataclass
 from .divisions import Division, DivisionTypes
 
@@ -18,5 +19,6 @@ class Universe(Division):
         
         self.type_ = DivisionTypes.UNIVERSE
 
+    @override
     def __str__(self):
         return f"{self.name} {self.__class__.__name__}".strip()

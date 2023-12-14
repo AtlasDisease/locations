@@ -6,7 +6,7 @@
 # --- Imports --- #
 
 from typing import Callable
-from ..divisions import Division
+from ...subdivisions import Divisible
 from .extensions import errorcheck
 
 __all__ = ("Area", "Kilometers", "Miles", \
@@ -18,12 +18,12 @@ __all__ = ("Area", "Kilometers", "Miles", \
 class Area(float):
     @staticmethod
     @errorcheck
-    def largest(division: Division) -> Division:
+    def largest(division: Divisible) -> Divisible:
         return max(division, key = lambda x: x.area)
     
     @staticmethod
     @errorcheck
-    def smallest(division: Division) -> Division:
+    def smallest(division: Divisible) -> Divisible:
         return min(division, key = lambda x: x.area)
 
 
@@ -72,8 +72,15 @@ class Miles(AreaUnit):
 
 # --- Extending Functionality Definitions --- #
 
-def add_area(cls, area: float) -> None:
-    cls.area = area
+def _get_area(self):
+    return self._area
+
+def _set_area(self, area: int):
+    self._area = area
+
+def add_area(self, area: float) -> None:
+    self._area = area
+    self.__class__.area = property(_get_area, _set_area)
 
 def kilometers(area: Miles) -> Kilometers:
     return Kilometers(area * 1.609344) 

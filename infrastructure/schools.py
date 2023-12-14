@@ -7,8 +7,8 @@
 import sys, inspect
 from ..enum import IntEnum, auto
 from dataclasses import dataclass
-from ..divisions import Division
-from ..subdivisions import Subdivision
+from ..subdivisions import DivisionBase
+from . import Subdivision
 
 __all__ = ("School", "College", "University", "Technical")
 
@@ -27,14 +27,15 @@ class SchoolTypes(IntEnum): #Not upgradable due to Technical being a non-upgrade
 
 # --- School Class --- #
 
-class School(Division):
+class School(DivisionBase):
      def __init__(self, name: str, type_: SchoolTypes = SchoolTypes.SCHOOL, #SchoolTypes = SchoolTypes.SCHOOL,
                   /,
                  subdivisions: list[Subdivision] | Subdivision = None,
                  population: int = None,
                  **kwargs):
 
-        super().__init__(name, type_, subdivisions, population = population)
+        super().__init__(name, type_, subdivisions)
+        self.population = population
 
 ##    def __format__(self, format_spec = "") -> str:
 ##        if "F" in format_spec:

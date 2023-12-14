@@ -6,27 +6,10 @@
 # --- Imports --- #
 
 from typing import Callable
-from ..divisions import Division
+##from ..divisions import Division
+from ...subdivisions import DivisionBase
 
 __all__ = ("errorcheck",)
-
-### --- Errorcheck Decorator --- #
-##
-##def check(func: Callable):
-##    def inner1(*args, **kwargs):
-##
-##        print(func, args)
-##        division = args[0]
-##        print(division)
-##        attr = args[1]
-##        print(attr)
-##
-##        if not hasattr(division, attr):
-##            return None
-##        
-##        return func(*args, **kwargs)
-##        
-##    return inner1
 
 
 # --- Errorcheck Decorator --- #
@@ -45,7 +28,7 @@ def errorcheck(func: Callable):
             raise NotImplementedError(f"Subdivisions are required to have a {varname} attribute in order to use this function.")
         
         if len(division.subdivisions) <= 0:
-            return Division("New", population = 0, area = 0, elevation = 0)
+            return DivisionBase("New", population = 0, area = 0, elevation = 0)
 
         return func(*args, **kwargs)
         
@@ -54,8 +37,8 @@ def errorcheck(func: Callable):
 
 # --- Extension Class --- #
 
-class Extension: #Past usage removed, new future use possibly
-    pass
+##class Extension: #Past usage removed, new future use possibly
+##    pass
 ##    @staticmethod
 ##    def _get(division: Division, func: Callable) -> Division:
 ##        result = division.subdivisions[0]

@@ -6,7 +6,7 @@
 # --- Imports --- #
 
 from typing import Callable
-from ..divisions import Division
+from ...subdivisions import Divisible
 from .extensions import errorcheck
 
 __all__ = ("Elevation", "Meters", "Feet", \
@@ -18,12 +18,12 @@ __all__ = ("Elevation", "Meters", "Feet", \
 class Elevation(int):
     @staticmethod
     @errorcheck
-    def highest(division: Division) -> Division:
+    def highest(division: Divisible) -> Divisible:
         return max(division, key = lambda x: x.elevation)
     
     @staticmethod
     @errorcheck
-    def lowest(division: Division) -> Division:
+    def lowest(division: Divisible) -> Divisible:
         return min(division, key = lambda x: x.elevation)
 
 
@@ -34,10 +34,7 @@ class ElevationUnit(int):
     def convert(func: Callable):
         def inner1(first, other):
             if type(first) != type(other):
-                if isinstance(other, Feet):
-                    other = feet(other)
-                else:
-                    other = meters(other)
+                other = feet(other) if isinstance(other, Feet) else meters(other)
                     
             return func(first, other)
 
@@ -72,8 +69,15 @@ class Feet(ElevationUnit):
 
 # --- Extending Functionality Definitions --- #
 
-def add_elevation(cls, elevation: int) -> None:
-    cls.elevation = elevation
+def _get_elevation(self):
+    return self._elevation
+
+def _set_elevation(self, elevation: int):
+    self._elevation = elevation
+
+def add_elevation(self, elevation: int) -> None:
+    self._elevation = elevation
+    self.__class__.elevation = elevation
 
 def meters(elevation: Feet) -> Meters:
     return Meters(elevation * 0.3048)
