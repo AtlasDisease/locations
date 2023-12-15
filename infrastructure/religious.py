@@ -4,10 +4,14 @@
 
 # --- Imports --- #
 
-from typing import override, Iterable
+import datetime as dt
+from typing import override, Iterable, Optional
+from dataclasses import dataclass, field, KW_ONLY
 from ..enum import StrEnum, auto, unique
-from dataclasses import dataclass, KW_ONLY
-from .buildings import Building, BuildingTypes
+from ..subdivisions import DivisionBase
+from .buildings import BuildingTypes
+from .rooms import Room
+from ..timetable import Timeable, Timetable
 
 __all__ = ("HouseOfWorship",)
 
@@ -90,18 +94,37 @@ class Religion:
     type_: ReligionType
     structure: WorshipStructure
     _: KW_ONLY
-    denomination: Denomination
+    denomination: Denomination = DenominationTypes.NONE
+
+
+# --- get_service_time Function --- #
+
+
+def get_service_time(hour, minute = 0, day = 0):
+    current = dt.datetime.now()
+    day += current.day + (6 - current.weekday())
+##    print(day)
+    return dt.datetime(current.year, current.month, day, hour, minute)
 
 
 # --- HouseOfWorship Class --- #
 
-class HouseOfWorship(Building):
-    def __init__(self, name: str, religion: Religion,
+class HouseOfWorship(DivisionBase):
+    def __init__(self,
+                 name: str,
+                 religion: Religion,
+                 /,
+                 subdivisions: Optional[list[Room]] = None,
+                 *,
+                 service_time: Timeable = field(default_factory = Timetable),
                  **kwargs):
 
-        super().__init__(name, BuildingTypes.COMMERICAL)
+        super().__init__(name, BuildingTypes.COMMERICAL, subdivisions)
 
         self.religion = religion
+
+        if service_time:
+            self.service_time = service_time
 
     @override
     def __format__(self, format_spec = "") -> str:
@@ -113,12 +136,27 @@ class HouseOfWorship(Building):
         return str(self)
 
     @staticmethod
-    def get_denominations(division,
+    def denominations(division,
                      denomination: DenominationTypes) -> Iterable:
         return filter(lambda x: x.religion.denomination == denomination,
                       (x for x in division if hasattr(x, "religion")))
     
     @staticmethod
-    def religion(division, type_: ReligionTypes) -> Iterable:
+    def religions(division, type_: ReligionTypes) -> Iterable:
         return filter(lambda x: x.religion.type_ == type_,
                       (x for x in division if hasattr(x, "religion")))
+
+    @staticmethod
+    def structures(division, structure: WorshipStructure) -> Iterable:
+        return filter(lambda x: x.religion.structure == structure,
+                      (x for x in division if hasattr(x, "religion")))
+
+    def worship(self):
+
+        if not self.service_time:
+            raise Exception("A service time has not been set for this congregation.")
+            
+        if  self.service_time.start < dt.datetime.now().time < self.service_time.end:
+            print("Worshiping...")
+        else:
+            print("Not worshiping...")

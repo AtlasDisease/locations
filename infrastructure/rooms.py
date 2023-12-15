@@ -1,6 +1,7 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a room. This is the smallest possible division in my package.
+# Description: A module to handle a room.
+# This is the smallest possible division in my package.
 
 # --- Imports --- #
 
@@ -21,7 +22,7 @@ class RoomTypes(StrEnum):
 
 # --- Room Class --- #
 
-@dataclass
+@dataclass(slots = True)
 class Room:
     name: str
     type_: RoomTypes

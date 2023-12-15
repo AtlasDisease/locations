@@ -4,6 +4,7 @@
 
 # --- Imports --- #
 
+import datetime as dt
 from dataclasses import dataclass, field, KW_ONLY
 from ...enum import IntEnum, StrEnum, UpgradableEnum, auto, unique
 
@@ -49,6 +50,8 @@ class Road:
     name: str
     type_: RoadTypes = RoadTypes.LOW_CAPACITY
     material: MaterialTypes = MaterialTypes.ASPHALT
+    _: KW_ONLY
+    existed: dt.date = dt.date.max
 
     def __str__(self) -> str:
         return self.name
@@ -77,4 +80,17 @@ class Intersection(Road):
     
     def __iter__(self):
         return iter(self.roads)
+
+
+# --- Junction Class --- #
     
+@dataclass
+class Junction(Intersection):
+    def __post_init__(self):
+        self.type_ = IntersectionTypes.INTERCHANGE
+
+    def __format__(self, format_spec = ""):
+        return str(self)
+    
+    def __iter__(self):
+        return iter(self.roads)

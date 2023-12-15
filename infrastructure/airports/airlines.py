@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass, field, KW_ONLY
-from ...positional import Location
+from ...locations import Location
 
 __all__ = ("Airline",)
 

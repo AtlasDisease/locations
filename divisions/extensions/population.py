@@ -17,7 +17,7 @@ __all__ = ("Population", "add_population")
 class Population(int):
     """Basically an integer but with formatting when converted to string
 and some additional functions to help with comparisons"""
-
+    
     def __str__(self) -> str:
         return f"{self: ,}"   
 

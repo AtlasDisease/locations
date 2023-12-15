@@ -5,8 +5,10 @@
 # --- Imports --- #
 
 import datetime as dt
-from ..enum import IntEnum, auto
+from typing import override
 from dataclasses import dataclass, field, KW_ONLY
+from ..enum import IntEnum, auto
+from ..subdivisions import DivisionBase
 
 __all__ = ("Cemetery",)
 
@@ -46,18 +48,13 @@ class Grave:
 
 # --- Cemetery Class --- #
 
-class Cemetery:
+class Cemetery(DivisionBase):
     def __init__(self, name: str,
                  /,
                  graves: list[Grave] = None,
                  **kwargs):
 
-        self.name = name
-        self.type_ = CemeteryTypes.CEMETERY
-        self._subdivisions = graves
-
-        if kwargs:
-            self.__dict__ |= kwargs
+        super().__init__(name, CemeteryTypes.CEMETERY, graves, **kwargs)
 
     @property
     def hasSubdivisions(self) -> bool:
@@ -68,21 +65,18 @@ class Cemetery:
         return self._subdivisions
 
     @property
+    @override
     def population(self): #This overrides the possible kwarg of "population"
         return len(self)
-
-    def __str__(self) -> str:
-        return self.name
 
     def __len__(self):
         return len(iter(self))
 
-    def __iter__(self):
-        return iter(self.subdivisions)
-
     def __bool__(self) -> bool:
-        return self.name != "New" and self.name and not self._subdivisions
+        return self.name != "New" and self.name \
+               and not self._subdivisions
 
+    @override
     def __format__(self, format_spec = "") -> str:
         if "F" in format_spec or "O" in format_spec:
             return f"{self.name} {self.__class__.__name__}"

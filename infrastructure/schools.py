@@ -4,9 +4,10 @@
 
 # --- Imports --- #
 
-import sys, inspect
-from ..enum import IntEnum, auto
+##import sys, inspect
+from typing import Optional
 from dataclasses import dataclass
+from ..enum import IntEnum, auto
 from ..subdivisions import DivisionBase
 from . import Subdivision
 
@@ -30,7 +31,7 @@ class SchoolTypes(IntEnum): #Not upgradable due to Technical being a non-upgrade
 class School(DivisionBase):
      def __init__(self, name: str, type_: SchoolTypes = SchoolTypes.SCHOOL, #SchoolTypes = SchoolTypes.SCHOOL,
                   /,
-                 subdivisions: list[Subdivision] | Subdivision = None,
+                 subdivisions: Optional[list[Subdivision] | Subdivision] = None,
                  population: int = None,
                  **kwargs):
 

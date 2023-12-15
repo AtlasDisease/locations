@@ -32,6 +32,7 @@ class DivisionTypes(IntEnum):
 
 # --- Division Class --- #
 
+@dataclass
 class Division(DivisionBase):
     def __init__(self, name: str,
                  type_: IntEnum = DivisionTypes.AREA,
@@ -88,14 +89,6 @@ class Division(DivisionBase):
     def __bool__(self) -> bool:
         return self.name != "New" and self.name \
                and self.type_ != DivisionTypes.AREA
-        
-    def get(self, func: Callable) -> Self:
-        """Gets a subdivision based of a certain function.
-Ex. get largest or smallest subdivision by Population"""
-        return func(self)
-
-    def search(self, search, func: Callable):
-        return func(self, search)
 
 ##    def add_subdivision(self, division: Self):
 ##        self._subdivisions.append(division)

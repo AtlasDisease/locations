@@ -4,9 +4,9 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass, field
+import re
+from typing import Self, Callable, Iterable, Protocol, Optional
 from .enum import Enums, StrEnum, auto
-from typing import Self, Callable, Iterable, Protocol
 
 __all__ = ("SubdivisionTypes",)
 
@@ -25,15 +25,17 @@ class SubdivisionTypes(StrEnum):
 
 # --- DivisionBase Class --- #
 
-class DivisionBase:
-    def __init__(self,
-                 name: str,
-                 type_: Enums = None,
-                 _subdivisions: list[Self] = None,
+class DivisionBase:        
+    def __init__(self, name: str,
+                 type_: Enums,
+                 /,
+                 _subdivisions: Optional[list[Self]] = None,
                  **kwargs):
         self.name = name
         self.type_ = type_
-        self._subdivisions = _subdivisions
+        self._subdivisions = _subdivisions if _subdivisions else []
+##        print(" ".join(re.findall('[A-Z][^A-Z]*', self.__class__.__name__)).upper())
+##        print("DIVSIONBASE:", self.name, self.type_, self._subdivisions)
 
     @property
     def subdivisions(self) -> list[Self]:
@@ -56,6 +58,14 @@ class DivisionBase:
     def __bool__(self) -> bool:
         return self.name != "New" and self.name
 
+    def get(self, func: Callable) -> Self:
+        """Gets a subdivision based of a certain function.
+Ex. get largest or smallest subdivision by Population"""
+        return func(self)
+
+    def search(self, search, func: Callable):
+        return func(self, search)
+
 
 # --- Divisible Protocol --- #
 
@@ -67,12 +77,8 @@ class Divisible(Protocol):
     def __iter__(self) -> Iterable[DivisionBase]:
         ...
 
+    def get(self, func: Callable) -> Self:
+        ...
 
-# --- Extending Functionality Definitions --- #
-
-def add_subdivisions(cls, subdivisions: list[DivisionBase] | DivisionBase) -> None:
-    if isinstance(subdivisions, list):
-        cls._subdivisions.extend(subdivisions)
-        return
-    
-    cls._subdivisions.append(subdivisions)
+    def search(self, search, func: Callable) -> Iterable[Self]:
+        ...

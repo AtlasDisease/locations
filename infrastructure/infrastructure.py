@@ -4,14 +4,12 @@
 
 # --- Imports --- #
 
-import datetime as dt
 from dataclasses import dataclass
 from ..enum import StrEnum, auto, unique
 from .buildings import Building
 
 __all__ = ("CityHall", "Courthouse",
-           "Port", "Bank", "Hospital",
-           "PostOffice")
+           "Port", "Bank", "Hospital")
 
 
 # --- InfrastructureTypes Enum --- #
@@ -23,9 +21,9 @@ class InfrastructureTypes(StrEnum):
     PORT = auto()
     BANK = auto()
     HOSPITAL = auto()
-    POST_OFFICE = auto()
     POWER_STATION = auto()
-        
+    POST_OFFICE = auto()
+    
 
 # --- CityHall Class --- #
 
@@ -70,12 +68,3 @@ class Hospital(Building):
     def __post_init__(self):
         
         self.type_ = InfrastructureTypes.HOSPITAL
-
-
-# --- PostOffice Class --- #
-
-@dataclass(init=False)
-class PostOffice(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.POST_OFFICE

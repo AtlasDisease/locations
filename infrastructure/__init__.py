@@ -11,7 +11,6 @@ from .airports import *
 from .buildings import Building
 from .rooms import Room
 
-
 #A type of Building or Room
 # EX. School() which could just have rooms or can have multiple buildings
 

@@ -9,7 +9,8 @@ from ...enum import StrEnum, auto, unique
 
 __all__ = ("CarManufacturer", "TrailerTruckManufacturer",
            "AutomobilePowerType", "AutomobileManufacturer",
-           "VehicleManufacturer", "Automobile", "Car", "Truck", "TrailerTruck")
+           "VehicleManufacturer", "Automobile", "Car",
+           "Truck", "TrailerTruck")
 
 
 # --- CarManufacturer Enum --- #

@@ -5,9 +5,9 @@
 # --- Imports --- #
 
 import datetime as dt
-from ...enum import IntEnum, auto
 from dataclasses import dataclass, field, KW_ONLY
-from ...positional import Location
+from ...enum import IntEnum, auto
+from ...locations import Location
 from .airlines import Airline
 from .airplanes import Airplane, Seat
 

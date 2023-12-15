@@ -8,9 +8,9 @@
 # --- Imports --- #
 
 from typing import override
+from dataclasses import dataclass
 from ..enum import IntEnum, StrEnum, auto, unique
-from ..subdivisions import DivisionBase
-from . import Subdivision
+from .buildings import ResidentialBuilding
 
 __all__ = ("Fort",)
 
@@ -36,19 +36,11 @@ class FortAreaTypes(StrEnum): #Can be used as a Building type or a Room Type
 
 # --- Fort Class --- #
 
-class Fort(DivisionBase):
-    def __init__(self, name: str,
-                 /,
-                 subdivisions: list[Subdivision] = None,
-                 *,
-                 population: int = None,
-                 **kwargs):
+@dataclass(init = False)
+class Fort(ResidentialBuilding):
+    def __post_init__(self):
+        self.type_ = FortTypes.FORT
         
-        super().__init__(name, FortTypes.FORT, subdivisions)
-
-        if population:
-            self.population = population
-
     @override
     def __format__(self, format_spec = ""):
         if "F" in format_spec or "O" in format_spec:

@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from ..enum import StrEnum, auto
-from .buildings import Building, BuildingTypes
+from .buildings import CommercialBuilding, BuildingTypes
 
 __all__ = ("EmergencyService",)
 
@@ -22,11 +22,11 @@ class EmergencyServiceTypes(StrEnum):
 
 # --- EmergencyService Class --- #
 
-class EmergencyService(Building):
+class EmergencyService(CommercialBuilding):
     def __init__(self, name: str,
                  service: EmergencyServiceTypes = EmergencyServiceTypes.EMERGENCY,
                  **kwargs):
 
-        super().__init__(name, BuildingTypes.COMMERICAL, **kwargs)
+        super().__init__(name, **kwargs)
 
         self.service = service
