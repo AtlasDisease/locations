@@ -7,46 +7,30 @@
 
 # --- Imports --- #
 
-from ..enum import StrEnum, auto
-from ..subdivisions import Subdivision
+from typing import Type
+from ..subdivisions import DivisionBase
 
-__all__ = ("PlaceTypes", "Place")
-
-
-# --- PlaceTypes Enum --- #
-
-class PlaceTypes(StrEnum):   
-    BUILDING = auto() #General use
-    STADIUM = auto()
-    CITY_HALL = auto()
-    COURTHOUSE = auto()
-    PORT = auto()
-    HOUSE_OF_WORSHIP = auto()
-    BANK = auto()
-    EMERGENCY_SERVICE = auto()
-    HOSPITAL = auto()
-    POST_OFFICE = auto()
+__all__ = ("Place",)
 
 
 # --- Place Class --- #
 
 class Place:
     def __init__(self, name: str,
-                 type_: PlaceTypes = PlaceTypes.BUILDING,
+                 type_: Type[DivisionBase],
                  *,
                  population: int = None,
-                 district: Subdivision = None,
-                 **kwargs):
+                 district: Type[DivisionBase] = None):
 
         self.name = name
-        self.type_ = type_
+        self.type = type_
 
         if population:
             self.population = population
 
         if district: #Type conversion
             self.name = district.name
-            self.type_ = district.type_
+            self.type = district.type_
             
 
     def __str__(self) -> str:
@@ -54,21 +38,20 @@ class Place:
     
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:
-            if self.type_.name == "FORT":
-                return f"{self.type_} {self.name}"
-            return f"{self.name} {self.type_}"
+            if self.__class__.name == "Fort":
+                return f"{self.type.__name__} {self.name}"
+            return f"{self.name} {self.type.__name__}"
 
         return str(self)
 
     def __bool__(self) -> bool:
-        return self.name != "New" and self.name != "" \
-               and self.type_ != PlaceTypes.BUILDING
+        return self.name != "New" and self.name
 
 
 # --- place Functions --- #
 
 def place(obj: object) -> Place:
-    if not isinstance(obj, District) \
-       and not isinstance(obj, Building):
-        return Place()
+##    if not isinstance(obj, District) \
+##       and not isinstance(obj, Building):
+##        return Place()
     return Place(district = obj)

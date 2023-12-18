@@ -4,8 +4,8 @@
 
 # --- Imports --- #
 
-from ..enum import StrEnum, auto
-from .buildings import CommercialBuilding, BuildingTypes
+from ..enum import StrEnum, auto, unique
+from .buildings import CommercialBuilding
 
 __all__ = ("EmergencyService",)
 

@@ -4,7 +4,6 @@
 
 # --- Imports --- #
 
-##import datetime as dt
 from .buildings import ResidentialBuilding
 
 

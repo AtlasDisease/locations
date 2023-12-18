@@ -1,13 +1,13 @@
 # Force you to import cities.py manually as
 # it contains multiple classes and things you need
 
-from .divisions import Division, DivisionTypes
-from .cities import City
-from .counties import County, Parish, Shire
-from .states import State
-from .countries import Country
-from .continents import Continent
-from .planets import Planet
-from .planetarysystems import PlanetarySystem
-from .galaxies import Galaxy
-from .universes import Universe
+from .divisions import *
+from .cities import *
+from .counties import *
+from .states import *
+from .countries import *
+from .continents import *
+from .planets import *
+from .planetarysystems import *
+from .galaxies import *
+from .universes import *

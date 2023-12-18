@@ -7,16 +7,9 @@
 import datetime as dt
 from typing import override
 from dataclasses import dataclass, field, KW_ONLY
-from ..enum import IntEnum, auto
 from ..subdivisions import DivisionBase
 
 __all__ = ("Cemetery",)
-
-
-# --- CemeteryTypes Enum --- #
-
-class CemeteryTypes(IntEnum):
-    CEMETERY = auto()
 
 
 # --- Grave Class --- #
@@ -54,7 +47,7 @@ class Cemetery(DivisionBase):
                  graves: list[Grave] = None,
                  **kwargs):
 
-        super().__init__(name, CemeteryTypes.CEMETERY, graves, **kwargs)
+        super().__init__(name, graves, **kwargs)
 
     @property
     def hasSubdivisions(self) -> bool:

@@ -4,47 +4,28 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass, field, KW_ONLY
-from typing import Self, Callable, override
-from ..enum import IntEnum, auto
+from typing import Self, override
 from ..subdivisions import DivisionBase
 from .extensions.population import add_population
 from .extensions.area import add_area
 from .extensions.elevation import add_elevation
 
-__all__ = ("DivisionTypes", "Division")
-
-
-# --- DivisionTypes Enum --- #
-
-class DivisionTypes(IntEnum):
-    AREA = auto() #General Use
-    CITY = auto()
-    COUNTY = auto()
-    STATE = auto()
-    COUNTRY = auto()
-    CONTINENT = auto()
-    PLANET = auto()
-    PLANETARY_SYSTEM = auto()
-    GALAXY = auto()
-    UNIVERSE = auto()
+__all__ = ("Division",)
 
 
 # --- Division Class --- #
 
-@dataclass
 class Division(DivisionBase):
     def __init__(self, name: str,
-                 type_: IntEnum = DivisionTypes.AREA,
                  /,
-                 subdivisions: list[Self] | Self = None,
+                 subdivisions: list[Self] = None,
                  *,
                  population: int = None,
                  area: int = None,
                  elevation: int = None,
                  **kwargs):
 
-        super().__init__(name, type_, subdivisions)
+        super().__init__(name, subdivisions)
 
         if population != None:
             add_population(self, population)
@@ -69,26 +50,6 @@ class Division(DivisionBase):
 
         # Add available extensions or extra arguments
         self.__dict__ |= kwargs
-        
-
-    @override
-    def __format__(self, format_spec: str = "") -> str:
-        if "O" in format_spec or "F" in format_spec: #Stands for "Formal" or "Official"
-            if self.__class__.__name__ == "Division":
-                return f"The {self.type_} of {self.name}".strip()
-            return f"The {self.__class__.__name__} of {self.name}".strip()
-        
-        if "L" in format_spec or "l" in format_spec: #Stands for "Location"
-            if self.__class__.__name__ == "Division":
-                return f"{self.name} {self.type_}".strip()
-            return f"{self.name} {self.__class__.__name__}".strip()
-
-        return str(self)
-
-    @override
-    def __bool__(self) -> bool:
-        return self.name != "New" and self.name \
-               and self.type_ != DivisionTypes.AREA
 
 ##    def add_subdivision(self, division: Self):
 ##        self._subdivisions.append(division)

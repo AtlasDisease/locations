@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from typing import override
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("Country",)
 
@@ -21,10 +21,9 @@ class Country(Division):
                  prefix: str = "",
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.COUNTRY, subdivisions,
-                         population = population, **kwargs)
+        super().__init__(name, subdivisions, population = population, **kwargs)
 
-        if prefix != "":
+        if prefix:
             self.prefix = prefix
 
     @override

@@ -4,7 +4,6 @@
 
 # --- Imports --- #
 
-from typing import Self
 from ...enum import UpgradableEnum, auto, unique
 from dataclasses import dataclass
 from ..buildings import Building
@@ -42,12 +41,14 @@ class Airport(Building):
                  subdivisions: list[Room] = None,
                  **kwargs):
 
-        super().__init__(name, type_, subdivisions = subdivisions)
+        super().__init__(name, subdivisions = subdivisions)
+
+        self.type = type_
 
     def __format__(self, format_spec = "") -> str:
         if any(letter in format_spec for letter in {"F", "O", "L", "l"}):
-            if self.type_ != AirportTypes.UNKNOWN:
-                return f"{self.name} {self.type_} {self.__class__.__name__}"
+            if self.type != AirportTypes.UNKNOWN:
+                return f"{self.name} {self.type} {self.__class__.__name__}"
             return f"{self.name} {self.__class__.__name__}"
         
         return str(self)

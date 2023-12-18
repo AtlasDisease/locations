@@ -4,67 +4,46 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass
-from ..enum import StrEnum, auto, unique
+from typing import override
 from .buildings import Building
 
 __all__ = ("CityHall", "Courthouse",
            "Port", "Bank", "Hospital")
-
-
-# --- InfrastructureTypes Enum --- #
-
-@unique
-class InfrastructureTypes(StrEnum):
-    CITY_HALL = auto()
-    COURTHOUSE = auto()
-    PORT = auto()
-    BANK = auto()
-    HOSPITAL = auto()
-    POWER_STATION = auto()
-    POST_OFFICE = auto()
     
 
 # --- CityHall Class --- #
 
-@dataclass(init=False)
 class CityHall(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.CITY_HALL
+    
+    @override
+    def __format__(self, format_spec = "") -> str:
+        if "F" in format_spec or "O" in format_spec:
+            return f"The City Hall of {self.name}"
+        if "L" in format_spec or "l" in format_spec:
+            return f"{self.name} City Hall"
+
+        return str(self.name)
 
 
 # --- Courthouse Class --- #
 
-@dataclass(init=False)
 class Courthouse(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.COURTHOUSE
+    pass
 
 
 # --- Port Class --- #
 
-@dataclass(init=False)
 class Port(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.PORT
+    pass
 
 
 # --- Bank Class --- #
 
-@dataclass(init=False)
 class Bank(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.BANK
+    pass
 
 
 # --- Hospital Class --- #
 
-@dataclass(init=False)
 class Hospital(Building):
-    def __post_init__(self):
-        
-        self.type_ = InfrastructureTypes.HOSPITAL
+    pass

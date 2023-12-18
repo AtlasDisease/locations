@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from typing import override
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("Continent",)
 
@@ -20,7 +20,7 @@ class Continent(Division):
                  population: int = None,
                  **kwargs):
 
-        super().__init__(name, DivisionTypes.CONTINENT, subdivisions,
+        super().__init__(name, subdivisions,
                          population = population, **kwargs)
 
     @override
@@ -29,4 +29,4 @@ class Continent(Division):
         if "L" in format_spec or "l" in format_spec:
             return str(self)
 
-        return Division.__format__(self, format_spec)
+        return super(self).__format__(format_spec)

@@ -7,25 +7,18 @@
 
 # --- Imports --- #
 
-from enum import StrEnum, auto
-from dataclasses import dataclass
 from .divisions import Division
-from ..subdivisions import SubdivisionTypes
 
-__all__ = ("Neighborhood",)
+__all__ = ("Neighborhood", "District")
 
 
 # --- Neighborhood Class --- #
 
-@dataclass(init = False)
 class Neighborhood(Division):
-    def __post_init__(self):
-
-        self.type_ = SubdivisionTypes.NEIGHBORHOOD
+    pass
 
 
 # --- District Class --- #
 
-@dataclass(init = False)
 class District(Division):
     pass

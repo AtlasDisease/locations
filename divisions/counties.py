@@ -4,8 +4,7 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 from .cities import AdministrativeTypes
 
 __all__ = ("County", "Parish", "Shire", "Oblast")
@@ -13,12 +12,7 @@ __all__ = ("County", "Parish", "Shire", "Oblast")
 
 # --- County Class --- #
 
-@dataclass(init = False)
 class County(Division):
-    def __post_init__(self):
-        
-        self.type_ = DivisionTypes.COUNTY
-
     def seat(self) -> Division:
         """Gets the county seat; this is a function (instead of a property)
 to imply there is a cost to this function"""

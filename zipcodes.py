@@ -8,15 +8,15 @@
 # --- Imports --- #
 
 import re
+import enum #Python's Enum module
 from dataclasses import dataclass
-from enum import Enum
 
 __all__ = ("ZipCode", "ZipCodeTypes",)
 
 
 # --- ZipCodeTypes Enum --- #
 
-class ZipCodeTypes(Enum):
+class ZipCodeTypes(enum.Enum):
     AMERICA = "^(\d{5})(-?)((\d{5})?)"
 
 

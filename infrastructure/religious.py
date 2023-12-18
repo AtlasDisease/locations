@@ -9,7 +9,6 @@ from typing import override, Iterable, Optional
 from dataclasses import dataclass, field, KW_ONLY
 from ..enum import StrEnum, auto, unique
 from ..subdivisions import DivisionBase
-from .buildings import BuildingTypes
 from .rooms import Room
 from ..timetable import Timeable, Timetable
 
@@ -119,7 +118,7 @@ class HouseOfWorship(DivisionBase):
                  service_time: Timeable = field(default_factory = Timetable),
                  **kwargs):
 
-        super().__init__(name, BuildingTypes.COMMERICAL, subdivisions)
+        super().__init__(name, subdivisions)
 
         self.religion = religion
 

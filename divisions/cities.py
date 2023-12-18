@@ -7,7 +7,7 @@
 
 from typing import Self, override
 from ..enum import UpgradableEnum, auto
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("CityTypes", "AdministrativeTypes", "City")
 
@@ -19,7 +19,7 @@ class CityTypes(UpgradableEnum): #Upgradable
     LOST = auto() #This is incredibly rare
     SITE = auto()
     COMMUNITY = auto()
-    TOWN = auto() #No real definition, user decision, incorporated
+    TOWN = auto() #No real definition but incorporated, user decision
     CITY = auto()
 
 
@@ -41,22 +41,23 @@ class AdministrativeTypes(UpgradableEnum): #Upgradable
 class City(Division):
     def __init__(self,
                  name: str,
-                 citytype: CityTypes,
+                 type_: CityTypes,
                  admintype: AdministrativeTypes,
                  /,
-                 subdivisions: list[Division] | Division = None,
+                 subdivisions: list[Division] = None,
                  *,
                  population: int = None,
-                 **kwargs):
+                 **kwargs) -> Self:
 
-        super().__init__(name, DivisionTypes.CITY, subdivisions,
+        super().__init__(name, subdivisions,
                          population = population, **kwargs)
-        self.city_type = citytype
-        self.admin_type = admintype
 
-        if self.admin_type == AdministrativeTypes.CAPITAL \
-        or self.admin_type == AdministrativeTypes.SEAT: #Make sure our political importance works correctly
-            self.city_type = CityTypes.CITY
+        if admintype > AdministrativeTypes.NONE \
+        and type_ != CityTypes.CITY: #Make sure our political importance works correctly
+            raise ValueError("The type of {self.type} and administrative type of {self.admin_type} do not match up.")
+
+        self.type = type_
+        self.admin_type = admintype
 
     @override
     def __format__(self, format_spec = "") -> str:
@@ -69,35 +70,35 @@ class City(Division):
         return str(self)
 
     def __eq__(self, other: Self) -> bool:
-        return self.city_type == other.city_type \
+        return self.type == other.type \
                and self.admin_type == other.admin_type
 
     def __gt__(self, other: Self) -> bool:
-        return self.city_type >= other.city_type \
+        return self.type >= other.type \
                and self.admin_type > other.admin_type
 
     def __lt__(self, other: Self) -> bool:
-        return self.city_type <= other.city_type \
+        return self.type <= other.type \
                and self.admin_type < other.admin_type
 
     @property
     def incorporated(self) -> bool:
-        return self.city_type >= CityTypes.TOWN
+        return self.type >= CityTypes.TOWN
 
     @property
     def abandoned(self)-> bool:
-        return self.city_type < CityTypes.COMMUNITY \
-               and self.city_type != CityTypes.UNKNOWN
+        return self.type < CityTypes.COMMUNITY \
+               and self.type != CityTypes.UNKNOWN
 
     @property
     def historical(self) -> bool:
-        return self.city_type == CityTypes.SITE
+        return self.type == CityTypes.SITE
 
     @property
     def importance(self) -> int:
         """Returns the importance of the city.
 This is mostly for debugging if there is an issue with most_importance or least_importance functions."""
-        return self.admin_type.value + self.city_type.value
+        return self.admin_type.value + self.type.value
 
     @staticmethod
     def most_importance(division: Division) -> Self:

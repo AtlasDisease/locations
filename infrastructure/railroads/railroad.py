@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass
-from ...enum import StrEnum, UpgradableEnum, auto, unique
+from ...enum import UpgradableEnum, auto, unique
 
 __all__ = ("Railroad", "GaugeTypes")
 

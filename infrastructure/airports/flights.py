@@ -55,7 +55,7 @@ class Flight:
 
     @property
     def duration(self) -> dt.timedelta:
-        return arrival - depart
+        return self.arrival - self.depart
 
     @property
     def isNonstop(self) -> bool:

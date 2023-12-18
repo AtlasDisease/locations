@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from ..enum import StrEnum, auto, unique
+from ..enum import IntEnum, StrEnum, auto, unique
 from .buildings import Building
 
 __all__ = ("StadiumTypes", "Stadium", "SportTypes")

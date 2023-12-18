@@ -4,9 +4,7 @@
 
 # --- Imports --- #
 
-import sys
-from typing import override
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from ...enum import IntEnum, StrEnum, auto, unique
 
 __all__ = ("Train", "PowerType", "UsageType",
@@ -23,9 +21,6 @@ class PowerTypes(IntEnum):
     GAS_TURBINE = auto()
     HYDROGEN = auto()
     NATURAL_GAS = auto()
-
-    def __str__(self):
-        return self.name.replace("_", " ").title()
 
 
 # --- Usage Type --- #

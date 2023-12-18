@@ -6,7 +6,7 @@
 
 import datetime as dt
 from dataclasses import dataclass, field, KW_ONLY
-from ...enum import IntEnum, StrEnum, UpgradableEnum, auto, unique
+from ...enum import StrEnum, UpgradableEnum, auto, unique
 
 __all__ = ("Road", "Intersection", "RoadTypes",
            "MaterialTypes", "IntersectionTypes", "Trail")

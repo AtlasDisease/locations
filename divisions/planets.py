@@ -5,19 +5,14 @@
 # --- Imports --- #
 
 from typing import override
-from dataclasses import dataclass
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("Planet",)
 
 
 # --- Planet Class --- #
 
-@dataclass(init = False)
 class Planet(Division):
-    def __post_init__(self):
-        
-        self.type_ = DivisionTypes.PLANET
 
     @override
     def __format__(self, format_spec = "") -> str:

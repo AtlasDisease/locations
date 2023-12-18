@@ -9,16 +9,12 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("State",)
 
 
 # --- State Class --- #
 
-@dataclass(init = False)
 class State(Division):
-    def __post_init__(self):
-        
-        self.type_ = DivisionTypes.STATE
+    pass

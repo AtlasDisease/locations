@@ -39,7 +39,7 @@ class IntEnum(_IntEnum):
 
 # --- UpgradableEnum Class --- #
 
-class UpgradableEnum(IntEnum):
+class UpgradableEnum(IntEnum): #This is similar to an IntFlag Enum
     """Upgradable enum that has a limited range"""
     
     def __add__(self, other) -> Self:
@@ -68,7 +68,8 @@ class UpgradableEnum(IntEnum):
 
 class OverflowUpgradableEnum(IntEnum):
     """Upgradable enum that is allowed to overflow and underflow.
-This will work as if an integer overflowed or underflowed by returning to the MAX or MIN."""
+This will work as if an integer overflowed or underflowed by returning
+to the MAX or MIN."""
     
     def __add__(self, other) -> Self:
         if isinstance(other, int):

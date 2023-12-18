@@ -4,45 +4,28 @@
 
 # --- Imports --- #
 
-import datetime as dt
-from typing import override, Protocol, Optional
-from dataclasses import dataclass, field, KW_ONLY
-from ..enum import StrEnum, auto, unique
+from typing import override, Optional
 from .rooms import Room
 from ..subdivisions import DivisionBase
 
-__all__ = ("Building", "CommercialBuilding", "ResidentialBuilding",
-           "BuildingTypes")
-
-
-# --- BuildingTypes Enum --- #
-
-@unique
-class BuildingTypes(StrEnum):  
-    COMMERICAL = auto() #General use
-    RESIDENTIAL = auto()
+__all__ = ("Building", "CommercialBuilding", "ResidentialBuilding",)
 
 
 # --- Building Class --- #
 
 class Building(DivisionBase): #DivisionBase but different functionality
-    def __init__(self, name: str, type_: BuildingTypes = BuildingTypes.COMMERICAL,
+    def __init__(self, name: str,
                  /,
                  subdivisions: Optional[list[Room]] = None,
                  **kwargs):
-        super().__init__(name, type_, subdivisions, **kwargs)
+        super().__init__(name, subdivisions, **kwargs)
         
     @override
     def __format__(self, format_spec: str = "") -> str:
         if "F" in format_spec or "O" in format_spec:
-            return f"{self.name} {self.type_}"
+            return f"{self.name} {self.__class__.__name__}"
 
         return str(self)
-
-    @override
-    def __bool__(self) -> bool:
-        return self.name != "New" and self.name \
-               and self.type_ != BuildingTypes.COMMERICAL
 
 
 # --- CommericalBuilding Class --- #
@@ -52,7 +35,7 @@ class CommericalBuilding(Building):
                  /,
                  subdivisions: Optional[list[Room]] = None,
                  **kwargs):
-        super().__init__(name, BuildingTypes.COMMERICAL, subdivisions, **kwargs)
+        super().__init__(name, subdivisions, **kwargs)
 
 
 # --- ResidentialBuilding Class --- #
@@ -64,7 +47,7 @@ class ResidentialBuilding(Building):
                  *,
                  population: int = 0,
                  **kwargs):
-        super().__init__(name, BuildingTypes.RESIDENTIAL, subdivisions, **kwargs)
+        super().__init__(name, subdivisions, **kwargs)
 
         if population:
             self.population = population

@@ -5,19 +5,14 @@
 # --- Imports --- #
 
 from typing import override
-from dataclasses import dataclass
-from .divisions import Division, DivisionTypes
+from .divisions import Division
 
 __all__ = ("Universe",)
 
 
 # --- Universe Class --- #
 
-@dataclass(init = False)
 class Universe(Division):
-    def __post_init__(self):
-        
-        self.type_ = DivisionTypes.UNIVERSE
 
     @override
     def __str__(self):
