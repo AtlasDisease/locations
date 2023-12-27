@@ -36,7 +36,7 @@ class Railroad:
 
     @property
     def abbreviation(self) -> str:
-        return "".join(name[0] for name in self.name.split('-'))
+        return "".join(map(lambda name: name[0], self.name.split('-')))
 
 
 # --- Testing --- #

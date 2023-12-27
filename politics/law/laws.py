@@ -30,4 +30,4 @@ class Law:
         self.bills = bills if bills else []
 
     def __str__(self):
-        return "\r\n\r\n".join((str(bill) for bill in self.bills))
+        return "\r\n\r\n".join(map(lambda bill: str(bill), self.bills))
