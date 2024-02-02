@@ -1,0 +1,6 @@
+[Extensions]
+
+[Extensions.Divisions]
+population = true
+area = true
+elevation = true
