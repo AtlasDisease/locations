@@ -10,4 +10,20 @@ from .continents import *
 from .planets import *
 from .planetarysystems import *
 from .galaxies import *
+from .localgroup import *
+from .supercluster import *
 from .universes import *
+
+
+_IMPORTANCE = (Division,
+               City,
+               County,
+               State,
+               Country,
+               Continent,
+               Planet,
+               PlanetarySystem,
+               Galaxy,
+               LocalGroup,
+               Supercluster,
+               Universe)

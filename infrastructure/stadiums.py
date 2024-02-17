@@ -21,7 +21,6 @@ class StadiumTypes(StrEnum):
 
 # --- SportTypes Enums --- #
 
-@unique
 class SportTypes(IntEnum):
     BASEBALL = auto()
     HOCKEY = auto()
