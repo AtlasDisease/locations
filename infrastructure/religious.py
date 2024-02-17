@@ -127,7 +127,7 @@ class HouseOfWorship(DivisionBase):
 
     @override
     def __format__(self, format_spec = "") -> str:
-        if any(i in format_spec for i in {"F", "O", "L", "l"}):
+        if any(map(lambda i: i in format_spec, {"F", "O", "L", "l"})): #i in format_spec for i in {"F", "O", "L", "l"}
             if self.religion.type_ == ReligionTypes.CHRISTIANITY:
                 return f"{self.name} {self.religion.denomination} {self.religion.structure}"
             return f"{self.name} {self.religion.structure}"
@@ -138,17 +138,17 @@ class HouseOfWorship(DivisionBase):
     def denominations(division,
                      denomination: DenominationTypes) -> Iterable:
         return filter(lambda x: x.religion.denomination == denomination,
-                      (x for x in division if hasattr(x, "religion")))
+                      filter(lambda x: hasattr(x, "religion"), division))#(x for x in division if hasattr(x, "religion"))
     
     @staticmethod
     def religions(division, type_: ReligionTypes) -> Iterable:
         return filter(lambda x: x.religion.type_ == type_,
-                      (x for x in division if hasattr(x, "religion")))
+                      filter(lambda x: hasattr(x, "religion"), division))#(x for x in division if hasattr(x, "religion")))
 
     @staticmethod
     def structures(division, structure: WorshipStructure) -> Iterable:
         return filter(lambda x: x.religion.structure == structure,
-                      (x for x in division if hasattr(x, "religion")))
+                      filter(lambda x: hasattr(x, "religion"), division))#(x for x in division if hasattr(x, "religion")))
 
     def worship(self):
 

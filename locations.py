@@ -9,6 +9,7 @@
 # --- Imports --- #
 
 from dataclasses import dataclass, field
+from typing import Iterable
 
 __all__ = ("Location",)
 
@@ -18,7 +19,10 @@ __all__ = ("Location",)
 @dataclass(slots = True)
 class Location:
     name: str = ""
-    divisions: list = field(default_factory = list)
+    divisions: Iterable = field(default_factory = list)
 
-    def __str__(self):
-        return ", ".join((f"{division: L}".strip() for division in self.divisions))
+    def __str__(self) -> str:
+        return ", ".join(map(lambda division: f"{division: L}".strip(), self.divisions))
+
+    def __iter__(self) -> Iterable:
+        return self.divisions
