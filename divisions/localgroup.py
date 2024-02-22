@@ -13,4 +13,8 @@ __all__ = ("LocalGroup",)
 # --- LocalGroup Class --- #
 
 class LocalGroup(Division):
-    pass
+    def __format__(self, format_spec = ""):
+        if "l" in format_spec or "L" in format_spec:
+            return f"{self.name} Local Group"
+
+        return str(self)

@@ -5,14 +5,14 @@
 # --- Imports --- #
 
 ##import re
-from typing import Self, Callable, Iterable, Protocol, Optional
+from typing import Self, Callable, Iterable, Protocol, Optional, Type
 
 __all__ = ("DivisionBase",)
 
 
 # --- DivisionBase Class --- #
 
-class DivisionBase:        
+class DivisionBase:
     def __init__(self, name: str,
                  /,
                  _subdivisions: Optional[list[Self]] = None,
@@ -43,6 +43,11 @@ class DivisionBase:
     def __bool__(self) -> bool:
         return self.name != "New" and bool(self.name)
 
+    def rename(self, new_name: str) -> Self:
+        """Renames the division. This changes self."""
+        self.name = new_name
+        return self
+
     def get(self, func: Callable) -> Self:
         """Gets a subdivision based of a certain function.
 Ex. get largest or smallest subdivision by Population"""
@@ -56,10 +61,13 @@ Ex. get largest or smallest subdivision by Population"""
 
 class Divisible(Protocol):
     @property
-    def subdivisions(self) -> list[DivisionBase]:
+    def subdivisions(self) -> list[Type[DivisionBase]]:
         ...
 
-    def __iter__(self) -> Iterable[DivisionBase]:
+    def __iter__(self) -> Iterable[Type[DivisionBase]]:
+        ...
+
+    def rename(self, new_name: str) -> Self:
         ...
 
     def get(self, func: Callable) -> Self:

@@ -6,6 +6,7 @@
 
 from ...enum import StrEnum, auto, unique
 from dataclasses import dataclass, field, KW_ONLY
+from .engines import Engine
 
 __all__ = ("Seat", "Airplane")
 
@@ -39,14 +40,6 @@ class Seat:
 
     def __str__(self) -> str:
         return f"{self.aisle}{self.seat}"
-
-
-# --- Engine Class --- #
-
-@dataclass
-class Engine:
-    name: str
-    manufacturer: str #Will be enum in future
 
 
 # --- Airplane Class --- #

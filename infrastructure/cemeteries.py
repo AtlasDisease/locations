@@ -26,7 +26,9 @@ class Grave:
         return self.name
 
     def __format__(self, format_spec = "") -> str:
-        if "F" in format_spec or "O" in format_spec:
+        if "L" in format_spec:
+            return f"{self.__class__.__name__} of {self.name}"
+        elif "F" in format_spec or "O" in format_spec:
             if self.epitaph:
                 return f"{self.name}\r\n{self.born:%b. %d, %Y} - {self.died:%b. %d, %Y}\r\n{self.epitaph}"
             return f"{self.name}\r\n{self.born:%b. %d, %Y} - {self.died:%b. %d, %Y}"
@@ -71,7 +73,7 @@ class Cemetery(DivisionBase):
 
     @override
     def __format__(self, format_spec = "") -> str:
-        if "F" in format_spec or "O" in format_spec:
+        if any((char in format_spec for char in {"F", "O", "L"})):
             return f"{self.name} {self.__class__.__name__}"
         
         return str(self)

@@ -15,3 +15,7 @@ class Coordinates:
     
     def __str__(self):
         return f"{self.longitude}, {self.latitude}"
+
+    def __iter__(self):
+        yield self.longitude
+        yield self.latitude

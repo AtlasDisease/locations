@@ -41,3 +41,34 @@ class ZipCode:
                     return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
                 
         return str(self.zip_code)
+
+    def __format__(self, format_spec = "") -> str:
+        if "-" in format_spec:
+            return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
+
+        return str(self)
+
+    @property
+    def national_area(self) -> int:
+        return int(str(self.zip_code)[0])
+
+    @property
+    def sectional_center(self) -> int:
+        """This will remove leading zeroes since it is a display concept not
+a storage concept"""
+        return int(str(self.zip_code)[1:3])
+
+    @property
+    def delivery_area(self) -> int:
+        """This will remove leading zeroes since it is a display concept not
+a storage concept"""
+        return int(str(self.zip_code)[3:5])
+
+    @property
+    def specific_delivery_area(self) -> int:
+        """Returns the specific delivery area (last 4 digits of 9 digit zip code)
+if a 5 digit zip is given then it will return -1"""
+        if len(str(self.zip_code)) != 9:
+            return -1
+
+        return int(str(self.zip_code)[5:])

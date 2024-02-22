@@ -33,6 +33,12 @@ class Shipping(Protocol):
 
 @dataclass(init=False)
 class PostOffice(Building):
+    def __format__(self, format_spec = "") -> str:
+        if any((char in format_spec for char in {"F", "O", "L", "l"})):
+            return f"{self.name} Post Office"
+
+        return str(self)
+    
     def send(self, package: Sendable) -> NoReturn:
         if not package.from_ or not package.to:
             raise SendError(f"Cannot send a {package.__class__.__name__.lower()} without a from to to address.")

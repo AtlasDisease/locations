@@ -2,6 +2,7 @@
 # it contains multiple classes and things you need
 
 from .divisions import *
+from .districts import *
 from .cities import *
 from .counties import *
 from .states import *

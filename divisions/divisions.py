@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from typing import Self, override
+from typing import Self, override, Type
 from ..subdivisions import DivisionBase
 from .extensions.population import add_population
 from .extensions.area import add_area
@@ -20,20 +20,20 @@ class Division(DivisionBase):
                  /,
                  subdivisions: list[Self] = None,
                  *,
-                 population: int = None,
-                 area: int = None,
-                 elevation: int = None,
+                 population: Type[int] = None,
+                 area: Type[int] = None,
+                 elevation: Type[int] = None,
                  **kwargs):
 
         super().__init__(name, subdivisions)
 
-        if population != None:
+        if population is not None:
             add_population(self, population)
 
-        if area != None:
+        if area is not None:
             add_area(self, area)
 
-        if elevation != None:
+        if elevation is not None:
             add_elevation(self, elevation)
 
         #I do not like this as it ties districts and politics together a bit

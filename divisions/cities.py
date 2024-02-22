@@ -47,6 +47,7 @@ class City(Division):
                  subdivisions: list[Division] = None,
                  *,
                  population: int = None,
+##                 description: str = "",
                  **kwargs) -> Self:
 
         super().__init__(name, subdivisions,
@@ -59,6 +60,9 @@ class City(Division):
         self.type = type_
         self.admin_type = admintype
 
+##        if description:
+##            self._description = description
+
     @override
     def __format__(self, format_spec = "") -> str:
 
@@ -66,6 +70,10 @@ class City(Division):
             if self.admin_type != AdministrativeTypes.NONE:
                 return f"The {self.admin_type} of {self.name}"
             return f"The {self.city_type} of {self.name}"
+##        elif "D" in format_spec or "d" in format_spec:
+##            if not hasattr(self, "_description"):
+##                return ""
+##            return self._description
 
         return str(self)
 
