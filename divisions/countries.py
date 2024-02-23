@@ -6,6 +6,7 @@
 
 from typing import override
 from .divisions import Division
+from .cities import AdministrativeTypes
 
 __all__ = ("Country",)
 
@@ -36,3 +37,16 @@ class Country(Division):
                 return f"The {self.government.leader.policy} of {self.name}"
 
         return str(self)
+
+    @property
+    def capital(self):
+        def recurse(division: Division):
+            for item in division:
+                if hasattr(item, "admin_type"):
+                    if item.admin_type == AdministrativeTypes.CAPITAL:
+                        return item
+                    continue
+
+                return recurse(item)
+
+        return recurse(self)

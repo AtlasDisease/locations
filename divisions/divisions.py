@@ -5,6 +5,7 @@
 # --- Imports --- #
 
 from typing import Self, override, Type
+##from functools import total_ordering
 from ..subdivisions import DivisionBase
 from .extensions.population import add_population
 from .extensions.area import add_area
@@ -55,11 +56,11 @@ class Division(DivisionBase):
 ##        self._subdivisions.append(division)
 ##        self._subdivisions.sort()
 
-    def __lt__(self, other: Self)  -> bool:
-        return _IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)
-
-    def __eq__(self, other: Self)  -> bool:
-        return _IMPORTANCE.index(self.__class__) == _IMPORTANCE.index(other.__class__)
-
-    def __gt__(self, other: Self) -> bool:
-        return _IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)
+##    def __lt__(self, other: Self)  -> bool:
+##        return False #_IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)
+##
+##    def __eq__(self, other: Self)  -> bool:
+##        return False #_IMPORTANCE.index(self.__class__) == _IMPORTANCE.index(other.__class__)
+##
+##    def __gt__(self, other: Self) -> bool:
+##        return _IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)

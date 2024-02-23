@@ -7,68 +7,89 @@
 
 # --- Imports --- #
 
-import re
+import re, warnings
 import enum #Python's Enum module
 from dataclasses import dataclass
 
 __all__ = ("ZipCode", "ZipCodeTypes",)
 
 
+# --- ZipCode4Warning Warning --- #
+
+class ZipCode4Warning(UserWarning):
+    pass
+
+
+# --- ZipCodeFormatError --- #
+
+class ZipCodeFormatError(Exception):
+    pass
+
+
 # --- ZipCodeTypes Enum --- #
 
 class ZipCodeTypes(enum.Enum):
-    AMERICA = "^(\d{5})(-?)((\d{5})?)"
+    AMERICA = "^(\\d{5})(-?)((\\d{4})?)"
 
 
 # --- ZipCode Class --- #
 
 @dataclass(slots = True)
 class ZipCode:
-    zip_code: int
+    zip_code: str
     type_: ZipCodeTypes
 
     def __post_init__(self):
-        if (not re.fullmatch(self.type_.value, str(self.zip_code))):
-            raise Exception("Zip code must be 5 numbers or 10 numbers.")
+        if (not re.fullmatch(self.type_.value, self.zip_code)):
+            raise ZipCodeFormatError("Zip code must be in the correct format.")
 
-    def __len__(self):
-        return len(str(self.zip_code))
+        self.zip_code = self.zip_code.replace("-", "")
 
-    def __str__(self):
+        if len(self.zip_code) == 9:
+            warnings.warn(
+                ZipCode4Warning("ZipCode+4 is not in widespread use.\r\n"))
+
+    def __len__(self) -> int:
+        return len(self.zip_code)
+
+    def __str__(self) -> str:
         match (self.type_):
             case ZipCodeTypes.AMERICA:
-                if len(self) == 10:
-                    return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
+                if len(self) == 9:
+                    return f"{self.zip_code[:5]}-{self.zip_code[5:]}"
                 
-        return str(self.zip_code)
+        return self.zip_code
+
+    def __int__(self) -> int:
+        return int(self.zip_code)
 
     def __format__(self, format_spec = "") -> str:
         if "-" in format_spec:
-            return f"{str(self.zip_code)[:5]}-{str(self.zip_code)[5:]}"
+            return f"{self.zip_code[:5]}-{self.zip_code[5:]}"
 
         return str(self)
 
     @property
-    def national_area(self) -> int:
-        return int(str(self.zip_code)[0])
+    def national_area(self) -> str:
+        return self.zip_code[0]
 
     @property
-    def sectional_center(self) -> int:
+    def sectional_center(self) -> str:
         """This will remove leading zeroes since it is a display concept not
 a storage concept"""
-        return int(str(self.zip_code)[1:3])
+        return self.zip_code[1:3]
 
     @property
-    def delivery_area(self) -> int:
+    def delivery_area(self) -> str:
         """This will remove leading zeroes since it is a display concept not
 a storage concept"""
-        return int(str(self.zip_code)[3:5])
+        return self.zip_code[3:5]
 
     @property
-    def specific_delivery_area(self) -> int:
-        """Returns the specific delivery area (last 4 digits of 9 digit zip code)
-if a 5 digit zip is given then it will return -1"""
-        if len(str(self.zip_code)) != 9:
-            return -1
+    def specific_delivery_area(self) -> str:
+        """Returns the specific delivery area (last 4 digits of 9 digit zip
+code) if a 5 digit zip is given then it will return an empty string"""
+        if len(self.zip_code) != 9:
+            return ""
 
-        return int(str(self.zip_code)[5:])
+        return self.zip_code[5:]

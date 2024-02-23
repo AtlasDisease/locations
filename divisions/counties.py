@@ -4,21 +4,50 @@
 
 # --- Imports --- #
 
+from typing import Callable, Self, Type
 from .divisions import Division
 from .cities import AdministrativeTypes
 
 __all__ = ("County", "Parish", "Shire", "Oblast")
+
+
+# --- SeatError --- #
+
+class SeatError(IndexError):
+    pass
         
 
 # --- County Class --- #
 
 class County(Division):
-    def seat(self) -> Division:
-        """Gets the county seat; this is a function (instead of a property)
-to imply there is a cost to this function"""
+    def __init__(self, name: str,
+                 /,
+                 subdivisions: list[Type[Division]] = None,
+                 *,
+                 population: Type[int] = None,
+                 **kwargs):
 
-        return next(filter(lambda x: x.admin_type == AdministrativeTypes.SEAT,
-                           self.subdivisions), None)
+        if subdivisions:
+            subdivisions.sort(key=lambda city: city.admin_type, reverse=True)
+        
+        super().__init__(name, subdivisions, **kwargs)
+
+    @property
+    def seat(self) -> Division:
+        if self._subdivisions[1]._admin_type == AdministrativeTypes.SEAT:
+            return self._subdivisions[1] #Rare instance in which the county seat is not the Capital, ex. Michigan.
+        return self._subdivisions[0]
+
+    @seat.setter
+    def seat(self, city: Division):
+        if city not in self._subdivisions:
+            raise SeatError("You cannot give county seat to a city not in the county.")
+
+        idx = self._subdivisions.index(city)
+        self._subdivisions[idx].admin_type = self.seat.admin_type
+        self.seat.admin_type = AdministrativeTypes.NONE
+
+        self._subdivisions.sort(key=lambda city: city.admin_type, reverse=True)
 
 
 class Parish(County): #French version of a County

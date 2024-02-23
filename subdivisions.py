@@ -15,7 +15,7 @@ __all__ = ("DivisionBase",)
 class DivisionBase:
     def __init__(self, name: str,
                  /,
-                 _subdivisions: Optional[list[Self]] = None,
+                 _subdivisions: Optional[list[Type[Self]]] = None,
                  **kwargs):
         self.name = name
         self._subdivisions = _subdivisions if _subdivisions else []

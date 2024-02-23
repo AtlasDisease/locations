@@ -89,7 +89,6 @@ type Denomination = DenominationTypes | str
 
 @dataclass(slots = True)
 class Religion:
-    
     type_: ReligionType
     structure: WorshipStructure
     _: KW_ONLY
@@ -99,7 +98,7 @@ class Religion:
 # --- get_service_time Function --- #
 
 
-def get_service_time(hour, minute = 0, day = 0):
+def get_service_time(hour: int, minute: int = 0, day: int = 0):
     current = dt.datetime.now()
     day += current.day + (6 - current.weekday())
 ##    print(day)
@@ -127,7 +126,7 @@ class HouseOfWorship(DivisionBase):
 
     @override
     def __format__(self, format_spec = "") -> str:
-        if any(map(lambda i: i in format_spec, {"F", "O", "L", "l"})): #i in format_spec for i in {"F", "O", "L", "l"}
+        if any((i in format_spec for i in {"F", "O", "L", "l"})): #i in format_spec for i in {"F", "O", "L", "l"}
             if self.religion.type_ == ReligionTypes.CHRISTIANITY:
                 return f"{self.name} {self.religion.denomination} {self.religion.structure}"
             return f"{self.name} {self.religion.structure}"
@@ -155,7 +154,7 @@ class HouseOfWorship(DivisionBase):
         if not self.service_time:
             raise Exception("A service time has not been set for this congregation.")
             
-        if  self.service_time.start < dt.datetime.now().time < self.service_time.end:
+        if self.service_time.start < dt.datetime.now().time < self.service_time.end:
             print("Worshiping...")
         else:
             print("Not worshiping...")

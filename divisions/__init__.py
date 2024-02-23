@@ -1,6 +1,8 @@
 # Force you to import cities.py manually as
 # it contains multiple classes and things you need
 
+# --- Imports --- #
+
 from .divisions import *
 from .districts import *
 from .cities import *
@@ -16,7 +18,9 @@ from .supercluster import *
 from .universes import *
 
 
-_IMPORTANCE = (Division,
+# --- Variables --- #
+
+_IMPORTANCE = [Division,
                City,
                County,
                State,
@@ -27,4 +31,4 @@ _IMPORTANCE = (Division,
                Galaxy,
                LocalGroup,
                Supercluster,
-               Universe)
+               Universe]
