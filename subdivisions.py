@@ -56,6 +56,14 @@ Ex. get largest or smallest subdivision by Population"""
     def search(self, search, func: Callable):
         return func(self, search)
 
+    @staticmethod
+    def most_by(division: Self, attribute: str) -> Self:
+        return max(division, key = lambda x: getattr(x, attribute))
+
+    @staticmethod
+    def least_by(division: Self, attribute: str) -> Self:
+        return min(division, key = lambda x: getattr(x, attribute))
+
 
 # --- Divisible Protocol --- #
 

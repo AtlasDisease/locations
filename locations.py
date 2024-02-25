@@ -42,8 +42,8 @@ in a majority of situations. If you have custom divisions use LocationIter."""
 
         if self.name:
             return
-        
-        self.name = self.city.name
+
+        self.name = str(self.city)
 
     def __str__(self) -> str:
         return self.name

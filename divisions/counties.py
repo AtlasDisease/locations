@@ -13,9 +13,9 @@ __all__ = ("County", "Parish", "Shire", "Oblast")
 
 # --- SeatError --- #
 
-class SeatError(IndexError):
+class SeatError(ValueError):
     pass
-        
+
 
 # --- County Class --- #
 
@@ -44,9 +44,8 @@ class County(Division):
             raise SeatError("You cannot give county seat to a city not in the county.")
 
         idx = self._subdivisions.index(city)
-        self._subdivisions[idx].admin_type = self.seat.admin_type
-        self.seat.admin_type = AdministrativeTypes.NONE
-
+        #Swap
+        self._subdivisions[idx].admin_type, self.seat.admin_type = self.seat.admin_type, self._subdivisions[idx].admin_type
         self._subdivisions.sort(key=lambda city: city.admin_type, reverse=True)
 
 

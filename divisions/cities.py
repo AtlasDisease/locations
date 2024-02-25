@@ -6,6 +6,7 @@
 # --- Imports --- #
 
 from typing import Self, override
+from functools import partial
 from ..enum import UpgradableEnum, auto
 from .divisions import Division
 
@@ -39,9 +40,13 @@ class AdministrativeTypes(UpgradableEnum): #Upgradable
 # --- City Class --- #
 
 class City(Division):
-    """A city based on a realistic city."""
+    """A city object based on a realistic city."""
+
+    most_importance = staticmethod(partial(Division.most_by, attribute = "importance"))
+    least_importance = staticmethod(partial(Division.least_by, attribute = "importance"))
+    
     def __init__(self,
-                 name: str,
+                name: str,
                  type_: CityTypes,
                  admintype: AdministrativeTypes,
                  /,
@@ -124,16 +129,7 @@ class City(Division):
 This is mostly for debugging if there is an issue with the comparison functions."""
         return self._admin_type.value + self.type.value
 
-## --- Below can be determined using min and max on a County
-##    @staticmethod
-##    def most_importance(division: Division) -> Self:
-##        """Importance is determined by the administrative type and the city type values combined
-##FIXME: Good for now, but hacky (and slightly unreliable) way to do this. This one should always be correct
-##unlike least_importance."""
-##        return max(division, key = lambda x: x.importance)
-##
-##    @staticmethod
-##    def least_importance(division: Division) -> Self:
-##        """Importance is determined by the administrative type and the city type values combined
-##FIXME: Good for now, but hacky (and slightly unreliable) way to do this"""
-##        return min(division, key = lambda x: x.importance)
+    @property
+    def political_importance(self) -> int:
+        return self._admin_type.value
+    
