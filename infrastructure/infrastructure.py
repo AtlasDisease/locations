@@ -7,8 +7,7 @@
 from typing import override
 from .buildings import Building
 
-__all__ = ("CityHall", "Courthouse",
-           "Port", "Hospital") #"Bank", 
+__all__ = ("CityHall", "Port", "Hospital")
     
 
 # --- CityHall Class --- #
@@ -23,12 +22,6 @@ class CityHall(Building):
             return f"{self.name} City Hall"
 
         return str(self.name)
-
-
-# --- Courthouse Class --- #
-
-class Courthouse(Building):
-    pass
 
 
 # --- Port Class --- #

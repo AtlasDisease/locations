@@ -5,18 +5,6 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 
 
-# --- EnhancedFujita Enum --- #
-
-class EnhancedFujitaScale(StrEnum):
-    EFU = _TornadoCategory("No surveyable", 0, 64)
-    EF0 = _TornadoCategory("Light", 65, 85)
-    EF1 = _TornadoCategory("Moderate", 86, 110)
-    EF2 = _TornadoCategory("Considerable", 111, 135)
-    EF3 = _TornadoCategory("Severe", 136, 165)
-    EF4 = _TornadoCategory("Devastating", 166, 200)
-    EF5 = _TornadoCategory("Incredible", 200, 300)
-
-
 # --- TornadoCategory Class --- #
 
 @dataclass(slots=True)
@@ -30,9 +18,21 @@ class _TornadoCategory:
 
     def __format__(self, format_spec = "") -> str:
         if format_spec == "R": #Range
-            return "{self.min_wind_speed}-{self.max_wind_speed}
+            return "{self.min_wind_speed}-{self.max_wind_speed}"
 
         return str(self)
+    
+
+# --- EnhancedFujitaScale Enum --- #
+
+class EnhancedFujitaScale(StrEnum):
+    EFU = _TornadoCategory("No surveyable", 0, 64)
+    EF0 = _TornadoCategory("Light", 65, 85)
+    EF1 = _TornadoCategory("Moderate", 86, 110)
+    EF2 = _TornadoCategory("Considerable", 111, 135)
+    EF3 = _TornadoCategory("Severe", 136, 165)
+    EF4 = _TornadoCategory("Devastating", 166, 200)
+    EF5 = _TornadoCategory("Incredible", 200, 300)
     
 
 # --- Tornado Class --- #
@@ -40,7 +40,7 @@ class _TornadoCategory:
 @dataclass
 class Tornado:
     name: str
-    category: FujitaScale | EnhancedFujitaScale
+    category: EnhancedFujitaScale
 
     @property
     def min_wind_speed(self) -> int:
