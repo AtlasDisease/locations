@@ -8,7 +8,7 @@
 
 # --- Imports --- #
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, KW_ONLY
 from typing import Iterable, Self
 from .divisions import Division, District, Neighborhood, City, County, State, \
      Country, Continent, Planet, PlanetarySystem, Galaxy, LocalGroup, \
@@ -24,6 +24,7 @@ class Location:
     """A standard location. This has values that can be set that are useful
 in a majority of situations. If you have custom divisions use LocationIter."""
     name: str = ""
+    _: KW_ONLY
     district: District | str = field(default="")
     neighborhood: Neighborhood | str = field(default="")
     city: City | str = field(default="")

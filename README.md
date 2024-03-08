@@ -395,6 +395,9 @@ All classes in this module subclass divisions.Division, therefore it receives su
 	
 *class* counties.**Shire**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
 	A class that represents a shire. Functionally the same as a county.
+	
+*class* counties.**Oblast**(*name: str*, /, *subdivisions: list[Division] | Division = None*, *population: int = None*, *\*\*kwargs*)\
+	A class that represents a oblast. Functionally the same as a county.
 
 #### Methods
 
