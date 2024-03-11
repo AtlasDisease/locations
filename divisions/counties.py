@@ -4,7 +4,7 @@
 
 # --- Imports --- #
 
-from typing import Callable, Self, Type
+from typing import Callable, Self, Type, Iterable
 from .divisions import Division
 from .cities import AdministrativeTypes
 
@@ -36,14 +36,15 @@ class County(Division):
 ##            filter(lambda div: div._admin_type, self.subdivisions))
 
     @property
-    def seat(self) -> Division:
+    def seat(self) -> Iterable[Division]:
         #Some places have 2 county seats, EX. Lee County, Iowa
-##        return filter(lambda div: div._admin_type == AdministrativeTypes.SEAT,
-##                      self.divisions)
+        return tuple(
+            filter(lambda div: div._admin_type == AdministrativeTypes.SEAT,
+                      self.subdivisions))
         
-        if self._subdivisions[1]._admin_type == AdministrativeTypes.SEAT:
-            return self._subdivisions[1] #Rare instance in which the county seat is not the Capital, ex. Michigan.
-        return self._subdivisions[0]
+##        if self._subdivisions[1]._admin_type == AdministrativeTypes.SEAT:
+##            return self._subdivisions[1] #Rare instance in which the county seat is not the Capital, ex. Michigan.
+##        return self._subdivisions[0]
 
     @seat.setter
     def seat(self, city: Division):

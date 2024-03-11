@@ -40,13 +40,16 @@ class Country(Division):
 
     @property
     def capital(self):
+##        capitals = []
         def recurse(division: Division):
             for item in division:
                 if hasattr(item, "admin_type"):
                     if item.admin_type == AdministrativeTypes.CAPITAL:
+##                        capitals.append(item)
                         return item
                     continue
 
                 return recurse(item)
 
-        return recurse(self)
+##        return capitals
+        return recurse(self.subdivisions)
