@@ -7,8 +7,9 @@
 
 from typing import Self, override
 from functools import partial
-from ..enum import UpgradableEnum, auto
+from ..enum import UpgradableEnum, UpgradableFlag, auto
 from .divisions import Division
+from enum import IntFlag, verify, UNIQUE, CONFORM
 
 __all__ = ("CityTypes", "AdministrativeTypes", "City")
 
@@ -26,8 +27,20 @@ class CityTypes(UpgradableEnum): #Upgradable
 
 # --- AdministrativeTypes Enum --- #
 
-class AdministrativeTypes(UpgradableEnum): #Upgradable
-    NONE = auto()
+##class AdministrativeTypes(UpgradableEnum): #Upgradable
+##    NONE = auto()
+##    SEAT = auto()
+##    CAPITAL = auto()
+##
+##    def __str__(self) -> str:
+##        if self == AdministrativeTypes.SEAT:
+##            return f"County {self.name.title()}"
+##        return self.name.title()
+
+
+@verify(UNIQUE)
+class AdministrativeTypes(UpgradableFlag): #Upgradable
+    NONE = 0
     SEAT = auto()
     CAPITAL = auto()
 
@@ -74,7 +87,9 @@ class City(Division):
 
         if "F" in format_spec or "O" in format_spec:
             if self._admin_type != AdministrativeTypes.NONE:
-                return f"The {self.admin_type} of {self.name}"
+                if '-' in format_spec:
+                    return f"The {min(self.admin_type)} of {self.name}"
+                return f"The {max(self.admin_type)} of {self.name}"        
             return f"The {self.type} of {self.name}"
 ##        elif "D" in format_spec or "d" in format_spec:
 ##            if not hasattr(self, "_description"):

@@ -32,8 +32,15 @@ class County(Division):
         
         super().__init__(name, subdivisions, **kwargs)
 
+##        self._seat_amount = len(
+##            filter(lambda div: div._admin_type, self.subdivisions))
+
     @property
     def seat(self) -> Division:
+        #Some places have 2 county seats, EX. Lee County, Iowa
+##        return filter(lambda div: div._admin_type == AdministrativeTypes.SEAT,
+##                      self.divisions)
+        
         if self._subdivisions[1]._admin_type == AdministrativeTypes.SEAT:
             return self._subdivisions[1] #Rare instance in which the county seat is not the Capital, ex. Michigan.
         return self._subdivisions[0]

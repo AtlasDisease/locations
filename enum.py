@@ -7,7 +7,8 @@
 from typing import Self
 from enum import IntEnum as _IntEnum
 from enum import StrEnum as _StrEnum
-from enum import auto, unique
+from enum import IntFlag as _IntFlag
+from enum import auto, unique, CONFORM
 
 __all__ = ("StrEnum", "IntEnum", "UpgradableEnum",
            "OverflowUpgradableEnum", "auto", "unique")
@@ -39,7 +40,7 @@ class IntEnum(_IntEnum):
 
 # --- UpgradableEnum Class --- #
 
-class UpgradableEnum(IntEnum): #This is similar to an IntFlag Enum
+class UpgradableEnum(IntEnum, boundary=CONFORM): #This is similar to an IntFlag Enum
     """Upgradable enum that has a limited range"""
     
     def __add__(self, other) -> Self:
@@ -54,8 +55,8 @@ class UpgradableEnum(IntEnum): #This is similar to an IntFlag Enum
             return other
         
         other = self.value + other.value
-        if other >= len(self):
-            return type(self)(len(self))
+##        if other >= len(self):
+##            return type(self)(len(self))
         
         return type(self)(other)
 
@@ -89,6 +90,23 @@ to the MAX or MIN."""
     def __iadd__(self, other) -> Self:
         self = self + other
         return self
+
+
+# --- UpgradableFlag --- #
+
+class UpgradableFlag(_IntFlag, boundary=CONFORM):
+    
+    def upgrade(self) -> Self:
+        mem = self.value * 2
+        if mem > max(self):
+            return type(self)(max(self))
+        return type(self)(mem)
+
+    def downgrade(self) -> Self:
+        mem = self.value // 2
+        if mem < min(self):
+            return type(self)(0)
+        return type(self)(mem)
 
 
 # --- Type Variables --- #
