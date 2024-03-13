@@ -48,6 +48,7 @@ class County(Division):
 
     @seat.setter
     def seat(self, city: Division):
+        """Gets the seat(s) for the county"""
         if city not in self._subdivisions:
             raise SeatError("You cannot give county seat to a city not in the county.")
 
