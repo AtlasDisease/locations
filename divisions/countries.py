@@ -6,9 +6,21 @@
 
 from typing import override
 from .divisions import Division
-from .cities import AdministrativeTypes
+from .cities import City, AdministrativeTypes
 
 __all__ = ("Country",)
+
+
+# --- NonCityError Class --- #
+
+class NonCityError(TypeError):
+    pass
+
+
+# --- NonCapitalError Class --- #
+
+class NonCapitalError(ValueError):
+    pass
 
 
 # --- Country Class --- #
@@ -17,6 +29,7 @@ class Country(Division):
     def __init__(self, name: str,
                  /,
                  subdivisions: list[Division] | Division = None,
+                 capitals: list[City] = None,
                  *,
                  population: int = None,
                  prefix: str = "",
@@ -26,6 +39,16 @@ class Country(Division):
 
         if prefix:
             self.prefix = prefix
+        
+        if capitals:
+            if any((not hasattr(city, "admin_type") for city in capitals)):
+                raise NonCityError("Capitals should have an admin type attribute.")
+            if any((AdministrativeTypes.CAPITAL not in city._admin_type for city in capitals)):
+                raise NonCapitalError("Capitals should have the admin type of CAPITAL.")
+        else:
+            capitals = list(self._find_capitals())
+
+        self._capitals = capitals 
 
     @override
     def __format__(self, format_spec = ""):
@@ -39,15 +62,53 @@ class Country(Division):
         return str(self)
 
     @property
-    def capital(self):
+    def capitals(self):
         """Gets the capital(s) for the country"""
-        def recurse(division: Division):
-            for item in division:
-                if hasattr(item, "admin_type"):
-                    if item.admin_type == AdministrativeTypes.CAPITAL:
-                        yield item
+        return self._capitals
+
+    @capitals.setter
+    def capitals(self, new_capital):
+        #This needs some work to determine whether it should turn into a
+        #county seat or a regular city
+        self._capitals[0].admin_type, new_capital.admin_type = \
+                                       new_capital.admin_type, self.capitals[0].admin_type
+        del self._capitals[0]
+        self._capitals.insert(new_capital, 0)
+
+    def add_capital(self, new_capital):
+        if new_capital in self._capitals:
+            return
+
+        self._capitals.append(new_capital)
+
+    def remove_capital(self, capital: str):
+        def get_capital(iterable, capital: str):
+            for city in iterable:
+                if city.name != capital:
                     continue
+                return city
 
-                yield recurse(item)
+        old_capital = get_capital(self.subdivisions, capital)
+        if AdministrativeTypes.SEAT in old_capital:    
+            old_capital.set_admin_type(AdministrativeTypes.SEAT)
+        else:
+            old_capital.set_admin_type(AdministrativeTypes.CITY)
+        self.capitals.remove(old_capital)
 
-        return recurse(self.subdivisions)
+    def _find_capitals(self):
+        """Recurses into subdivisions to find any cities with admin type of CAPITAL"""
+        cities = []
+
+        def recurse(division: Division):
+            for city in division:
+##                print(city)
+                if not hasattr(city, "admin_type"):
+                    return recurse(city)
+                    continue
+                
+                cities.append(city)
+            return cities
+
+        return filter(
+            lambda city: AdministrativeTypes.CAPITAL in city.admin_type,
+            recurse(self))

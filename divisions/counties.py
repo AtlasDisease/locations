@@ -6,7 +6,7 @@
 
 from typing import Callable, Self, Type, Iterable
 from .divisions import Division
-from .cities import AdministrativeTypes
+from .cities import City, AdministrativeTypes
 
 __all__ = ("County", "Parish", "Shire", "Oblast")
 
@@ -36,18 +36,14 @@ class County(Division):
 ##            filter(lambda div: div._admin_type, self.subdivisions))
 
     @property
-    def seat(self) -> Iterable[Division]:
+    def seats(self) -> Iterable[Division]:
         #Some places have 2 county seats, EX. Lee County, Iowa
         return tuple(
-            filter(lambda div: div._admin_type == AdministrativeTypes.SEAT,
+            filter(lambda div: AdministrativeTypes.SEAT in div.admin_type,
                       self.subdivisions))
-        
-##        if self._subdivisions[1]._admin_type == AdministrativeTypes.SEAT:
-##            return self._subdivisions[1] #Rare instance in which the county seat is not the Capital, ex. Michigan.
-##        return self._subdivisions[0]
 
-    @seat.setter
-    def seat(self, city: Division):
+    @seats.setter
+    def seats(self, city: Division):
         """Gets the seat(s) for the county"""
         if city not in self._subdivisions:
             raise SeatError("You cannot give county seat to a city not in the county.")

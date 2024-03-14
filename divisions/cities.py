@@ -55,14 +55,14 @@ class AdministrativeTypes(UpgradableFlag): #Upgradable
 class City(Division):
     """A city object based on a realistic city."""
 
-    most_importance = staticmethod(partial(Division.most_by, attribute = "importance"))
-    least_importance = staticmethod(partial(Division.least_by, attribute = "importance"))
+##    most_importance = staticmethod(partial(Division.most_by, attribute = "importance"))
+##    least_importance = staticmethod(partial(Division.least_by, attribute = "importance"))
     
     def __init__(self,
-                name: str,
+                 name: str,
                  type_: CityTypes,
-                 admintype: AdministrativeTypes,
                  /,
+                 admintype: AdministrativeTypes = AdministrativeTypes.NONE,
                  subdivisions: list[Division] = None,
                  *,
                  population: int = None,
@@ -72,9 +72,9 @@ class City(Division):
         super().__init__(name, subdivisions,
                          population = population, **kwargs)
 
-##        if admintype > AdministrativeTypes.NONE \
-##        and type_ != CityTypes.CITY: #Make sure our political importance works correctly
-##            raise ValueError("The type of {self.type} and administrative type of {self.admin_type} do not match up.")
+        if admintype > AdministrativeTypes.NONE \
+        and type_ != CityTypes.CITY: #Make sure our political importance works correctly
+            raise ValueError("The type of {self.type} and administrative type of {self.admin_type} do not match up.")
 
         self.type = type_
         self._admin_type = admintype #DO NOT CHANGE MANUALLY
@@ -100,30 +100,52 @@ class City(Division):
 
     #Comparisons are subject to change.
     #Discourage use of them for production. -Brendan
+##    def __eq__(self, other: Self) -> bool:
+##        if type(self) != type(other):
+##            return False
+##        
+##        return self.type == other.type \
+##               and self._admin_type == other._admin_type
+##
+##    def __gt__(self, other: Self) -> bool:
+##        if type(self) != type(other):
+##            return False
+##        
+##        return self.type >= other.type \
+##               and self._admin_type > other._admin_type
+##
+##    def __lt__(self, other: Self) -> bool:
+##        if type(self) != type(other):
+##            return False
+##        
+##        return self.type <= other.type \
+##               and self._admin_type < other._admin_type
+##
+    @property
+    def admin_type(self) -> AdministrativeTypes:
+        return self._admin_type
+
+    @admin_type.setter
+    def admin_type(self, admintype: AdministrativeTypes):
+        self._admin_type = admintype
+
     def __eq__(self, other: Self) -> bool:
         if type(self) != type(other):
             return False
         
-        return self.type == other.type \
-               and self._admin_type == other._admin_type
+        return self.type == other.type
 
     def __gt__(self, other: Self) -> bool:
         if type(self) != type(other):
             return False
         
-        return self.type >= other.type \
-               and self._admin_type > other._admin_type
+        return self.type >= other.type
 
     def __lt__(self, other: Self) -> bool:
         if type(self) != type(other):
             return False
         
-        return self.type <= other.type \
-               and self._admin_type < other._admin_type
-
-    @property
-    def admin_type(self) -> AdministrativeTypes:
-        return self._admin_type
+        return self.type <= other.type
 
     @property
     def incorporated(self) -> bool:
@@ -138,13 +160,13 @@ class City(Division):
     def historical(self) -> bool:
         return self.type == CityTypes.SITE
 
-    @property
-    def importance(self) -> int:
-        """Returns the importance of the city.
-This is mostly for debugging if there is an issue with the comparison functions."""
-        return self._admin_type.value + self.type.value
-
-    @property
-    def political_importance(self) -> int:
-        return self._admin_type.value
+##    @property
+##    def importance(self) -> int:
+##        """Returns the importance of the city.
+##This is mostly for debugging if there is an issue with the comparison functions."""
+##        return self._admin_type.value + self.type.value
+##
+##    @property
+##    def political_importance(self) -> int:
+##        return self._admin_type.value
     
