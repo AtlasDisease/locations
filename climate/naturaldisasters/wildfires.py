@@ -2,16 +2,18 @@
 
 from dataclasses import dataclass, field
 from typing import Iterable
+from ...locations import Location
 
 
 # --- Wildfire Class --- #
 
 @dataclass
 class Wildfire:
-    """A wildfire. size should be in acres, but this is not enforced currently."""
+    """A wildfire. Size should be in acres, but this is not enforced currently."""
     name: str
     size: float = field(default=0)
-    locations: list = field(default_factory=list)
+    locations: list[Location] = field(default_factory=list)
+    containment: int | float = field(default=0)
 
     def __str__(self) -> str:
         return self.name
