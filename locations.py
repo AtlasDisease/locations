@@ -44,7 +44,8 @@ in a majority of situations. If you have custom divisions use LocationIter."""
         if self.name:
             return
 
-        self.name = str(self.city)
+        #Get the smallest (most detailed) available name
+        self.name = next(filter(lambda item: not str(item), self), "")
 
     def __str__(self) -> str:
         return self.name
@@ -97,7 +98,8 @@ in ascending order."""
         if self.name:
             return
 
-        self.name = self.divisions[0].name
+        if len(self.divisions) > 0:
+            self.name = self.divisions[0].name
 
     def __str__(self) -> str:
         return ", ".join(map(lambda division: f"{division: L}".strip(),
