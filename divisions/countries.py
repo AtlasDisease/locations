@@ -103,7 +103,7 @@ class Country(Division):
             for city in division:
 ##                print(city)
                 if not hasattr(city, "admin_type"):
-                    return recurse(city)
+                    recurse(city)
                     continue
                 
                 cities.append(city)
