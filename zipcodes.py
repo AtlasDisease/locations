@@ -22,7 +22,7 @@ class ZipCode4Warning(UserWarning):
 
 # --- ZipCodeFormatError --- #
 
-class ZipCodeFormatError(Exception):
+class ZipCodeFormatError(ValueError):
     pass
 
 
