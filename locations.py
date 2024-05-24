@@ -10,6 +10,7 @@
 
 from dataclasses import dataclass, field, KW_ONLY
 from typing import Iterable, Self
+from itertools import chain
 from .divisions import Division, District, Neighborhood, City, County, State, \
      Country, Continent, Planet, PlanetarySystem, Galaxy, LocalGroup, \
      Supercluster, Universe
@@ -52,11 +53,13 @@ in a majority of situations. If you have custom divisions use LocationIter."""
 
     def __format__(self, fmt: str = "") -> str:
         if fmt == ", ":
-            fstring = fmt.join(
-                    map(lambda loc: loc if isinstance(loc, str) else f"{loc: L}",
-                    filter(lambda loc: str(loc), iter(self))))
+            iterable = iter(self)
             if self.city.name != self.name:
-                return f"{self.name}{fmt}{fstring}"
+                iterable = chain((self.name,), iterable) #Add the name to the iterable
+                
+            fstring = fmt.join(
+                    map(lambda loc: loc if isinstance(loc, str) else f"{loc: L}".strip(),
+                    filter(lambda loc: str(loc), iterable)))
             return fstring
 
         return str(self)
