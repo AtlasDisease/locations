@@ -50,10 +50,11 @@ class Country(Division):
 ##
 ##        self._capitals = capitals
         self._capitals = list(self._find_capitals())
+##        if any((AdministrativeTypes.CAPITAL not in city._admin_type for city in self._capitals)):
+##            raise NonCapitalError("Capitals should have the admin type of CAPITAL.")
 
     @override
     def __format__(self, format_spec = ""):
-
         if "F" in format_spec or "O" in format_spec:
             if hasattr(self, "government"):
                 if hasattr(self, "prefix"):
@@ -90,10 +91,8 @@ class Country(Division):
                 return city
 
         old_capital = get_capital(self.subdivisions, capital)
-        if AdministrativeTypes.SEAT in old_capital:    
-            old_capital.set_admin_type(AdministrativeTypes.SEAT)
-        else:
-            old_capital.set_admin_type(AdministrativeTypes.CITY)
+        admin_type = AdministrativeTypes.SEAT if AdministrativeTypes.SEAT in old_capital else AdministrativeTypes.CITY
+        old_capital.set_admin_type(admin_type)
         self.capitals.remove(old_capital)
 
     def _find_capitals(self):

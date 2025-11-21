@@ -63,6 +63,15 @@ class WeatherAlertTypes(StrEnum):
     EXCESSIVE_HEAT_WARNING = auto()
     TROPICAL_STORM_WARNING = auto()
     HURRICANE_WARNING = auto()
+
+
+# --- WeatherAlert Class --- #
+
+@dataclass(slots=True)
+class WeatherAlerts:
+    alert: WeatherAlertTypes
+##    locations: list[Location] = field(default_factory=list)
+    description: str = ""
     
     
 # --- Wildfire Class --- #
@@ -72,7 +81,7 @@ class Weather:
     """Weather Class"""
     #name: str
     current_weather: WeatherTypes
-    alerts: Iterable[WeatherAlertTypes] = field(default_factory=list)
+    alerts: Iterable[WeatherAlerts] = field(default_factory=list)
     locations: list[Location] = field(default_factory=list)
     #locations might become a list of divisions.
     #Cities and counties as the NWS uses.
@@ -100,14 +109,14 @@ class Weather:
         self.locations.remove(location)
         return self
 
-    def get_alerts(self) -> Iterable[WeatherAlertTypes]:
-        return self.alerts
+##    def get_alerts(self) -> Iterable[WeatherAlerts]:
+##        return self.alerts
 
 
 if __name__ == "__main__":
     def main():
         weather = Weather(WeatherTypes.THUNDERSTORM,
-                          [WeatherAlertTypes.SEVERE_THUNDERSTORM_WARNING])
+                          [WeatherAlerts(WeatherAlertTypes.SEVERE_THUNDERSTORM_WARNING)])
         print(f"{weather: A}")
     
     main()

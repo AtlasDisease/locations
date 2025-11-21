@@ -32,9 +32,6 @@ class County(Division):
         
         super().__init__(name, subdivisions, **kwargs)
 
-##        self._seat_amount = len(
-##            filter(lambda div: div._admin_type, self.subdivisions))
-
     @property
     def seats(self) -> Iterable[Division]:
         #Some places have 2 county seats, EX. Lee County, Iowa
