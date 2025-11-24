@@ -6,7 +6,7 @@
 # --- Imports --- #
 
 from typing import Self, override
-from functools import partial
+##from functools import partial
 from ..enum import UpgradableEnum, UpgradableFlag, auto
 from .divisions import Division
 from enum import IntFlag, verify, UNIQUE, CONFORM

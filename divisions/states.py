@@ -9,6 +9,7 @@
 
 # --- Imports --- #
 
+from typing import Type, Iterable
 from .divisions import Division
 from .cities import City
 from .independentcities import IndependentCity, AdministrativeTypes
@@ -16,16 +17,16 @@ from .independentcities import IndependentCity, AdministrativeTypes
 __all__ = ("State",)
 
 
-# --- NonCityError Class --- #
-
-class NonCityError(TypeError):
-    pass
-
-
-# --- NonCapitalError Class --- #
-
-class NonCapitalError(ValueError):
-    pass
+### --- NonCityError Class --- #
+##
+##class NonCityError(TypeError):
+##    pass
+##
+##
+### --- NonCapitalError Class --- #
+##
+##class NonCapitalError(ValueError):
+##    pass
 
 
 # --- State Class --- #
@@ -61,34 +62,34 @@ class State(Division):
         """Gets the capital(s) for the country"""
         return list(self.__find_capitals())
 
-    @capitals.setter
-    def capitals(self, new_capital):
-        #This needs some work to determine whether it should turn into a
-        #county seat or a regular city
-        self._capitals[0]._admin_type, new_capital._admin_type = \
-                                       new_capital._admin_type, self._capitals[0]._admin_type
-        del self._capitals[0]
-        self._capitals.insert(new_capital, 0)
-
-    def add_capital(self, new_capital):
-        if new_capital in self._capitals:
-            return
-
-        self._capitals.append(new_capital)
-
-    def remove_capital(self, capital: str):
-        def get_capital(iterable, capital: str):
-            for city in iterable:
-                if city.name != capital:
-                    continue
-                return city
-
-        old_capital = get_capital(self.subdivisions, capital)
-        if AdministrativeTypes.SEAT in old_capital:    
-            old_capital.set_admin_type(AdministrativeTypes.SEAT)
-        else:
-            old_capital.set_admin_type(AdministrativeTypes.CITY)
-        self.capitals.remove(old_capital)
+##    @capitals.setter
+##    def capitals(self, new_capital):
+##        #This needs some work to determine whether it should turn into a
+##        #county seat or a regular city
+##        self._capitals[0]._admin_type, new_capital._admin_type = \
+##                                       new_capital._admin_type, self._capitals[0]._admin_type
+##        del self._capitals[0]
+##        self._capitals.insert(new_capital, 0)
+##
+##    def add_capital(self, new_capital):
+##        if new_capital in self._capitals:
+##            return
+##
+##        self._capitals.append(new_capital)
+##
+##    def remove_capital(self, capital: str):
+##        def get_capital(iterable, capital: str):
+##            for city in iterable:
+##                if city.name != capital:
+##                    continue
+##                return city
+##
+##        old_capital = get_capital(self.subdivisions, capital)
+##        if AdministrativeTypes.SEAT in old_capital:    
+##            old_capital.set_admin_type(AdministrativeTypes.SEAT)
+##        else:
+##            old_capital.set_admin_type(AdministrativeTypes.CITY)
+##        self.capitals.remove(old_capital)
         
     def __find_capitals(self):
         """Recurses into subdivisions to find any cities with admin type of CAPITAL."""
