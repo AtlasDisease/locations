@@ -14,6 +14,12 @@ from .extensions.elevation import add_elevation
 __all__ = ("Division",)
 
 
+# --- DivisionNameError ---#
+
+class DivisionNameError(ValueError):
+    pass
+
+
 # --- Division Class --- #
 
 class Division(DivisionBase):

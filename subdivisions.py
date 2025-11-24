@@ -18,7 +18,8 @@ class DivisionBase:
                  _subdivisions: Optional[list[Type[Self]]] = None,
                  **kwargs):
         self.name = name
-        self._subdivisions = _subdivisions if _subdivisions else []
+        self._subdivisions = list(_subdivisions) if _subdivisions else []
+##        self._subdivisions = set(_subdivisions) if _subdivisions else {}
 ##        print(" ".join(re.findall('[A-Z][^A-Z]*', self.__class__.__name__)).upper())
 ##        print("DIVSIONBASE:", self.name, self.type_, self._subdivisions)
 

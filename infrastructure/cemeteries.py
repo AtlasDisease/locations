@@ -14,7 +14,7 @@ __all__ = ("Cemetery",)
 
 # --- Grave Class --- #
 
-@dataclass(slots = True)
+@dataclass(slots=True)
 class Grave:
     name: str
     born: dt.date = dt.date.min
