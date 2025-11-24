@@ -25,7 +25,7 @@ class DivisionNameError(ValueError):
 class Division(DivisionBase):
     def __init__(self, name: str,
                  /,
-                 subdivisions: list[Self] = None,
+                 subdivisions: list[Type[Self]] = None,
                  *,
                  population: Type[int] = None,
                  area: Type[int] = None,

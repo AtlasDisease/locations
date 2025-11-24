@@ -1,6 +1,6 @@
 # Created By: Brendan (@atlasdisease)
 # Copyright: 2023
-# Description: A module to handle a County, Parish, Shire, and Oblast.
+# Description: A module to handle a County, Parish, Shire, Oblast, and Borough.
 
 # --- Imports --- #
 
@@ -8,7 +8,7 @@ from typing import Callable, Self, Type, Iterable
 from .divisions import Division, DivisionNameError
 from .cities import City, AdministrativeTypes
 
-__all__ = ("County", "Parish", "Shire", "Oblast")
+__all__ = ("County", "Parish", "Shire", "Oblast", "Borough")
 
 
 # --- SeatError --- #
@@ -23,9 +23,9 @@ class County(Division):
     def __init__(self, name: str,
                  /,
                  subdivisions: list[Type[Division]] = None,
+                 max_seat_num: int = 1,
                  *,
                  population: Type[int] = None,
-                 max_seat_num: int = 1,
                  **kwargs):
 
 ##        if subdivisions:
@@ -34,6 +34,9 @@ class County(Division):
         super().__init__(name, subdivisions, **kwargs)
 
         self._max_seat_num = max_seat_num
+
+        if len(self.seats) > self._max_seat_num:
+            raise OverflowError("There are more seats tha the maximum number of county seats.")
 
     @property
     def organized(self) -> bool:
@@ -50,24 +53,39 @@ class County(Division):
 
 Some places have 2 county seats, EX. Lee County, Iowa"""
         return tuple(
-            filter(lambda div: AdministrativeTypes.EAT in div.admin_type,
+            filter(lambda div: AdministrativeTypes.SEAT in div.admin_type,
                       self.subdivisions))
 
     def add_city(self, city: Division):
+        """Adds a city to the county.
+If city is of type City and is a county seat the function will check to make sure it does not overflow the maximum number of seats"""
         if any((div.name == city.name for div in self)):
             raise DivisionNameError(f"{city.name} is already in the county.")
+        if isinstance(city, City):
+            if city.admin_type == AdministrativeTypes.SEAT:
+                if len(self.seats) + 1 > self._max_seat_num:
+                    raise OverflowError("Adding this county seat would overflow the maximum number of county seats.")
 
         self._subdivisions.append(city)
 
-##    @seats.setter
-##    def seats(self, city: Division):
-##        """Gets the seat(s) for the county"""
-##        if city not in self._subdivisions:
-##            raise SeatError("You cannot give county seat to a city not in the county.")
-##
-##        idx = self._subdivisions.index(city)
-##        #Swap
-##        self._subdivisions[idx].admin_type, self.seat.admin_type = self.seat.admin_type, self._subdivisions[idx].admin_type
+    def remove_city(self, city: Division):
+        """Removes a city from the county"""
+        if city not in self._subdivisions:
+            raise ValueError("{city} is not in the county.")
+        self._subdivisions.remove(city)
+
+    def move_seat(self, old_seat: City, new_seat: City):
+        """Moves a county seat from old_seat to the new_seat"""
+        if old_seat not in self._subdivisions:
+            raise ValueError("{old_seat} is not in the county.")
+        old_idx = self._subdivisions.index(old_seat)
+        
+        if new_seat not in self._subdivisions:
+            raise SeatError("{new_seat} must be in the county.")
+        new_idx = self._subdivisions.index(new_seat)
+        
+        self._subdivisions[new_idx].admin_type = AdministrativeTypes.SEAT
+        self._subdivisions[old_idx].admin_type = AdministrativeTypes.NONE
 ##        self._subdivisions.sort(key=lambda city: city.admin_type, reverse=True)
 
 

@@ -72,6 +72,17 @@ class WeatherAlerts:
     alert: WeatherAlertTypes
 ##    locations: list[Location] = field(default_factory=list)
     description: str = ""
+
+    def __str__(self) -> str:
+        return str(self.alert)
+
+    def __format__(self, format_spec="") -> str:
+        if "A" in format_spec:
+            return f"{self.alert}: {self.description}"""
+        return str(self)
+
+    def __bool__(self) -> bool:
+        return "warning" in str(self.alert).lower()
     
     
 # --- Wildfire Class --- #
@@ -91,7 +102,7 @@ class Weather:
 
     def __format__(self, format_spec = "") -> str:
         if "A" in format_spec:
-            return ", ".join(self.alerts)
+            return ", ".join(map(lambda alert: str(alert), self.alerts))
         return self.current_weather.value
 
     def __iter__(self) -> Iterable:
@@ -99,7 +110,7 @@ class Weather:
 
     @property
     def severe(self):
-        return bool(self.alerts)
+        return any((bool(alert) for alert in self.alerts))
 
     def add_location(self, location):
         self.locations.append(location)
