@@ -5,8 +5,11 @@
 # --- Imports --- #
 
 from typing import override, Self, Iterable, Type
+from itertools import chain
+
 from .divisions import Division
 from .cities import City, AdministrativeTypes
+from .counties import County
 
 __all__ = ("Country",)
 
@@ -51,47 +54,50 @@ class Country(Division):
     @property
     def capitals(self) -> Iterable[Division]:
         """Gets the capital(s) for the country"""
-        return list(self.__find_capitals())
+        return list(self._find_capitals(self))
 
-    def add_county(county: Division):
+    def add_city(city: City, county: County) -> None:
+        if county not in self:
+            raise IndexError("{county.name} must be in the country.")
+        if any((div.name == city.name for div in self)):
+            raise DivisionNameError(f"{city.name} is already in the county.")
+        if isinstance(city, City):
+            if city.admin_type == AdministrativeTypes.CAPITAL:
+                if len(self.seats) + 1 > self._max_capital_num:
+                    raise ValueError("Adding this capital would overflow the maximum number of capitals.")
+
+        self._subdivisions.append(city)
+        
+    def add_county(county: Division) -> None:
         """Adds a county to the country."""
         if any((div.name == county.name for div in self)):
             raise DivisionNameError(f"{county.name} is already in the country.")
 
         self._subdivisions.append(county)
 
-    def remove_county(self, county: Division):
+    def remove_county(self, county: Division) -> None:
         """Removes a county from the country"""
         if county not in self._subdivisions:
             raise ValueError("{county} is not in the country.")
+        
         self._subdivisions.remove(city)
 
-##    def move_capital(self, old_capital: City, new_capital: City):
-##        """Moves a capital from old_capital to the new_capital"""
-##        if old_capital not in self._subdivisions:
-##            raise ValueError("{old_capital} is not in the county.")
-##        old_idx = self._subdivisions.index(old_seat)
-##        
-##        if new_seat not in self._subdivisions:
-##            raise SeatError("{new_seat} must be in the county.")
-##        new_idx = self._subdivisions.index(new_seat)
-##        
-##        self._subdivisions[new_idx].admin_type = AdministrativeTypes.CAPITAL
-##        self._subdivisions[old_idx].admin_type = AdministrativeTypes.SEAT
+    def _get_cities(self, subdivisions: list[Division]):
+        """Get all cities from subdivisions (flattened)"""
+        def get_cities(subdivision) -> list[Division]:
+            if isinstance(subdivision, City):
+                return [subdivision]
+            elif isinstance(subdivision, County):
+                return list(chain.from_iterable(get_cities(sub) for sub in subdivision.subdivisions))
+            return []
+        
+        return chain.from_iterable(get_cities(sub) for sub in subdivisions)
 
-    def __find_capitals(self):
-        """Recurses into subdivisions to find any cities with admin type of CAPITAL"""
-        cities = []
-
-        def recurse(division: Division):
-            for city in division:
-                if not hasattr(city, "admin_type"):
-                    recurse(city)
-                    continue
-                
-                cities.append(city)
-            return cities
-
-        return filter(
-            lambda city: AdministrativeTypes.CAPITAL in city.admin_type,
-            recurse(self))
+    def _find_capitals(self, subdivision: list[Division]):
+        """Find all capitals"""
+        return filter(lambda city: AdministrativeTypes.CAPITAL in city.admin_type,
+                          self._get_cities(subdivision))
+    
+    def _count_capitals_in_subdivision(self, subdivision: list[Division]):
+        """Count capitals in a specific subdivision"""
+        return len(self._find_capitals(subdivision))

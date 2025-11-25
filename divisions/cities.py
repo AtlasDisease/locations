@@ -6,16 +6,17 @@
 # --- Imports --- #
 
 from typing import Self, override
-##from functools import partial
+from enum import verify, UNIQUE#, IntFlag, CONFORM
+
 from ..enum import UpgradableEnum, UpgradableFlag, auto
 from .divisions import Division
-from enum import IntFlag, verify, UNIQUE, CONFORM
 
 __all__ = ("CityTypes", "AdministrativeTypes", "City")
 
 
 # --- CityTypes Enum --- #
 
+@verify(UNIQUE)
 class CityTypes(UpgradableEnum): #Upgradable
     UNKNOWN = auto() #General use
     LOST = auto() #Incredibly rare; no known location, no historical info (ex. Nanhattie, Coke County, TX)
@@ -26,17 +27,6 @@ class CityTypes(UpgradableEnum): #Upgradable
 
 
 # --- AdministrativeTypes Enum --- #
-
-##class AdministrativeTypes(UpgradableEnum): #Upgradable
-##    NONE = auto()
-##    SEAT = auto()
-##    CAPITAL = auto()
-##
-##    def __str__(self) -> str:
-##        if self == AdministrativeTypes.SEAT:
-##            return f"County {self.name.title()}"
-##        return self.name.title()
-
 
 @verify(UNIQUE)
 class AdministrativeTypes(UpgradableFlag): #Upgradable
@@ -53,7 +43,9 @@ class AdministrativeTypes(UpgradableFlag): #Upgradable
 # --- City Class --- #
 
 class City(Division):
-    """A city object based on a realistic city."""
+    """A city object based on a realistic city.
+
+If the city is independent (not in a county), then this should be added to the Country object."""
 
 ##    most_importance = staticmethod(partial(Division.most_by, attribute = "importance"))
 ##    least_importance = staticmethod(partial(Division.least_by, attribute = "importance"))

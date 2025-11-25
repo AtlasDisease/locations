@@ -64,7 +64,7 @@ If city is of type City and is a county seat the function will check to make sur
         if isinstance(city, City):
             if city.admin_type == AdministrativeTypes.SEAT:
                 if len(self.seats) + 1 > self._max_seat_num:
-                    raise OverflowError("Adding this county seat would overflow the maximum number of county seats.")
+                    raise ValueError("Adding this county seat would overflow the maximum number of county seats.")
 
         self._subdivisions.append(city)
 
