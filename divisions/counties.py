@@ -36,7 +36,7 @@ class County(Division):
         self._max_seat_num = max_seat_num
 
         if len(self.seats) > self._max_seat_num:
-            raise OverflowError("There are more seats tha the maximum number of county seats.")
+            raise ValueError("There are more seats than the maximum number of county seats.")
 
     @property
     def organized(self) -> bool:

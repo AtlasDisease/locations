@@ -28,9 +28,13 @@ class Country(Division):
 
         super().__init__(name, subdivisions, population = population, **kwargs)
         
-        self._max_capital_num = max_capital_num
         if prefix:
             self.prefix = prefix
+        
+        self._max_capital_num = max_capital_num
+
+        if len(self.capitals) > self._max_capital_num:
+            raise ValueError("There are more capitals than the maximum number of capitals.")
 
     @override
     def __format__(self, format_spec = ""):
