@@ -13,18 +13,6 @@ from .rooms import Room
 __all__ = ("CURRENCY_SIGNS", "Bank")
 
 
-# --- Money Class --- #
-
-##class Money(float):
-##    def __init__(self, value: float):
-##        super().__init__()
-##
-##    def __str__(self):
-##        return str(self)
-##
-##    def __format__(self, format_spec = ""):
-##        return locale.currency(self, symbol=True, grouping=True)
-
 CURRENCY_SIGNS = {"$", "¢", "₡"}
 
 
@@ -35,7 +23,7 @@ class Bank(CommericalBuilding):
                  /,
                  subdivisions: Optional[list[Room]] = None,
                  *,
-                 cash_on_hand: float = 0,#Money = Money(0),
+                 cash_on_hand: float = 0,
                  **kwargs):
         super().__init__(name, subdivisions, **kwargs)
 
@@ -56,6 +44,5 @@ class Bank(CommericalBuilding):
 
     def merge(self, bank: Self) -> None:
         self._cash_on_hand += bank.cash_on_hand
-##        self._cash_on_hand = Money(self._cash_on_hand)
         
     

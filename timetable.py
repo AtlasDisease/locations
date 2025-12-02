@@ -3,12 +3,12 @@
 import datetime as dt
 from typing import Protocol
 from dataclasses import dataclass, field, KW_ONLY
-##from functools import cached_property
+from functools import cached_property
 
 
 # --- Timetable Class --- #
 
-@dataclass(slots = True)
+@dataclass(slots = True, frozen=True)
 class Timetable:
     start: dt.datetime = dt.datetime.min
     end: dt.datetime = dt.datetime.max
@@ -20,8 +20,7 @@ class Timetable:
         if self._duration:
             self.end = self.start + self._duration
 
-    @property
-##    @cached_property
+    @cached_property
     def duration(self) -> dt.datetime:
         return self.end - self.start
 
@@ -29,7 +28,6 @@ class Timetable:
 # --- Timeable Protocol --- #
 
 class Timeable(Protocol):
-    @property
-##    @cached_property
+    @cached_property
     def duration(self) -> dt.datetime:
         return self.end - self.start

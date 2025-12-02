@@ -112,7 +112,7 @@ If the city is independent (not in a county), then this should be added to the C
 ##        
 ##        return self.type <= other.type \
 ##               and self._admin_type < other._admin_type
-##
+
     @property
     def admin_type(self) -> AdministrativeTypes:
         return self._admin_type
