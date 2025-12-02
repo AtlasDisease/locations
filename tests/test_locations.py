@@ -3,8 +3,10 @@
 
 # --- Imports --- #
 
+import os
 import datetime as dt
-import timeit
+import locale
+##import timeit
 
 from locations.divisions import District, City, CityTypes, \
      AdministrativeTypes, County, State, Country, Continent, Planet, \
@@ -17,7 +19,7 @@ from locations.infrastructure.airports.airplanes import Airplane, \
      AirplaneManufacturer
 from locations.infrastructure.airports import Airport, AirportTypes
 from locations.infrastructure.postoffice import PostOffice
-from locations.infrastructure.banks import Bank, Money
+from locations.infrastructure.banks import Bank#, Money
 from locations.infrastructure.courthouses import Courthouse, CourthouseTypes
 from locations.locations import Location, LocationIter
 from locations.zipcodes import ZipCode, ZipCodeTypes
@@ -28,10 +30,12 @@ from locations.climate.weather import Weather, WeatherTypes, \
 from locations.administrativedistricts import AdministrativeDistrict
 from locations.locations import Location
 
+locale.setlocale(locale.LC_ALL, '')
 
-# --- Examples --- #
 
-def main():
+# --- Definitions --- #
+
+def texas_main():
     district = District("Downtown Austin")
     city = City("Austin",
                 CityTypes.CITY,
@@ -48,14 +52,25 @@ def main():
     city3 = City("Riesel",
                  CityTypes.CITY,
                  AdministrativeTypes.NONE)
+    city4 = City("Bryan",
+                 CityTypes.CITY,
+                 AdministrativeTypes.SEAT)
+    city5 = City("College Station",
+                 CityTypes.CITY)
+    city6 = City("Boonville",
+                 CityTypes.SITE)
+    city7 = City("Millican",
+                 CityTypes.COMMUNITY)
     county = County("Travis", [city])
     county2 = County("McLennan", [city2, city3])
+    county3 = County("Brazos", [city4, city5, city6, city7])
     country = Country("Texas", [county, county2])
     continent = Continent("North America", [country])
     planet = Planet("Earth", [continent])
     system = PlanetarySystem("Solar", [planet])
     galaxy = Galaxy("Milky Way", [system])
-    localgroup = LocalGroup("Milky Way", [galaxy])
+    galaxy2 = Galaxy("Andromeda", [])
+    localgroup = LocalGroup("Milky Way", [galaxy, galaxy2])
     supercluster = Supercluster("Virgo", [localgroup])
     location = Location(district = district,
                         city = city,
@@ -64,12 +79,11 @@ def main():
                         continent = continent,
                         planet = planet,
                         system = system,
-                        galaxy = galaxy,
+                        galaxy = galaxy2,
                         localgroup = localgroup,
                         supercluster = supercluster)
-    print(f"{location:, }")
     locationiter = LocationIter.fromLocation(location)
-    print(locationiter)
+    print(f"{location:, }", locationiter, sep=os.linesep)
     print()
     
     locationiter2 = LocationIter(divisions = [grave,
@@ -77,21 +91,11 @@ def main():
                                               city2,
                                               county2,
                                               country])
-    print(locationiter2)
-    print(f"{grave: O}")
+    print(locationiter2, f"{grave: O}", sep=os.linesep)
     print()
 
     university = University("Texas A&M")
     print(f"{university: O}")
-    print()
-
-    engine = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
-    engine2 = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
-    airplane = Airplane("787 - Dreamliner",
-                        AirplaneManufacturer.BOEING,
-                        engines = [engine, engine2])
-    print(f"{engine: O}")
-    print(airplane)
     print()
 
     airport = Airport("Easterwood", AirportTypes.REGIONAL)
@@ -107,7 +111,8 @@ def main():
                       country,
                       zipcode)
     print(address)
-    print(zipcode.national_area,
+    print(address,
+          zipcode.national_area,
           zipcode.sectional_center,
           zipcode.delivery_area,
           zipcode.specific_delivery_area)
@@ -118,6 +123,55 @@ def main():
           sep=", ")
     print(min(county2, key=lambda city: city.admin_type))
     print(max(county2, key=lambda city: city.admin_type))
+
+    wildfire = Wildfire("Smokehouse Creek", size = 1_058_460, containment = 89)
+    print(wildfire, f"{wildfire: O}", f"{wildfire.size:,.2f}", f"{wildfire.containment:,.1f}%", sep=os.linesep)
+
+    courthouse = Courthouse("Texas", CourthouseTypes.SUPREME)
+    print(f"{courthouse: L}")
+
+    weather = Weather(WeatherTypes.THUNDERSTORM,
+                      [WeatherAlerts(WeatherAlertTypes.SEVERE_THUNDERSTORM_WARNING)],
+                      [city2, city3])
+    print(weather,
+          f"{weather: A}",
+          weather.severe,
+          sep=os.linesep)
+    
+    weather2 = Weather(WeatherTypes.THUNDERSTORM,
+                      [WeatherAlerts(WeatherAlertTypes.SEVERE_THUNDERSTORM_WATCH)],
+                      [city2, city3])
+    print(weather2,
+          f"{weather2: A}",
+          weather2.severe,
+          sep=os.linesep)
+
+    location2 = Location(city = city2,
+                         county = county2,
+                         country = country)
+    adminDistrict = AdministrativeDistrict(location2)
+    adminDistrict.construct_courthouse(f"{adminDistrict.location.county: L}",
+                                       adminDistrict.location.city,
+                                       AdministrativeTypes.SEAT)
+    print(*map(lambda div: f"{div: L}",
+              adminDistrict.location.city), sep=", ")
+    print(county2.seat)
+    print(*map(lambda city: f"{city: L}", country.capitals), sep=", ")
+
+
+# --- Main --- #
+
+def main():
+    texas_main()
+    print()
+
+    engine = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
+    engine2 = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
+    airplane = Airplane("787 - Dreamliner",
+                        AirplaneManufacturer.BOEING,
+                        engines = [engine, engine2])
+    print(f"{engine: O}", airplane, sep=os.linesep)
+    print()
 
     city4 = City("Lansing", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     city5 = City("Mason", CityTypes.CITY, AdministrativeTypes.SEAT)
@@ -151,31 +205,20 @@ def main():
     country2 = Country("USA", [state4, state3, state2, state])#, [city7])
     print(*map(lambda city: f"{city: L}", country2.capitals), sep=", ")
     print(*map(lambda city: f"{city: L}", county7.seats), sep=", ")
-    print(county2.seat)
 
-    localbank = Bank("Local Credit Union", cash_on_hand = Money(100_000))
+    localbank = Bank("Local Credit Union", cash_on_hand = 100_000)#Money(100_000))
     print(localbank)
-    bigbank = Bank("Wells Fargo", cash_on_hand = Money(500_000_000.30))
+    bigbank = Bank("Wells Fargo", cash_on_hand = 500_000_000.30)#Money(500_000_000.30))
     print(bigbank)
 
     bigbank.merge(localbank)
-    print(f"{bigbank} Cash on hand: {bigbank.cash_on_hand:,.2f}")
-
-    wildfire = Wildfire("Smokehouse Creek", size = 1_058_460, containment = 89)
-    print(wildfire)
-    print(f"{wildfire: O}")
-    print(f"{wildfire.size:,.2f}")
-    print(f"{wildfire.containment:,.1f}%")
-
-    courthouse = Courthouse("Texas", CourthouseTypes.SUPREME)
-    print(f"{courthouse: L}")
+    print(f"{bigbank} Cash on hand: {bigbank: $,}") #This requires using locales
 
     city10 = City("Pretoria", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     city11 = City("Cape Town", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     city12 = City("Bloemfontein", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     country4 = Country("South Africa", [city10, city11, city12], max_capital_num=3)#, [city10, city11, city12])
     print(*map(lambda city: f"{city: L}", country4.capitals), sep=", ")
-    print(*map(lambda city: f"{city: L}", country.capitals), sep=", ")
     print(f"{country4.capital: L}")
 
     city13 = City("The Hague", CityTypes.CITY, AdministrativeTypes.CAPITAL)
@@ -186,30 +229,6 @@ def main():
     country5 = Country("Netherlands", [county9, county10], max_capital_num=2)#, [city13, city14])
     print(*map(lambda city: f"{city: L}", country5.capitals), sep=", ")
     print(f"{country5.capital: L}")
-
-    weather = Weather(WeatherTypes.THUNDERSTORM,
-                      [WeatherAlerts(WeatherAlertTypes.SEVERE_THUNDERSTORM_WARNING)],
-                      [city2, city3])
-    print(weather)
-    print(f"{weather: A}")
-    print(weather.severe)
-    
-    weather2 = Weather(WeatherTypes.THUNDERSTORM,
-                      [WeatherAlerts(WeatherAlertTypes.SEVERE_THUNDERSTORM_WATCH)],
-                      [city2, city3])
-    print(weather2)
-    print(f"{weather2: A}")
-    print(weather2.severe)
-
-    location2 = Location(city = city2,
-                         county = county2,
-                         country = country)
-    adminDistrict = AdministrativeDistrict(location2)
-    adminDistrict.construct_courthouse(f"{adminDistrict.location.county: L}",
-                                       adminDistrict.location.city,
-                                       AdministrativeTypes.SEAT)
-    print(*map(lambda div: f"{div: L}",
-              adminDistrict.location.city.subdivisions), sep=", ")
 
 
 if __name__ == "__main__":
