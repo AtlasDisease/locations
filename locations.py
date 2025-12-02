@@ -64,7 +64,7 @@ in a majority of situations. If you have custom divisions use LocationIter."""
 
         return str(self)
 
-    def __iter__(self) -> Iterable[Division]:
+    def __iter__(self) -> Iterable[Division | str]:
         yield self.district
         yield self.neighborhood
         yield self.city
@@ -95,7 +95,6 @@ in ascending order."""
             return
         
         self.divisions = list(filter(lambda loc: str(loc), self.divisions))
-        #print(self.divisions)
         #self.divisions.sort()
 
         if self.name:
@@ -109,7 +108,7 @@ in ascending order."""
                              self.divisions))
 
     def __iter__(self) -> Iterable:
-        return self.divisions
+        yield from self.divisions
 
     @staticmethod
     def fromLocation(location: Location) -> Self:
