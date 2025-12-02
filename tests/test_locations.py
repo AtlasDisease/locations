@@ -16,12 +16,11 @@ from locations.infrastructure.cemeteries import Cemetery, Grave
 from locations.infrastructure.airports.engines import Engine, \
      EngineManufacturer
 from locations.infrastructure.airports.airplanes import Airplane, \
-     AirplaneManufacturer, Seat
-from locations.infrastructure.airports.flights import FlightStatus, Flight
-from locations.infrastructure.airports.airlines import Airline
-from locations.infrastructure.airports import Airport, AirportTypes
+     AirplaneManufacturer
+from locations.infrastructure.airports import Airport, AirportTypes, \
+     Airline, FlightStatus, Flight, Seat
 from locations.infrastructure.postoffice import PostOffice
-from locations.infrastructure.banks import Bank#, Money
+from locations.infrastructure.banks import Bank
 from locations.infrastructure.courthouses import Courthouse, CourthouseTypes
 from locations.locations import Location, LocationIter
 from locations.zipcodes import ZipCode, ZipCodeTypes
