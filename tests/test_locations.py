@@ -16,7 +16,9 @@ from locations.infrastructure.cemeteries import Cemetery, Grave
 from locations.infrastructure.airports.engines import Engine, \
      EngineManufacturer
 from locations.infrastructure.airports.airplanes import Airplane, \
-     AirplaneManufacturer
+     AirplaneManufacturer, Seat
+from locations.infrastructure.airports.flights import FlightStatus, Flight
+from locations.infrastructure.airports.airlines import Airline
 from locations.infrastructure.airports import Airport, AirportTypes
 from locations.infrastructure.postoffice import PostOffice
 from locations.infrastructure.banks import Bank#, Money
@@ -165,12 +167,34 @@ def main():
     texas_main()
     print()
 
+    city = City("College Station",
+                 CityTypes.CITY)
+    city1 = City("Dallas", CityTypes.CITY, AdministrativeTypes.SEAT)
+    county = County("Brazos", [city])
+    county1 = County("Dallas", [city1])
+    country = Country("Texas", [county])
+
+    location2 = LocationIter("College Station", [city, county, country])
+    location3 = LocationIter("Houston", [city1, county1, country])
+
+    seat = Seat(15, "B")
     engine = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
     engine2 = Engine("Trent 1000", EngineManufacturer.ROLLS_ROYCE)
     airplane = Airplane("787 - Dreamliner",
                         AirplaneManufacturer.BOEING,
                         engines = [engine, engine2])
-    print(f"{engine: O}", airplane, sep=os.linesep)
+    flight = Flight(Airline("Delta Airlines"),
+                    location2,
+                    location3,
+                    "12345",
+                    [seat],
+                    airplane,
+                    dt.datetime.today(),
+                    dt.datetime.today() + dt.timedelta(minutes = 45))
+    airport = Airport("Dallas-Fort Worth", AirportTypes.INTERNATIONAL)
+    print(f"{engine: O}", airplane, f"{airport: O}", sep=os.linesep)
+    print()
+    print(f"{flight: D}")
     print()
 
     city4 = City("Lansing", CityTypes.CITY, AdministrativeTypes.CAPITAL)
@@ -206,10 +230,9 @@ def main():
     print(*map(lambda city: f"{city: L}", country2.capitals), sep=", ")
     print(*map(lambda city: f"{city: L}", county7.seats), sep=", ")
 
-    localbank = Bank("Local Credit Union", cash_on_hand = 100_000)#Money(100_000))
-    print(localbank)
-    bigbank = Bank("Wells Fargo", cash_on_hand = 500_000_000.30)#Money(500_000_000.30))
-    print(bigbank)
+    localbank = Bank("Local Credit Union", cash_on_hand = 100_000)
+    bigbank = Bank("Wells Fargo", cash_on_hand = 500_000_000.30)
+    print(localbank, bigbank, sep="\n")
 
     bigbank.merge(localbank)
     print(f"{bigbank} Cash on hand: {bigbank: $,}") #This requires using locales
