@@ -5,7 +5,7 @@
 # --- Imports --- #
 
 from typing import Self, override, Type
-##from functools import total_ordering
+
 from ..subdivisions import DivisionBase
 from .extensions.population import add_population
 from .extensions.area import add_area
@@ -27,9 +27,9 @@ class Division(DivisionBase):
                  /,
                  subdivisions: list[Type[Self]] = None,
                  *,
-                 population: Type[int] = None,
-                 area: Type[int] = None,
-                 elevation: Type[int] = None,
+                 population: Type[int | float] = None,
+                 area: Type[int | float] = None,
+                 elevation: Type[int | float] = None,
                  **kwargs):
 
         super().__init__(name, subdivisions)
@@ -57,3 +57,7 @@ class Division(DivisionBase):
 
         # Add available extensions or extra arguments
         self.__dict__ |= kwargs
+
+    @property
+    def subdivisions(self) -> list[Self]:
+        return self._subdivisions

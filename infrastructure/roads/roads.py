@@ -79,7 +79,7 @@ class Intersection(Road):
         return str(self)
     
     def __iter__(self):
-        return iter(self.roads)
+        yield from self.roads
 
 
 # --- Junction Class --- #
@@ -93,4 +93,4 @@ class Junction(Intersection):
         return str(self)
     
     def __iter__(self):
-        return iter(self.roads)
+        yield from self.roads

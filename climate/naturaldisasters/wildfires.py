@@ -31,7 +31,7 @@ class Wildfire:
         return self.size
 
     def __iter__(self) -> Iterable:
-        return iter(self.locations)
+        yield from self.locations
 
     def add_location(self, location):
         self.locations.append(location)

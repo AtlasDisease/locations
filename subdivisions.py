@@ -19,10 +19,10 @@ class DivisionBase:
         self.name = name
         self._subdivisions = list(_subdivisions) if _subdivisions else []
 
-    @property
-    def subdivisions(self) -> list[Self]:
-        return self._subdivisions
-    
+##    @property
+##    def subdivisions(self) -> list[Self]:
+##        return self._subdivisions
+        
     def __str__(self) -> str:
         return self.name
 
@@ -64,9 +64,9 @@ Ex. get largest or smallest subdivision by Population"""
 # --- Divisible Protocol --- #
 
 class Divisible(Protocol):
-    @property
-    def subdivisions(self) -> list[Type[DivisionBase]]:
-        ...
+##    @property
+##    def subdivisions(self) -> list[Type[DivisionBase]]:
+##        ...
 
     def __iter__(self) -> Iterable[Type[DivisionBase]]:
         ...

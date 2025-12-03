@@ -66,7 +66,7 @@ class PostalBox:
         return len(self.mail)
 
     def __iter__(self) -> Iterable[Sendable]:
-        return iter(self.mail)
+        yield from self.mail
 
     def send(self, package: Sendable) -> NoReturn:
         if not package.from_ or not package.to:

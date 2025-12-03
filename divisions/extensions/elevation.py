@@ -77,7 +77,7 @@ def _set_elevation(self, elevation: int):
 
 def add_elevation(self, elevation: int) -> None:
     self._elevation = elevation
-    self.__class__.elevation = elevation
+    self.__class__.elevation = property(_get_elevation, _set_elevation)
 
 def meters(elevation: Feet) -> Meters:
     return Meters(elevation * 0.3048)

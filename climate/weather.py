@@ -106,7 +106,7 @@ class Weather:
         return self.current_weather.value
 
     def __iter__(self) -> Iterable:
-        return iter(self.locations)
+        yield from self.locations
 
     @property
     def severe(self):
