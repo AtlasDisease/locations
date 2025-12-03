@@ -29,7 +29,6 @@ from locations.climate.naturaldisasters import Wildfire
 from locations.climate.weather import Weather, WeatherTypes, \
      WeatherAlertTypes, WeatherAlerts
 from locations.administrativedistricts import AdministrativeDistrict
-from locations.locations import Location
 
 locale.setlocale(locale.LC_ALL, '')
 
@@ -92,7 +91,8 @@ def texas_main():
                                               city2,
                                               county2,
                                               country])
-    print(locationiter2, f"{grave: O}", sep=os.linesep)
+    print(locationiter2, sep=os.linesep)
+    print(f"{grave: O}")
     print()
 
     university = University("Texas A&M")
@@ -111,20 +111,21 @@ def texas_main():
                       county,
                       country,
                       zipcode)
-    print(address)
     print(address,
           zipcode.national_area,
           zipcode.sectional_center,
           zipcode.delivery_area,
           zipcode.specific_delivery_area)
 
-##    print(city > city2)
+##    print("City > City2:", city > city2)
     print(*map(lambda city: str(city),
                sorted(county2, key=lambda city: city.admin_type, reverse=True)),
           sep=", ")
     print(min(county2, key=lambda city: city.admin_type))
+    print(City.least_by(county2, "admin_type")) #Another way to do above
     print(max(county2, key=lambda city: city.admin_type))
-
+    print(City.most_by(county2, "admin_type")) #Another way to do above
+    
     wildfire = Wildfire("Smokehouse Creek", size = 1_058_460, containment = 89)
     print(wildfire, f"{wildfire: O}", f"{wildfire.size:,.2f}", f"{wildfire.containment:,.1f}%", sep=os.linesep)
 
@@ -158,6 +159,45 @@ def texas_main():
               adminDistrict.location.city), sep=", ")
     print(county2.seat)
     print(*map(lambda city: f"{city: L}", country.capitals), sep=", ")
+
+
+def extensions_test():
+    from locations.divisions.extensions import Population, Area, Kilometers, \
+         Miles, Elevation, Feet, Meters, kilometers, meters
+    
+    city = City("Bryan",
+                 CityTypes.CITY,
+                 AdministrativeTypes.SEAT,
+                 population = Population(200_000),
+                 area = Miles(54.26),
+                 elevation = Feet(361))
+    city1 = City("College Station",
+                 CityTypes.CITY,
+                 population = Population(115_000),
+                 area = Miles(51.30),
+                 elevation = Feet(289))
+    city2 = City("Boonville",
+                 CityTypes.SITE,
+                 population = Population(0),
+                 area = Miles(0),
+                 elevation = Feet(359))
+    county = County("Brazos", [city,city1,city2], population = Population(233_849))
+
+    print(kilometers(city1.area))
+    print(meters(city.elevation))
+    print(Miles(100) == Kilometers(100))
+    print(Feet(100) == Meters(100))
+
+    funcs = (Population.largest,
+              Population.smallest,
+              Area.largest,
+              Area.smallest,
+              Elevation.highest,
+              Elevation.lowest)
+    c = None
+    for func in funcs:
+        c = county.get(func =  func)
+        print(c, c.population, c.incorporated, c.abandoned, c.historical)
 
 
 # --- Main --- #
@@ -234,7 +274,7 @@ def main():
     print(localbank, bigbank, sep="\n")
 
     bigbank.merge(localbank)
-    print(f"{bigbank} Cash on hand: {bigbank: $,}") #This requires using locales
+    print(f"{bigbank} Cash on hand: {bigbank: $,}")
 
     city10 = City("Pretoria", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     city11 = City("Cape Town", CityTypes.CITY, AdministrativeTypes.CAPITAL)
@@ -251,6 +291,9 @@ def main():
     country5 = Country("Netherlands", [county9, county10], max_capital_num=2)#, [city13, city14])
     print(*map(lambda city: f"{city: L}", country5.capitals), sep=", ")
     print(f"{country5.capital: L}")
+
+    print()
+    extensions_test()
 
 
 if __name__ == "__main__":
