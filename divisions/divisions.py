@@ -57,16 +57,3 @@ class Division(DivisionBase):
 
         # Add available extensions or extra arguments
         self.__dict__ |= kwargs
-
-##    def add_subdivision(self, division: Self):
-##        self._subdivisions.append(division)
-##        self._subdivisions.sort()
-
-##    def __lt__(self, other: Self)  -> bool:
-##        return False #_IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)
-##
-##    def __eq__(self, other: Self)  -> bool:
-##        return False #_IMPORTANCE.index(self.__class__) == _IMPORTANCE.index(other.__class__)
-##
-##    def __gt__(self, other: Self) -> bool:
-##        return _IMPORTANCE.index(self.__class__) < _IMPORTANCE.index(other.__class__)

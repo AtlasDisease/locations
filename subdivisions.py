@@ -18,9 +18,6 @@ class DivisionBase:
                  **kwargs):
         self.name = name
         self._subdivisions = list(_subdivisions) if _subdivisions else []
-##        self._subdivisions = set(_subdivisions) if _subdivisions else {}
-##        print(" ".join(re.findall('[A-Z][^A-Z]*', self.__class__.__name__)).upper())
-##        print("DIVSIONBASE:", self.name, self.type_, self._subdivisions)
 
     @property
     def subdivisions(self) -> list[Self]:
@@ -38,15 +35,10 @@ class DivisionBase:
         return str(self)
 
     def __iter__(self):
-        return iter(self.subdivisions)
+        yield from self._subdivisions
 
     def __bool__(self) -> bool:
         return self.name != "New" and bool(self.name)
-
-    def rename(self, new_name: str) -> Self:
-        """Renames the division. This changes self."""
-        self.name = new_name
-        return self
 
     def get(self, func: Callable) -> Self:
         """Gets a subdivision based of a certain function.
@@ -77,9 +69,6 @@ class Divisible(Protocol):
         ...
 
     def __iter__(self) -> Iterable[Type[DivisionBase]]:
-        ...
-
-    def rename(self, new_name: str) -> Self:
         ...
 
     def get(self, func: Callable) -> Self:
