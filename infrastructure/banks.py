@@ -13,7 +13,17 @@ from .rooms import Room
 __all__ = ("CURRENCY_SIGNS", "Bank")
 
 
-CURRENCY_SIGNS = {"$", "¢", "₡"}
+CURRENCY_SIGNS = {'₾', '௹', '₦', '৻', '₷',
+                  '₡', '₣', '＄', '฿', '￦',
+                  '৳', '￠', '₱', '₢', '৲',
+                  '₹', '₺', '₳', '૱', '₧',
+                  '₫', '₵', '₤', '￡', '₲',
+                  '꠸', '₠', '₿', '€', '₭',
+                  '﷼', '￥', '៛', 'ƒ', '₨',
+                  '¥', '₩', '₥', '£', '₯',
+                  '$', '¢', '₽', '₪', '﹩',
+                  '₸', '₮', '₶', '₻', '₰',
+                  '₴', '؋', '¤', '₼'}
 
 
 # --- Bank Class --- #
@@ -32,11 +42,17 @@ class Bank(CommericalBuilding):
     def __format__(self, format_spec=""):
         if not format_spec:
             return str(self)
-
-        symbol = any((spec in CURRENCY_SIGNS for spec in format_spec))
-        grouping = "," in format_spec or symbol
-        international = not symbol
-        return locale.currency(self._cash_on_hand, symbol=symbol, grouping=grouping, international=international)
+        try:
+            symbol = any((spec in CURRENCY_SIGNS for spec in format_spec))
+            grouping = "," in format_spec or symbol
+            international = not symbol
+            return locale.currency(self._cash_on_hand,
+                                   symbol=symbol,
+                                   grouping=grouping,
+                                   international=international)
+        except ValueError:
+            symbol = next((char for char in format_spec if char in CURRENCY_SIGNS))
+            return f"{symbol}{self._cash_on_hand:-,.2f}"
 
     @property
     def cash_on_hand(self) -> float:
