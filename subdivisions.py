@@ -4,7 +4,6 @@
 
 # --- Imports --- #
 
-##import re
 from typing import Self, Callable, Iterable, Protocol, Optional, Type
 
 __all__ = ("DivisionBase",)
@@ -59,11 +58,15 @@ Ex. get largest or smallest subdivision by Population"""
 
     @staticmethod
     def most_by(division: Self, attribute: str) -> Self:
-        return max(division, key = lambda x: getattr(x, attribute))
+        return max(division, key = lambda x: getattr(x, attribute, None))
 
     @staticmethod
     def least_by(division: Self, attribute: str) -> Self:
-        return min(division, key = lambda x: getattr(x, attribute))
+        return min(division, key = lambda x: getattr(x, attribute, None))
+
+    @staticmethod
+    def get_all_by(division: Self, attribute: str) -> Iterable[Self]:
+        return filter(lambda x: getattr(x, attribute, None), division)
 
 
 # --- Divisible Protocol --- #

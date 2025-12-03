@@ -7,6 +7,7 @@
 
 from typing import Self, override
 from enum import verify, UNIQUE#, IntFlag, CONFORM
+from functools import partial
 
 from ..enum import UpgradableEnum, UpgradableFlag, auto
 from .divisions import Division
@@ -47,8 +48,9 @@ class City(Division):
 
 If the city is independent (not in a county), then this should be added to the Country object."""
 
-##    most_importance = staticmethod(partial(Division.most_by, attribute = "importance"))
-##    least_importance = staticmethod(partial(Division.least_by, attribute = "importance"))
+## I like this in theory but you can technically get multiple cities from this - BB
+##    high_admin = staticmethod(partial(Division.most_by, attribute = "admin_type"))
+##    low_admin = staticmethod(partial(Division.least_by, attribute = "admin_type"))
     
     def __init__(self,
                  name: str,
@@ -90,36 +92,13 @@ If the city is independent (not in a county), then this should be added to the C
 
         return str(self)
 
-    #Comparisons are subject to change.
-    #Discourage use of them for production. -Brendan
-##    def __eq__(self, other: Self) -> bool:
-##        if type(self) != type(other):
-##            return False
-##        
-##        return self.type == other.type \
-##               and self._admin_type == other._admin_type
-##
-##    def __gt__(self, other: Self) -> bool:
-##        if type(self) != type(other):
-##            return False
-##        
-##        return self.type >= other.type \
-##               and self._admin_type > other._admin_type
-##
-##    def __lt__(self, other: Self) -> bool:
-##        if type(self) != type(other):
-##            return False
-##        
-##        return self.type <= other.type \
-##               and self._admin_type < other._admin_type
-
     @property
     def admin_type(self) -> AdministrativeTypes:
         return self._admin_type
 
-    @admin_type.setter
-    def admin_type(self, admintype: AdministrativeTypes):
-        self._admin_type = admintype
+##    @admin_type.setter
+##    def admin_type(self, admintype: AdministrativeTypes):
+##        self._admin_type = admintype
 
     def __eq__(self, other: Self) -> bool:
         if type(self) != type(other):
@@ -151,14 +130,3 @@ If the city is independent (not in a county), then this should be added to the C
     @property
     def historical(self) -> bool:
         return self.type == CityTypes.SITE
-
-##    @property
-##    def importance(self) -> int:
-##        """Returns the importance of the city.
-##This is mostly for debugging if there is an issue with the comparison functions."""
-##        return self._admin_type.value + self.type.value
-##
-##    @property
-##    def political_importance(self) -> int:
-##        return self._admin_type.value
-    
