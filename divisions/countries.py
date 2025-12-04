@@ -86,22 +86,25 @@ class Country(Division):
         
         self._subdivisions.remove(city)
 
-    def _get_cities(self, subdivisions: list[Division]):
+    @staticmethod
+    def get_cities(subdivisions: Iterable[Division]) -> list[Division]:
         """Get all cities from subdivisions (flattened)"""
-        def get_cities(subdivision) -> list[Division]:
+        def _get_cities(subdivision) -> Iterable[Division]:
             if isinstance(subdivision, City):
                 return [subdivision]
             elif isinstance(subdivision, County):
-                return list(chain.from_iterable(get_cities(sub) for sub in subdivision.subdivisions))
+                return list(chain.from_iterable(_get_cities(sub) for sub in subdivision.subdivisions))
             return []
         
-        return chain.from_iterable(get_cities(sub) for sub in subdivisions)
+        return chain.from_iterable(_get_cities(sub) for sub in subdivisions)
 
-    def _find_capitals(self, subdivision: list[Division]):
+    @staticmethod
+    def _find_capitals(subdivision: Iterable[Division]) -> Iterable[Division]:
         """Find all capitals"""
         return filter(lambda city: AdministrativeTypes.CAPITAL in city.admin_type,
-                          self._get_cities(subdivision))
-    
-    def _count_capitals_in_subdivision(self, subdivision: list[Division]):
+                          Country.get_cities(subdivision))
+
+    @staticmethod
+    def _count_capitals_in_subdivision(self, subdivision: Iterable[Division]) -> int:
         """Count capitals in a specific subdivision"""
-        return len(self._find_capitals(subdivision))
+        return len(Country._find_capitals(subdivision))
