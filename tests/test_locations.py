@@ -30,6 +30,17 @@ from locations.climate.weather import Weather, WeatherTypes, \
      WeatherAlertTypes, WeatherAlerts
 from locations.administrativedistricts import AdministrativeDistrict
 
+# Politics is a complex thing as it is tied into districts very
+# closely but a separate idea so doing something like districts.politics
+# makes it seem like they rely on each other which does not make sense
+# to me especially since the politics package could be used on its own
+# without the districts being used.
+from locations.politics import Government, Leader, Administrator, Law, \
+     Bill, Economy
+from locations.politics.leaders import LeaderPolicy
+from locations.politics.economics import EconomicPolicy
+from locations.politics.law import LawPolicy, BillStatus
+
 locale.setlocale(locale.LC_ALL, '')
 
 
@@ -103,7 +114,18 @@ def texas_main():
     print(f"{airport: L}")
 
     post_office = PostOffice("Austin")
-    print(f"{post_office: L}")
+    print(f"{post_office: L}", end=os.linesep*2)
+
+    administrator = Administrator("Dan Patrick")
+    leader = Leader("Greg Abbott", LeaderPolicy.REPUBLIC)
+    economy = Economy(EconomicPolicy.CAPITALIST)
+    bill = Bill("Bill of Rights", BillStatus.ABSOLUTE,
+                """    1. Freedom of Religion, Press, Protest, etc
+    2. Right to Own Guns""")
+    law = Law(LawPolicy.FAIR_AND_JUST, bills = [bill])
+    government = Government(leader, economy, law)
+    print(government, administrator, sep=os.linesep)
+    print(Administrator(leader = leader))
 
     zipcode = ZipCode("78701-0001", ZipCodeTypes.AMERICA)
     address = Address("123 Main St.",
@@ -125,6 +147,8 @@ def texas_main():
     print(City.least_by(county2, "admin_type")) #Another way to do above
     print(max(county2, key=lambda city: city.admin_type))
     print(City.most_by(county2, "admin_type")) #Another way to do above
+    print(City.least_by(Country.get_cities(country), "admin_type")) #Another way to do above
+    print(City.most_by(Country.get_cities(country), "admin_type")) #Another way to do above
     
     wildfire = Wildfire("Smokehouse Creek", size = 1_058_460, containment = 89)
     print(wildfire, f"{wildfire: O}", f"{wildfire.size:,.2f}", f"{wildfire.containment:,.1f}%", sep=os.linesep)
@@ -158,7 +182,7 @@ def texas_main():
     print(*map(lambda div: f"{div: L}",
               adminDistrict.location.city), sep=", ")
     print(county2.seat)
-    print(*map(lambda city: f"{city: L}", country.capitals), sep=", ")
+    print(*map(lambda city: f"{city: L}", country.capitals), sep=", ", end=os.linesep*2)
 
 
 def extensions_test():
@@ -204,7 +228,6 @@ def extensions_test():
 
 def main():
     texas_main()
-    print()
 
     city = City("College Station",
                  CityTypes.CITY)
@@ -231,10 +254,8 @@ def main():
                     dt.datetime.today(),
                     dt.datetime.today() + dt.timedelta(minutes = 45))
     airport = Airport("Dallas-Fort Worth", AirportTypes.INTERNATIONAL)
-    print(f"{engine: O}", airplane, f"{airport: O}", sep=os.linesep)
-    print()
-    print(f"{flight: D}")
-    print()
+    print(f"{engine: O}", airplane, f"{airport: O}", sep=os.linesep, end=os.linesep*2)
+    print(f"{flight: D}", end=os.linesep*2)
 
     city4 = City("Lansing", CityTypes.CITY, AdministrativeTypes.CAPITAL)
     city5 = City("Mason", CityTypes.CITY, AdministrativeTypes.SEAT)
@@ -290,9 +311,8 @@ def main():
     county10 = County("Friesland", [city15])
     country5 = Country("Netherlands", [county9, county10], max_capital_num=2)#, [city13, city14])
     print(*map(lambda city: f"{city: L}", country5.capitals), sep=", ")
-    print(f"{country5.capital: L}")
+    print(f"{country5.capital: L}", end=os.linesep*2)
 
-    print()
     extensions_test()
 
 
